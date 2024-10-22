@@ -5,7 +5,7 @@ WanderWays is a global travel agency management system designed to streamline op
 # Clone Repository
 Clone the Repository
 ```bash
-git clone https://github.com/username/repository.git
+git clone https://github.com/EshCookiez/WanderWays.git
 ```
 after you make changes
 ```bash
