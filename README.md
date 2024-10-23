@@ -7,6 +7,17 @@ Clone the Repository
 ```bash
 git clone https://github.com/EshCookiez/WanderWays.git
 ```
+Install Dependencies 
+Open Terminal 
+Go to root directory Wanderways\wanderways
+```
+cd {Directory Locations]\Wanderways\wanderways
+```
+Install Dependencies
+```
+mvn clean install
+```
+
 after you make changes
 ```bash
 git add .
