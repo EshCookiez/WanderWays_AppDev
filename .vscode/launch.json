@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-WanderwaysApplication<Wanderways>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.wanderways.Wanderways.WanderwaysApplication",
+            "projectName": "Wanderways",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
