@@ -12,7 +12,7 @@ public class Accommodation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer acm_id;
 
     private String acm_name;
     private String acm_type;
@@ -22,11 +22,11 @@ public class Accommodation {
 
     // Getters and Setters
     public Integer getId() {
-        return id;
+        return acm_id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer acm_id) {
+        this.acm_id = acm_id;
     }
 
     public String getAcm_name() {
