@@ -1,0 +1,90 @@
+package com.wanderways.Entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "FlightBooking")
+public class BookFlight {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer fbook_id;
+
+    private String location_origin;
+    private String location_destination;
+    private Integer passenger_amount;
+    private String fare_class;
+
+    @ManyToOne
+    @JoinColumn(name = "flight_id", nullable = false)
+    private Flight flight;
+
+    public BookFlight() {}
+
+    public BookFlight(Integer fbook_id, String location_origin,String location_destination, Integer passenger_amount, String fare_class){
+        this.fbook_id = fbook_id;
+        this.location_origin = location_origin;
+        this.location_destination = location_destination;
+        this.passenger_amount = passenger_amount;
+        this.fare_class = fare_class;
+    }
+
+
+    // Getters
+    public Integer getFbookId() {
+        return fbook_id;
+    }
+    
+    public String getLocationOrigin() {
+        return location_origin;
+    }
+    
+    public String getLocationDestination() {
+        return location_destination;
+    }
+    
+    public Integer getPassengerAmount() {
+        return passenger_amount;
+    }
+    
+    public String getFareClass() {
+        return fare_class;
+    }
+    
+     public Flight getFlight() {
+        return flight;
+    }
+    
+     // Setters
+    public void setFbookId(Integer fbook_id) {
+        this.fbook_id = fbook_id;
+    }
+    
+    public void setLocationOrigin(String location_origin) {
+        this.location_origin = location_origin;
+    }
+    
+    public void setLocationDestination(String location_destination) {
+        this.location_destination = location_destination;
+    }
+    
+    public void setPassengerAmount(Integer passenger_amount) {
+        this.passenger_amount = passenger_amount;
+    }
+    
+    public void setFareClass(String fare_class) {
+        this.fare_class = fare_class;
+    }
+    
+    public void setFlight(Flight flight) {
+        this.flight = flight;
+    }
+    
+
+}
