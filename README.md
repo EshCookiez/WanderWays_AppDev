@@ -28,3 +28,9 @@ git commit -m "Description of changes"
 ```bash
 git push origin main
 ```
+
+If Repository is cloned. Use pull to update local instance of Repository
+Go to root directory of local instance clone and open terminal
+```
+git pull origin main
+```
