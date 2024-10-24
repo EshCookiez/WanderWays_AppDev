@@ -3,6 +3,8 @@ package com.wanderways.Controller;
 import com.wanderways.Entity.BookFlight;
 import com.wanderways.Service.BookFlightService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +27,9 @@ public class BookFlightController {
     }
     
     @PostMapping("/add")
-    public BookFlight createBooking(@RequestBody BookFlight bookFlight) {
-        return bookFlightService.save(bookFlight); 
+    public ResponseEntity<BookFlight> createBooking(@RequestBody BookFlight booking) {
+        BookFlight savedBooking = bookFlightService.save(booking);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedBooking);
     }
 
     @GetMapping("/all")
