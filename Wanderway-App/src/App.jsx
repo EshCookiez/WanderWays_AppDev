@@ -4,36 +4,36 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import FlightBooking from './Pages/FlightBooking';
 import CustomerList from './Pages/CustomerList';
 import CustomerForm from './Pages/CustomerForm';
+import AcmBooking from './Pages/AcmBooking'; 
+
 function App() {
-    {/* SUBJECT TO CHANGES  */}
-    return(
+    return (
         <Router>
             <div>
-                {/*Test rani ari e butang ato pang link sa different features*/}
                 <Routes>
                     <Route path="/" element={
                         <div>
                             <h1>Main App for Customers</h1>
-                            {/* Ari e link nato ato pages */}
                             <Link to="/book-flight">
                                 <button>Book Flights</button>
                             </Link>
                             <Link to="/customerList">
                                 <button>Customer List</button>
                             </Link>
-                           
+                            <Link to="/book-accommodation">
+                                <button>Book Accommodation</button>
+                            </Link>
                         </div>
                     } />
-
-                    {/* Route diri para sa html or react pages gi gamit para sa ato features*/}
                     <Route path="/book-flight" element={<FlightBooking />} />
                     <Route path="/customerList" element={<CustomerList />} />
                     <Route path="/addCustomer" element={<CustomerForm />} />
                     <Route path="/updateCustomer/:id" element={<CustomerForm />} />
+                    <Route path="/book-accommodation" element={<AcmBooking />} /> 
                 </Routes>
             </div>
         </Router>
     );
 }
 
-export default App
+export default App;
