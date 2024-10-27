@@ -2,7 +2,8 @@ import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import FlightBooking from './Pages/FlightBooking';
-
+import CustomerList from './Pages/CustomerList';
+import CustomerForm from './Pages/CustomerForm';
 function App() {
     {/* SUBJECT TO CHANGES  */}
     return(
@@ -17,12 +18,18 @@ function App() {
                             <Link to="/book-flight">
                                 <button>Book Flights</button>
                             </Link>
+                            <Link to="/customerList">
+                                <button>Customer List</button>
+                            </Link>
                            
                         </div>
                     } />
 
                     {/* Route diri para sa html or react pages gi gamit para sa ato features*/}
                     <Route path="/book-flight" element={<FlightBooking />} />
+                    <Route path="/customerList" element={<CustomerList />} />
+                    <Route path="/addCustomer" element={<CustomerForm />} />
+                    <Route path="/updateCustomer/:id" element={<CustomerForm />} />
                 </Routes>
             </div>
         </Router>
