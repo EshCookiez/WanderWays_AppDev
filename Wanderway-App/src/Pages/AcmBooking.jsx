@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const AcmBooking = () => {
     const [acmName, setAcmName] = useState("");
@@ -7,6 +8,7 @@ const AcmBooking = () => {
     const [acmLocation, setAcmLocation] = useState("");
     const [acmPrice, setAcmPrice] = useState("");
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,6 +25,8 @@ const AcmBooking = () => {
 
             if (response.status === 200 || response.status === 201) { 
                 setMessage('Accommodation booked successfully!');
+                // Navigate back to the accommodation list after successful booking
+                navigate('/list-accommodation');
             } else {
                 setMessage("Failed to book accommodation");
                 console.error('Error response:', response);

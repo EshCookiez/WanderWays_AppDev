@@ -5,6 +5,8 @@ import FlightBooking from './Pages/FlightBooking';
 import CustomerList from './Pages/CustomerList';
 import CustomerForm from './Pages/CustomerForm';
 import AcmBooking from './Pages/AcmBooking'; 
+import AcmList from './Pages/AcmList';
+import AcmForm from './Pages/AcmForm';
 
 function App() {
     return (
@@ -23,6 +25,9 @@ function App() {
                             <Link to="/book-accommodation">
                                 <button>Book Accommodation</button>
                             </Link>
+                            <Link to="/list-accommodation">
+                                <button>List of Accommodation</button>
+                            </Link>
                         </div>
                     } />
                     <Route path="/book-flight" element={<FlightBooking />} />
@@ -30,6 +35,9 @@ function App() {
                     <Route path="/addCustomer" element={<CustomerForm />} />
                     <Route path="/updateCustomer/:id" element={<CustomerForm />} />
                     <Route path="/book-accommodation" element={<AcmBooking />} /> 
+                    <Route path="/list-accommodation" element={<AcmList />} />
+                    <Route path="/addAccommodation" element={<AcmForm />} />
+                    <Route path="/acmForm/:id" element={<AcmForm />} />
                 </Routes>
             </div>
         </Router>
