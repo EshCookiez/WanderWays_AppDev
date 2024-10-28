@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import CustomerService from '../services/CustomerService';
+import './CustomerForm.css';
 
 const CustomerForm = () => {
   const { id } = useParams();
   const [customer, setCustomer] = useState({
-    first_name: '',
-    last_name: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    phone_number: '',
+    phoneNumber: '',
     password: '',
-    customer_address: '',
+    customerAddress: '',
     birthdate: '',
   });
   const navigate = useNavigate();
@@ -24,8 +25,18 @@ const CustomerForm = () => {
   const fetchCustomerById = async (customerId) => {
     try {
       const response = await CustomerService.getAllCustomers();
-      const foundCustomer = response.data.find((c) => c.customer_id === parseInt(customerId));
-      if (foundCustomer) setCustomer(foundCustomer);
+      const foundCustomer = response.data.find((c) => c.customerId === parseInt(customerId)); // Use the new customerId key
+      if (foundCustomer) {
+        setCustomer({
+          firstName: foundCustomer.firstName || '',
+          lastName: foundCustomer.lastName || '',
+          email: foundCustomer.email || '',
+          phoneNumber: foundCustomer.phoneNumber || '',
+          password: foundCustomer.password || '', // Note: Handle password securely
+          customerAddress: foundCustomer.customerAddress || '',
+          birthdate: foundCustomer.birthdate || '',
+        });
+      }
     } catch (error) {
       console.error('Error fetching customer:', error);
     }
@@ -60,16 +71,16 @@ const CustomerForm = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          name="first_name"
-          value={customer.first_name}
+          name="firstName"
+          value={customer.firstName} // Ensure correct state binding
           onChange={handleChange}
           placeholder="First Name"
           required
         />
         <input
           type="text"
-          name="last_name"
-          value={customer.last_name}
+          name="lastName"
+          value={customer.lastName} // Ensure correct state binding
           onChange={handleChange}
           placeholder="Last Name"
           required
@@ -77,15 +88,15 @@ const CustomerForm = () => {
         <input
           type="email"
           name="email"
-          value={customer.email}
+          value={customer.email} // Ensure correct state binding
           onChange={handleChange}
           placeholder="Email"
           required
         />
         <input
           type="text"
-          name="phone_number"
-          value={customer.phone_number}
+          name="phoneNumber"
+          value={customer.phoneNumber} // Ensure correct state binding
           onChange={handleChange}
           placeholder="Phone Number"
           required
@@ -93,15 +104,15 @@ const CustomerForm = () => {
         <input
           type="password"
           name="password"
-          value={customer.password}
+          value={customer.password} // Ensure correct state binding
           onChange={handleChange}
           placeholder="Password"
           required
         />
         <input
           type="text"
-          name="customer_address"
-          value={customer.customer_address}
+          name="customerAddress"
+          value={customer.customerAddress} // Ensure correct state binding
           onChange={handleChange}
           placeholder="Address"
           required
@@ -109,9 +120,9 @@ const CustomerForm = () => {
         <input
           type="text"
           name="birthdate"
-          value={customer.birthdate}
+          value={customer.birthdate} // Ensure correct state binding
           onChange={handleChange}
-          placeholder="Birthdate (YYYY-MM-DD)"           
+          placeholder="Birthdate (YYYY-MM-DD)"
           required
         />
         <button type="submit">Submit</button>
