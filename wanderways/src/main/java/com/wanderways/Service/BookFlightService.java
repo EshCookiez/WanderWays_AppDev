@@ -32,13 +32,17 @@ public class BookFlightService{
         return bookflightrepo.findAll();
     }
 
+    //Get booking by ID
+    public Optional<BookFlight> findById(Integer id) {
+        return bookflightrepo.findById(id);
+    }
+    
     // Update a booking
     public BookFlight updateBookFlight(Integer id, BookFlight updatedBookFlight) {
         Optional<BookFlight> existingBookingOpt = bookflightrepo.findById(id);
         
         if (existingBookingOpt.isPresent()) {
             BookFlight existingBooking = existingBookingOpt.get();
-            existingBooking.setLocationOrigin(updatedBookFlight.getLocationOrigin());
             existingBooking.setPassengerAmount(updatedBookFlight.getPassengerAmount());
             existingBooking.setFareClass(updatedBookFlight.getFareClass());
             

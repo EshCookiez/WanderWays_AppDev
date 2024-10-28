@@ -40,7 +40,9 @@ public class FlightService{
             updatedFlight.setRating(flight.getRating());
             updatedFlight.setDateDepart(flight.getDateDepart());
             updatedFlight.setDateArrival(flight.getDateArrival());
-            updatedFlight.setFlightClass(flight.getFlightClass());
+            updatedFlight.setFlightClass(flight.getFlightClass());  
+            updatedFlight.setLocationOrigin(updatedFlight.getLocationOrigin());
+            updatedFlight.setLocationDestination(updatedFlight.getLocationOrigin());
             
             return flightRepo.save(updatedFlight);
         } else {

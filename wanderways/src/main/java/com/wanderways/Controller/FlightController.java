@@ -25,6 +25,7 @@ public class FlightController {
     }
 
     @PostMapping("/add")
+    @ResponseBody
     public Flight createFlight(@RequestBody Flight flight) {
         return flightService.save(flight); 
     }

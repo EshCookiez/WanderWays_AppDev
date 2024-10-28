@@ -2,6 +2,8 @@ package com.wanderways.Entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,16 +21,27 @@ public class Flight{
     private String rating;
     private LocalDateTime dateDepart; 
     private LocalDateTime dateArrival;
-    private String flight_class;
+
+    @JsonProperty("flight_class")
+    private String flightClass;
+
+    @JsonProperty("location_origin")
+    private String locationOrigin;
+
+    @JsonProperty("location_destination")
+    private String locationDestination;
 
     public Flight() {}
 
-    public Flight(Integer flight_id, String rating,  LocalDateTime dateDepart, LocalDateTime dateArrival,String flight_class) {
+    public Flight(Integer flight_id, String rating,  LocalDateTime dateDepart, LocalDateTime dateArrival,
+    String flightClass, String locationOrigin, String locationDestination) {
         this.flight_id = flight_id;
         this.rating = rating;
         this.dateDepart = dateDepart;
         this.dateArrival = dateArrival;
-        this.flight_class = flight_class;
+        this.flightClass = flightClass;
+        this.locationOrigin = locationOrigin;
+        this.locationDestination = locationDestination;
     }
 
     //getters
@@ -49,10 +62,18 @@ public class Flight{
     }
 
     public String getFlightClass() {
-        return flight_class;
+        return flightClass;
     }
 
-    // getters
+    public String getLocationOrigin() {
+        return locationOrigin;
+    }
+    
+    public String getLocationDestination() {
+        return locationDestination;
+    }
+
+    // setters
     public void setFlightId(Integer flight_id) {
         this.flight_id = flight_id;
     }
@@ -70,7 +91,15 @@ public class Flight{
     }
 
     public void setFlightClass(String flight_class) {
-        this.flight_class = flight_class;
+        this.flightClass = flight_class;
+    }
+
+    public void setLocationOrigin(String location_origin) {
+        this.locationOrigin = location_origin;
+    }
+    
+    public void setLocationDestination(String location_destination) {
+        this.locationDestination = location_destination;
     }
 
 }

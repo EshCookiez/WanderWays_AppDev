@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
-const FlightBooking = () => {
-    const { flightId } = useParams(); 
+function FlightBooking_Update() {
+    const {  flightId, fbookId } = useParams();
     const [travellerCtr, setTravellersCtr] = useState(1);
     const [fareclass, setFareclass] = useState("");
     const [message, setMessage] = useState("");
@@ -13,24 +13,40 @@ const FlightBooking = () => {
         const BookingData = {
             fare_class: fareclass,
             passenger_amount: parseInt(travellerCtr, 10),
-            fbook_Id: null,
-            flight: { flightId: parseInt(flightId, 10) }
+            flight: { flightId: parseInt(flightId, 10) },
+            fbook_Id: fbookId
         };
     
         try {
-            const response = await axios.post('http://localhost:8080/api/bookings/add', BookingData);
+            console.log("Flight ID:", flightId, "Booking ID:", fbookId);
+            const response = await axios.put(`http://localhost:8080/api/bookings/update/${fbookId}`, BookingData);
     
-            if (response.status === 201) {
-                setMessage('Flight booked successfully!');
+            if (response.status === 200) {
+                setMessage('Flight booking updated successfully!');
             } else {
-                setMessage("Failed to book Flight");
+                setMessage("Failed to update booking");
             }
         } catch (error) {
-            console.error('Error booking flight:', error);
-            setMessage('Error occurred while booking the flight.');
+            console.error('Error update:', error);
+            setMessage('Error occurred while updating the booking.');
         }
     };
 
+    useEffect(() => {
+        const fetchBookingData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/bookings/${fbookId}`);
+                const booking = response.data;
+                setTravellersCtr(booking.passenger_amount);
+                setFareclass(booking.fare_class);
+            } catch (error) {
+                console.error('Error fetching booking data:', error);
+                setMessage('Error occurred while fetching booking data.');
+            }
+        };
+    
+        fetchBookingData();
+    }, [fbookId]);
     return (
         <div>
             <h1>Book Your Flights</h1>
@@ -54,7 +70,7 @@ const FlightBooking = () => {
                     required 
                 />
                 <br />
-                <button type='submit'>Book Flight</button>
+                <button type='submit'>Update Booking</button>
                 <Link to={`/list-flight`}>
                 <button>Available Flights</button>
                 </Link>
@@ -62,6 +78,6 @@ const FlightBooking = () => {
             {message && <p>{message}</p>}
         </div>
     );
-};
+}
 
-export default FlightBooking;
+export default FlightBooking_Update
