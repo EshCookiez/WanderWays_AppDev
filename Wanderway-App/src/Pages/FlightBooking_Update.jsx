@@ -19,15 +19,21 @@ function FlightBooking_Update() {
     
         try {
             console.log("Flight ID:", flightId, "Booking ID:", fbookId);
-            const response = await axios.put(`http://localhost:8080/api/bookings/update/${fbookId}`, BookingData);
     
-            if (response.status === 200) {
+            const response = await fetch(`http://localhost:8080/api/bookings/update/${fbookId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(BookingData)
+            });
+    
+            if (response.ok) {
                 setMessage('Flight booking updated successfully!');
             } else {
                 setMessage("Failed to update booking");
             }
         } catch (error) {
-            console.error('Error update:', error);
             setMessage('Error occurred while updating the booking.');
         }
     };
@@ -40,13 +46,15 @@ function FlightBooking_Update() {
                 setTravellersCtr(booking.passenger_amount);
                 setFareclass(booking.fare_class);
             } catch (error) {
-                console.error('Error fetching booking data:', error);
                 setMessage('Error occurred while fetching booking data.');
             }
         };
     
         fetchBookingData();
     }, [fbookId]);
+
+
+
     return (
         <div>
             <h1>Book Your Flights</h1>

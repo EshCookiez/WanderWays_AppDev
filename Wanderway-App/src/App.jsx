@@ -16,14 +16,12 @@ function App() {
             <div>
                 <Routes>
                     <Route path="/" element={
-                        <div className='router-buttons' style={{display: 'flex', flexDirection: 'column', padding: '20px' }}>
+                        <div className='Title' style={{display: 'flex', flexDirection: 'column', padding: '20px' }}>
                             <h1>Main App for Customers</h1>
+                            <div className='router-buttons' style={{display: 'flex', flexDirection: 'row', padding: '20px' }}>
                             {/* Ari e link nato ato pages */}
                             <Link to="/list-flight">
                                 <button>Flight List</button>
-                            </Link>
-                            <Link to="/book-flight">
-                                <button>Book Flights</button>
                             </Link>
                             <Link to="/customerList">
                                 <button>Customer List</button>
@@ -34,14 +32,15 @@ function App() {
                             <Link to="/list-accommodation">
                                 <button>List of Accommodation</button>
                             </Link>
+                            </div>
                         </div>
                     } />
 
                     {/* Route diri para sa html or react pages gi gamit para sa ato features*/}
                     <Route path="/book/:flightId" element={<FlightBooking />} />
                     <Route path="/list-flight" element={<FlightList />} />
-                    <Route path="/bookUpdate/:fbookId/:flightId" element={<FlightBooking_Update />} />
-
+                    <Route path="/bookUpdate/:fbookId" element={<FlightBooking_Update />} />
+                    
                     <Route path="/customerList" element={<CustomerList />} />
                     <Route path="/addCustomer" element={<CustomerForm />} />
                     <Route path="/updateCustomer/:id" element={<CustomerForm />} />
