@@ -2,15 +2,18 @@ import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import FlightBooking from './Pages/FlightBooking';
-import FlightList from './Pages/FlightList';
 import FlightBooking_Update from './Pages/FlightBooking_Update';
+import FlightList from './Pages/FlightList';
+import CustomerList from './Pages/CustomerList';
+import CustomerForm from './Pages/CustomerForm';
+import AcmBooking from './Pages/AcmBooking'; 
+import AcmList from './Pages/AcmList';
+import AcmForm from './Pages/AcmForm';
 
 function App() {
-    {/* SUBJECT TO CHANGES  */}
-    return(
+    return (
         <Router>
             <div>
-                {/*Test rani ari e butang ato pang link sa different features*/}
                 <Routes>
                     <Route path="/" element={
                         <div className='router-buttons' style={{display: 'flex', flexDirection: 'column', padding: '20px' }}>
@@ -19,7 +22,18 @@ function App() {
                             <Link to="/list-flight">
                                 <button>Flight List</button>
                             </Link>
-                           
+                            <Link to="/book-flight">
+                                <button>Book Flights</button>
+                            </Link>
+                            <Link to="/customerList">
+                                <button>Customer List</button>
+                            </Link>
+                            <Link to="/book-accommodation">
+                                <button>Book Accommodation</button>
+                            </Link>
+                            <Link to="/list-accommodation">
+                                <button>List of Accommodation</button>
+                            </Link>
                         </div>
                     } />
 
@@ -27,10 +41,18 @@ function App() {
                     <Route path="/book/:flightId" element={<FlightBooking />} />
                     <Route path="/list-flight" element={<FlightList />} />
                     <Route path="/bookUpdate/:fbookId/:flightId" element={<FlightBooking_Update />} />
+
+                    <Route path="/customerList" element={<CustomerList />} />
+                    <Route path="/addCustomer" element={<CustomerForm />} />
+                    <Route path="/updateCustomer/:id" element={<CustomerForm />} />
+                    <Route path="/book-accommodation" element={<AcmBooking />} /> 
+                    <Route path="/list-accommodation" element={<AcmList />} />
+                    <Route path="/addAccommodation" element={<AcmForm />} />
+                    <Route path="/acmForm/:id" element={<AcmForm />} />
                 </Routes>
             </div>
         </Router>
     );
 }
 
-export default App
+export default App;

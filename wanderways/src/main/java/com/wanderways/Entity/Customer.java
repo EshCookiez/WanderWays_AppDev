@@ -11,38 +11,38 @@ import jakarta.persistence.Table;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customer_id;
-    private String first_name;
-    private String last_name;
+    private int customerId;
+    private String firstName;
+    private String lastName;
     private String email;
-    private String phone_number;
+    private String phoneNumber;
     private String password;
-    private String customer_address;
+    private String customerAddress;
     private String birthdate;
 
 
     public int getCustomerId() {
-        return customer_id;
+        return customerId;
     }
     
-    public void setCustomerId(int customer_id) {
-        this.customer_id = customer_id;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
     
     public String getFirstName() {
-        return first_name;
+        return firstName;
     }
     
-    public void setFirstName(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
     
     public String getLastName() {
-        return last_name;
+        return lastName;
     }
     
-    public void setLastName(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
     
     public String getEmail() {
@@ -54,11 +54,11 @@ public class Customer {
     }
     
     public String getPhoneNumber() {
-        return phone_number;
+        return phoneNumber;
     }
     
-    public void setPhoneNumber(String phone_number) {
-        this.phone_number = phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     
     public String getPassword() {
@@ -70,11 +70,11 @@ public class Customer {
     }
     
     public String getCustomerAddress() {
-        return customer_address;
+        return customerAddress;
     }
     
-    public void setCustomerAddress(String customer_address) {
-        this.customer_address = customer_address;
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
     }
     
     public String getBirthdate() {

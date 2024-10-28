@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/acc")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AcmController {
+
+    private static final Logger logger = Logger.getLogger(AcmController.class.getName());
 
     @Autowired
     private AcmService acmService;
@@ -21,7 +25,10 @@ public class AcmController {
 
     @PostMapping("/add")
     public Accommodation addAccommodation(@RequestBody Accommodation accommodation) {
-        return acmService.addAccommodation(accommodation);
+        logger.info("Received request to add accommodation: " + accommodation);
+        Accommodation savedAccommodation = acmService.addAccommodation(accommodation);
+        logger.info("Saved accommodation: " + savedAccommodation);
+        return savedAccommodation;
     }
 
     @GetMapping("/all")
