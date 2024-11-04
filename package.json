@@ -1,0 +1,12 @@
+{
+  "name": "wanderways_appdev",
+  "version": "1.0.0",
+  "description": "WanderWays is a global travel agency management system designed to streamline operations for trips around the world.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
