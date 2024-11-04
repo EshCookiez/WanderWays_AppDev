@@ -62,7 +62,7 @@ const FlightList = () => {
   }, []);
 
   return (
-    <div className='main-box' style={{ display: 'flex', flexDirection: 'row' }}>
+    <div className='main-box' style={{ display: 'flex', flexDirection: 'row' }}>d
       <div className='list-box' style={{ display: 'flex', flexDirection: 'column', padding: '50px', width: '500px' }}>
         <h2>Available Flights</h2>
         {flights.length > 0 ? (
@@ -72,8 +72,7 @@ const FlightList = () => {
               <h3>Flight from {flight.location_origin} to {flight.location_destination}</h3>
               <p>Departure: {flight.dateDepart}</p>
               <p>Arrival: {flight.dateArrival}</p>
-              <p>Class: {flight.flight_class}</p>
-              <p>Rating: {flight.rating}</p>
+              <p>Class: {flight.flight_class} - Rating: {flight.rating}</p>
               <Link to={`/book/${flight.flightId}`}>
                 <button>Book This Flight</button>
               </Link>
@@ -96,7 +95,7 @@ const FlightList = () => {
               <Link to={`/bookUpdate/${booking.fbookId}`}>
                 <button>Update Details</button>
               </Link>
-              <button onClick={() => handleDeleteBooking(booking.fbookId)} style={{ marginTop: '5px'}}>
+              <button onClick={() => handleDeleteBooking(booking.fbookId)} style={{ marginTop: '5px', marginLeft: '5px'}}>
                 Delete This Flight
               </button>
             </div>

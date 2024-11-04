@@ -1,9 +1,9 @@
-import './App.css';
+import './app.css';
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import FlightBooking from './Pages/FlightBooking';
-import FlightBooking_Update from './Pages/FlightBooking_Update';
-import FlightList from './Pages/FlightList';
+import FlightBooking from './Pages/FlightBooking/FlightBooking';
+import FlightBooking_Update from './Pages/FlightBooking/FlightBooking_Update';
+import FlightList from './Pages/FlightBooking/FlightList';
 import CustomerList from './Pages/CustomerList';
 import CustomerForm from './Pages/CustomerForm';
 import AcmBooking from './Pages/AcmBooking'; 
@@ -33,6 +33,7 @@ function App() {
                                 <button>List of Accommodation</button>
                             </Link>
                             </div>
+
                         </div>
                     } />
 
@@ -40,7 +41,7 @@ function App() {
                     <Route path="/book/:flightId" element={<FlightBooking />} />
                     <Route path="/list-flight" element={<FlightList />} />
                     <Route path="/bookUpdate/:fbookId" element={<FlightBooking_Update />} />
-                    
+
                     <Route path="/customerList" element={<CustomerList />} />
                     <Route path="/addCustomer" element={<CustomerForm />} />
                     <Route path="/updateCustomer/:id" element={<CustomerForm />} />
