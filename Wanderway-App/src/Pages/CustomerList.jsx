@@ -21,16 +21,22 @@ const CustomerList = () => {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await CustomerService.deleteCustomer(id);
-      fetchCustomers();
-    } catch (error) {
-      console.error('Error deleting customer:', error);
+    const confirmDelete = window.confirm("Are you sure you want to delete this record?");
+    if (confirmDelete) {
+      try {
+        await CustomerService.deleteCustomer(id);
+        fetchCustomers(); // Refresh the customer list after deletion
+      } catch (error) {
+        console.error('Error deleting customer:', error);
+      }
     }
   };
 
   return (
     <div className="customer-list-container">
+
+
+
       <h2>Customer List</h2>
       <button className="add-customer-button" onClick={() => navigate('/addCustomer')}>
         Add Customer
@@ -52,7 +58,7 @@ const CustomerList = () => {
         <tbody>
           {customers.map((customer) => (
             <tr key={customer.customerId}>
-               <td>{customer.customerId}</td>
+              <td>{customer.customerId}</td>
               <td>{customer.firstName}</td>
               <td>{customer.lastName}</td>
               <td>{customer.email}</td>

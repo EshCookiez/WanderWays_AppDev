@@ -1,0 +1,33 @@
+/* AddCustomer.css */
+.add-customer-form {
+    max-width: 400px; /* Adjust as needed */
+    margin: auto; /* Center the form */
+}
+
+label {
+    display: block; /* Make labels block elements */
+    margin: 10px 0 5px; /* Add spacing */
+}
+
+.text-input {
+    width: 100%; /* Full width */
+    padding: 10px; /* Increase padding for bigger input */
+    font-size: 16px; /* Increase font size */
+    margin-bottom: 15px; /* Spacing between fields */
+    border: 1px solid #ccc; /* Border */
+    border-radius: 4px; /* Rounded corners */
+}
+
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

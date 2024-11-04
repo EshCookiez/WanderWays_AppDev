@@ -9,6 +9,8 @@ import CustomerForm from './Pages/CustomerForm';
 import AcmBooking from './Pages/AcmBooking'; 
 import AcmList from './Pages/AcmList';
 import AcmForm from './Pages/AcmForm';
+import RoomList from './Pages/Rooms/RoomList';
+import RoomForm from './Pages/Rooms/RoomForm';
 
 function App() {
     return (
@@ -32,6 +34,9 @@ function App() {
                             <Link to="/list-accommodation">
                                 <button>List of Accommodation</button>
                             </Link>
+                            <Link to="/roomList">
+                                <button>Room List</button>
+                            </Link>
                             </div>
 
                         </div>
@@ -49,6 +54,9 @@ function App() {
                     <Route path="/list-accommodation" element={<AcmList />} />
                     <Route path="/addAccommodation" element={<AcmForm />} />
                     <Route path="/acmForm/:id" element={<AcmForm />} />
+                    <Route path="/roomList" element={<RoomList />} />
+                    <Route path="/addRoom" element={<RoomForm />} />
+                    <Route path="/updateRoom/:id" element={<RoomForm />} />
                 </Routes>
             </div>
         </Router>
