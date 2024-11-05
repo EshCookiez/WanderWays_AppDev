@@ -1,5 +1,7 @@
 package com.wanderways.Entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,7 +18,10 @@ public class BookFlight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer fbook_id;
 
+    @JsonProperty("passengerAmount")
     private Integer passenger_amount;
+
+    @JsonProperty("fareClass")
     private String fare_class;
 
     @ManyToOne

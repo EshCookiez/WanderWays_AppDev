@@ -46,7 +46,7 @@ function FlightBooking_Update() {
                 setTravellersCtr(booking.passenger_amount);
                 setFareclass(booking.fare_class);
             } catch (error) {
-                setMessage('Error occurred while fetching booking data.');
+                setMessage('');
             }
         };
     
