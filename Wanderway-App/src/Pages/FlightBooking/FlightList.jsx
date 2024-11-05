@@ -1,6 +1,7 @@
+import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import Logo from '../../Components/Logo';
 const FlightList = () => {
   const [flights, setFlights] = useState([]);
   const [booked, setBooked] = useState([]);
@@ -73,15 +74,19 @@ const FlightList = () => {
 
   return (
     <div className='main-box' style={{ display: 'flex', flexDirection: 'column'}}>
-      <div className='search-box' style={{display: 'flex', flexDirection: 'row', justifyContent: 'center',alignItems: 'center', gap: '25px'}}>
-        <div className='search-origin' style={{marginBottom: '20px'}}>
+      <div className='sample-header' style={{display: 'flex', justifyContent: 'start', width: '100%', margin: '10px 10px 10px 10px'}}> 
+        <Logo/>
+      </div>
+      <div className='search-box' style={{display: 'flex', flexDirection: 'row', justifyContent: 'center',alignItems: 'center', gap: '25px', marginBottom: '20px'}}>
+        
+        <div className='search-origin'>
           <input
             type="text" placeholder='Search by origin' value={originSearch}
             onChange={e => setOriginSearch(e.target.value)} 
             style={{ marginRight: '10px', padding: '10px', width: '500px' }}
           />
         </div>
-        <div className='search-destination' style={{marginBottom: '20px'}}>
+        <div className='search-destination'>
         <input
             type="text" placeholder='Search by destination' value={destinationSearch}
             onChange={e => setDestinationSearch(e.target.value)} 
