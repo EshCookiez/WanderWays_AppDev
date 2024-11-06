@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../../Components/Logo';
+import Header from '../../Components/Header.jsx'
 import './flightscss.css';
 
 const FlightList = () => {
@@ -75,8 +75,8 @@ const FlightList = () => {
 
   return (
     <div className='main-box'>
-        <div className='sample-header'> 
-          <Logo/>
+        <div className='sample-header' > 
+          <Header/>
         </div>
         <div className='search-box'  
         style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', 

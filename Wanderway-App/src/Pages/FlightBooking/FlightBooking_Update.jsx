@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { CgUser } from "react-icons/cg";
 import { MdAirlineSeatReclineExtra } from "react-icons/md";
+import './flightscss.css';
+
 
 function FlightBooking_Update() {
     const { flightId, fbookId } = useParams();

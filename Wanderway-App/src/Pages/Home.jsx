@@ -1,18 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { IoAirplane } from "react-icons/io5";
+import Header from '../Components/Header.jsx'
 
 const Home = () => {
     return (
-        <div className='Title' style={{display: 'flex', flexDirection: 'column', padding: '20px' }}>
+        <div className='Title' style={{display: 'flex', flexDirection: 'column', padding: '20px'}}>
+        <Header/>
             <h1>Main App for Customers</h1>
-                 <div className='router-buttons' style={{display: 'flex', flexDirection: 'row', padding: '20px' }}>
+                 <div className='router-buttons' style={{display: 'flex', flexDirection: 'row', padding: '20px', gap: '10px'}}>
                     {/* Ari e link nato ato pages */}
-                    
-                     <Link to="/list-flight">
-                     <button style={{ display: 'flex', alignItems: 'center' }}>
-                    Flight List <IoAirplane style={{ marginLeft: '8px' }}/>
-                    </button>
+
+                    <Link to="/list-flight">
+                        <button style={{ display: 'flex', alignItems: 'center' }}>
+                            Flight List <IoAirplane style={{ marginLeft: '8px' }}/>
+                        </button>
                     </Link>
                     <Link to="/customerList">
                         <button>Customer List</button>

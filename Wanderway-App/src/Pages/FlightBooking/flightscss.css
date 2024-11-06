@@ -25,7 +25,10 @@ button{
     display: 'flex';
     justify-Content: 'start';
     width: '100%';
-    margin: '10px 10px 10px 10px'
+    margin: '10px 10px 10px 10px';
+    position: 'sticky';
+    top: '0';
+    z-Index: '1000';
 }
 
 .list-container{

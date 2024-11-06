@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
-import './flightscss.css';
 import { FaUser } from 'react-icons/fa';
 import { MdAirlineSeatReclineExtra } from "react-icons/md";
+import axios from 'axios';
+import './flightscss.css';
+
 
 const FlightBooking = () => {
     const { flightId } = useParams(); 
