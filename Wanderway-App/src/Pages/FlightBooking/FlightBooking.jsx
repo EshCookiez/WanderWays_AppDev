@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import './CSS/FlightBooking.css';
+import './flightscss.css';
+import { FaUser } from 'react-icons/fa';
+import { MdAirlineSeatReclineExtra } from "react-icons/md";
 
 const FlightBooking = () => {
     const { flightId } = useParams(); 
@@ -33,34 +35,45 @@ const FlightBooking = () => {
     };
 
     return (
-        <div>
-            <h1>Book Your Flights</h1>
-            <h2>Flight ID: {flightId}</h2>
-            <form onSubmit={handleSubmit}>
-                <label>Seat Class: </label>
-                <input 
-                    type="text" 
-                    placeholder="(Economy, Business, First-Class)" 
-                    value={fareclass}
-                    onChange={(e) => setFareclass(e.target.value)}
-                    required 
-                />
-                <br />
-                <label>Number of Travellers: </label>
-                <input 
-                    type="number" 
-                    placeholder="Enter Number of Travellers" 
-                    value={travellerCtr}
-                    onChange={(e) => setTravellersCtr(e.target.value)} 
-                    required 
-                />
-                <br />
-                <button type='submit'>Book Flight</button>
-                <Link to={`/list-flight`}>
-                <button>Available Flights</button>
-                </Link>
-            </form>
-            {message && <p>{message}</p>}
+        <div className='book-page'>
+            <div className='book-box'>
+                <h1>Book Your Flights</h1>
+                <h2>Flight ID: {flightId}</h2>
+                <form onSubmit={handleSubmit} style={{ margin: '20px'}}>
+                    <label>Seat Class</label>
+                    <div className='input-fareclass'>
+                    <input 
+                        type="text" 
+                        placeholder="(Economy, Business, First-Class)" 
+                        value={fareclass}
+                        onChange={(e) => setFareclass(e.target.value)}
+                        required 
+                        style={{ padding: '10px', width: '90%'}}
+                    />
+                    <MdAirlineSeatReclineExtra className="input-icon"/>
+                    </div>
+                    <label>Number of Travellers</label>
+                    <div className='input-travellers'>
+                    <input 
+                        type="number" 
+                        placeholder="Enter Number of Travellers" 
+                        value={travellerCtr}
+                        onChange={(e) => setTravellersCtr(e.target.value)} 
+                        required 
+                        style={{ padding: '10px', width: '90%'}}
+                    />
+                     <FaUser className="input-icon" />
+                    </div>
+                    <div className='button-box'>
+                        <button type='submit' style={{width: '150px'}}>Book Flight</button>
+                        <Link to={`/list-flight`}>
+                            <button style={{width: '130px'}}>Available Flights</button>
+                        </Link>
+                    </div>
+
+                </form>
+                {message && <p>{message}</p>}
+            </div>
         </div>
     );
 };

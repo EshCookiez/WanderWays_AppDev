@@ -18,7 +18,6 @@ function App() {
         <Router>
             <div>
                 <Routes>
-
                     {/* Route diri para sa html or react pages gi gamit para sa ato features*/}
                     <Route path="/" element={<Home/>} />
 

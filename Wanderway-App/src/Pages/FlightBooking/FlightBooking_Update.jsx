@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import { CgUser } from "react-icons/cg";
+import { MdAirlineSeatReclineExtra } from "react-icons/md";
 
 function FlightBooking_Update() {
-    const {  flightId, fbookId } = useParams();
+    const { flightId, fbookId } = useParams();
     const [travellerCtr, setTravellersCtr] = useState(1);
     const [fareclass, setFareclass] = useState("");
     const [message, setMessage] = useState("");
@@ -56,34 +58,44 @@ function FlightBooking_Update() {
 
 
     return (
-        <div>
-            <h1>Book Your Flights</h1>
-            <h2>Flight ID: {flightId}</h2>
-            <form onSubmit={handleSubmit}>
-                <label>Seat Class: </label>
-                <input 
-                    type="text" 
-                    placeholder="(Economy, Business, First-Class)" 
-                    value={fareclass}
-                    onChange={(e) => setFareclass(e.target.value)}
-                    required 
-                />
-                <br />
-                <label>Number of Travellers: </label>
-                <input 
-                    type="number" 
-                    placeholder="Enter Number of Travellers" 
-                    value={travellerCtr}
-                    onChange={(e) => setTravellersCtr(e.target.value)} 
-                    required 
-                />
-                <br />
-                <button type='submit'>Update Booking</button>
-                <Link to={`/list-flight`}>
-                <button>Available Flights</button>
-                </Link>
-            </form>
-            {message && <p>{message}</p>}
+        <div className='update-page'>
+            <div className='update-box'>
+                <h1>Update your Booking</h1>
+                <h2>Booking ID: {fbookId}</h2>
+                <form onSubmit={handleSubmit} style={{ margin: '20px'}}>
+                    <label>Seat Class</label>
+                    <div className='input-fareclass'>
+                    <input 
+                        type="text" 
+                        placeholder="(Economy, Business, First-Class)" 
+                        value={fareclass}
+                        onChange={(e) => setFareclass(e.target.value)}
+                        required 
+                        style={{ padding: '10px', width: '90%'}}
+                    />
+                    <MdAirlineSeatReclineExtra className="input-icon"/>
+                    </div>
+                    <label>Number of Travellers</label>
+                    <div className='input-travellers'>
+                        <input 
+                            type="number" 
+                            placeholder="Enter Number of Travellers" 
+                            value={travellerCtr}
+                            onChange={(e) => setTravellersCtr(e.target.value)} 
+                            required 
+                            style={{ padding: '10px', width: '90%'}}
+                        />
+                         <CgUser className="input-icon" />
+                    </div>
+                        <div className='button-box'>
+                            <button type='submit'>Update Booking</button>
+                                <Link to={`/list-flight`}>
+                            <button>Available Flights</button>
+                            </Link>
+                        </div>
+                </form>
+                {message && <p>{message}</p>}
+            </div>
         </div>
     );
 }

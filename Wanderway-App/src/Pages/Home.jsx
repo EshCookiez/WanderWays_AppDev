@@ -1,13 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { IoAirplane } from "react-icons/io5";
+
 const Home = () => {
     return (
         <div className='Title' style={{display: 'flex', flexDirection: 'column', padding: '20px' }}>
             <h1>Main App for Customers</h1>
                  <div className='router-buttons' style={{display: 'flex', flexDirection: 'row', padding: '20px' }}>
                     {/* Ari e link nato ato pages */}
+                    
                      <Link to="/list-flight">
-                        <button>Flight List</button>
+                     <button style={{ display: 'flex', alignItems: 'center' }}>
+                    Flight List <IoAirplane style={{ marginLeft: '8px' }}/>
+                    </button>
                     </Link>
                     <Link to="/customerList">
                         <button>Customer List</button>

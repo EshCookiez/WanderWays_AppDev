@@ -1,7 +1,8 @@
-import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../Components/Logo';
+import './flightscss.css';
+
 const FlightList = () => {
   const [flights, setFlights] = useState([]);
   const [booked, setBooked] = useState([]);
@@ -73,40 +74,44 @@ const FlightList = () => {
   );
 
   return (
-    <div className='main-box' style={{ display: 'flex', flexDirection: 'column'}}>
-      <div className='sample-header' style={{display: 'flex', justifyContent: 'start', width: '100%', margin: '10px 10px 10px 10px'}}> 
-        <Logo/>
-      </div>
-      <div className='search-box' style={{display: 'flex', flexDirection: 'row', justifyContent: 'center',alignItems: 'center', gap: '25px', marginBottom: '20px'}}>
-        
-        <div className='search-origin'>
+    <div className='main-box'>
+        <div className='sample-header'> 
+          <Logo/>
+        </div>
+        <div className='search-box'  
+        style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', 
+        alignItems: 'center',gap: '15px'}}>
+          <div className='search-origin'>
+            <input
+              type="text" placeholder='Search by origin' value={originSearch}
+              onChange={e => setOriginSearch(e.target.value)} 
+              style={{ padding: '10px', width: '500px' }}
+            />
+          </div>
+          <div className='search-destination'>
           <input
-            type="text" placeholder='Search by origin' value={originSearch}
-            onChange={e => setOriginSearch(e.target.value)} 
-            style={{ marginRight: '10px', padding: '10px', width: '500px' }}
-          />
-        </div>
-        <div className='search-destination'>
-        <input
-            type="text" placeholder='Search by destination' value={destinationSearch}
-            onChange={e => setDestinationSearch(e.target.value)} 
-            style={{ marginRight: '10px', padding: '10px',  width: '500px'}}
-          />
+              type="text" placeholder='Search by destination' value={destinationSearch}
+              onChange={e => setDestinationSearch(e.target.value)} 
+              style={{padding: '10px',  width: '500px'}}
+            />
 
+          </div>
         </div>
-      </div>
-      <div className='list-container' style={{ display: 'flex', flexDirection: 'row', border: "1px solid #ddd"}}>
-      <div className='list-box' style={{ display: 'flex', flexDirection: 'column', padding: '50px', width: '500px' }}>
+      <div className='list-container' 
+      style={{ display: 'flex', flexDirection: 'row',gap: '20px', margin : '20px 20px'}}>
+      <div className='flights-box' 
+      style={{ display: 'flex', flexDirection: 'column', padding: '50px', width: '500px' }}>
         <h2>Available Flights</h2>
         {flights.length > 0 ? (
           filteredFlights.map(flight => (
-            <div key={flight.flight_id} style={{ border: "1px solid #ddd", padding: "10px", margin: "10px 0"}}>
+            <div key={flight.flight_id} 
+            style={{border: "1px solid #ddd", padding: "10px", margin: "10px 0"}}>
               <h2>Flight ID : {flight.flightId}</h2>
               <h3>Flight from {flight.location_origin} -- to {flight.location_destination}</h3>
               <p>Departure: {flight.dateDepart} --- Arrival: {flight.dateArrival}</p>
               <p>Class: {flight.flight_class} - Rating: {flight.rating}</p>
               <Link to={`/book/${flight.flightId}`}>
-                <button style={{backgroundColor: 'aquamarine', width: '90%'}}>BOOK THIS FLIGHT</button>
+                <button style={{width: '90%'}}>BOOK THIS FLIGHT</button>
               </Link>
             </div>
           ))
@@ -114,18 +119,20 @@ const FlightList = () => {
           <p>Loading flights...</p>
         )}
       </div>
-      <div className='booked-box' style={{ display: 'flex', flexDirection: 'column', padding: '50px', width: '500px', border: "1px solid #ddd"}}>
+      <div className='booked-box' 
+      style={{ display: 'flex', flexDirection: 'column', padding: '50px', width: '500px'}}>
         <h2>Your Booked Flights</h2>
         {booked.length > 0 ? (
           booked.map(booking => (
-            <div key={booking.fbookId} style={{ border: "1px solid #ddd", padding: "10px", margin: "10px 0" }}>
+            <div key={booking.fbookId} 
+            style={{ border: "1px solid #ddd", padding: "10px", margin: "10px 0" }}>
               <h2>Flight ID: {booking.flight.flightId} -- Booking ID: {booking.fbookId}</h2> 
               <p>Passenger Amount: {booking.passengerAmount}</p>
               <p>Fare Class: {booking.fareClass}</p>
               <Link to={`/bookUpdate/${booking.fbookId}`}>
-                <button style={{ backgroundColor: 'aquamarine', width: '40%'}}>UPDATE</button>
+                <button style={{width: '40%'}}>UPDATE</button>
               </Link>
-              <button onClick={() => handleDeleteBooking(booking.fbookId)} style={{ marginTop: '5px', marginLeft: '5px', backgroundColor: 'aquamarine', width: '40%'}}>
+              <button onClick={() => handleDeleteBooking(booking.fbookId)} style={{margin: '0px 0px 5px 5px',width: '40%'}}>
                 DELETE
               </button>
             </div>
