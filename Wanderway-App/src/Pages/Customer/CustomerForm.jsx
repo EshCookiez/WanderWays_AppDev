@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import CustomerService from '../services/CustomerService';
+import CustomerService from '../../services/CustomerService';
 import './CustomerForm.css';
 
 const CustomerForm = () => {

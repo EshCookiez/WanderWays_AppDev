@@ -1,0 +1,133 @@
+.loginPage {
+    display: flex;
+    background-color: #fff;
+    overflow: hidden;
+  }
+  
+  .contentWrapper {
+    flex: 1;
+    padding: 63px 68px 104px;
+  }
+  
+  .loginSection {
+    max-width: 512px;
+  }
+  
+  .logo {
+    width: 269px;
+    height: auto;
+    margin-bottom: 58px;
+  }
+  
+  .loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .title {
+    font: 700 40px 'TradeGothic LT Extended', -apple-system, Roboto, Helvetica, sans-serif;
+    color: #000;
+  }
+  
+  .subtitle {
+    font: 400 16px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    color: #121;
+    opacity: 0.75;
+  }
+  
+  .formOptions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font: 500 14px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+  }
+  
+  .rememberMe {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #121;
+  }
+  
+  .checkIcon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .forgotPassword {
+    color: #ff8682;
+    text-decoration: none;
+  }
+  
+  .signUpPrompt {
+    text-align: center;
+    font: 500 14px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    color: #ff8682;
+  }
+  
+  .signUpLink {
+    font-weight: 600;
+    color: #ff8682;
+    text-decoration: none;
+  }
+  
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 40px 0;
+    font: 400 14px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    color: #121;
+  }
+  
+  .dividerLine {
+    flex-grow: 1;
+    height: 1px;
+    background-color: rgba(17, 34, 17, 0.25);
+  }
+  
+  .dividerText {
+    opacity: 0.5;
+  }
+  
+  .socialLogin {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .imageSection {
+    flex: 1;
+  }
+  
+  .scenicImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  @media (max-width: 991px) {
+    .loginPage {
+      flex-direction: column;
+    }
+  
+    .contentWrapper {
+      padding: 40px 20px;
+    }
+  
+    .loginSection {
+      max-width: 100%;
+    }
+  
+    .logo {
+      margin-bottom: 40px;
+    }
+  
+    .imageSection {
+      order: -1;
+    }
+  
+    .scenicImage {
+      max-height: 300px;
+    }
+  }
