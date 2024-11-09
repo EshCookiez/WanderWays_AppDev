@@ -15,8 +15,8 @@ const FlightBooking = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const BookingData = {
-            fare_class: fareclass,
-            passenger_amount: parseInt(travellerCtr, 10),
+            fareClass: fareclass,
+            passengerAmount: parseInt(travellerCtr, 10),
             fbook_Id: null,
             flight: { flightId: parseInt(flightId, 10) }
         };
@@ -40,6 +40,7 @@ const FlightBooking = () => {
             <div className='book-box'>
                 <h1>Book Your Flights</h1>
                 <h2>Flight ID: {flightId}</h2>
+                {message && <p>{message}</p>}
                 <form onSubmit={handleSubmit} style={{ margin: '20px'}}>
                     <label>Seat Class</label>
                     <div className='input-fareclass'>
@@ -73,7 +74,7 @@ const FlightBooking = () => {
                     </div>
 
                 </form>
-                {message && <p>{message}</p>}
+                
             </div>
         </div>
     );

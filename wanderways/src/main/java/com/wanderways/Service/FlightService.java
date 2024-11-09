@@ -43,6 +43,7 @@ public class FlightService{
             updatedFlight.setFlightClass(flight.getFlightClass());  
             updatedFlight.setLocationOrigin(updatedFlight.getLocationOrigin());
             updatedFlight.setLocationDestination(updatedFlight.getLocationOrigin());
+            updatedFlight.setPrice(updatedFlight.getPrice());
             
             return flightRepo.save(updatedFlight);
         } else {

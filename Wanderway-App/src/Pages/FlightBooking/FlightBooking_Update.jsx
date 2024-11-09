@@ -91,8 +91,8 @@ function FlightBooking_Update() {
                     </div>
                         <div className='button-box'>
                             <button type='submit'>Update Booking</button>
-                                <Link to={`/list-flight`}>
-                            <button>Available Flights</button>
+                            <Link to={`/list-flight`}>
+                                <button>Available Flights</button>
                             </Link>
                         </div>
                 </form>

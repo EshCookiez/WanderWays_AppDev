@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../Components/Header.jsx'
+import { RxLoop } from "react-icons/rx";
+import { FaMagnifyingGlassLocation } from "react-icons/fa6";
 import './flightscss.css';
 
 const FlightList = () => {
@@ -39,11 +41,12 @@ const FlightList = () => {
       })
       .then(data => {
         setBooked(Array.isArray(data) ? data : []);
-        console.log(booked);
+        console.log("Booked flights:", data); 
       })
       .catch(error => {
         console.error("Error fetching booked flights:", error);
       });
+      
   };
 
   const handleDeleteBooking = (fbookId) => {
@@ -78,25 +81,34 @@ const FlightList = () => {
         <div className='sample-header' > 
           <Header/>
         </div>
-        <div className='search-box'  
-        style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', 
-        alignItems: 'center',gap: '15px'}}>
-          <div className='search-origin'>
-            <input
-              type="text" placeholder='Search by origin' value={originSearch}
-              onChange={e => setOriginSearch(e.target.value)} 
-              style={{ padding: '10px', width: '500px' }}
-            />
+        
+        <div className='search-box'>
+          <div className="search-origin">
+            <div className="input-wrapper">
+              <input
+                type="text" 
+                placeholder="Search by origin"
+                value={originSearch}
+                onChange={e => setOriginSearch(e.target.value)} 
+                style={{ padding: '10px 40px 10px 10px', width: '500px' }}
+              />
+              <RxLoop className="loop-icon" />
+            </div>
           </div>
-          <div className='search-destination'>
-          <input
-              type="text" placeholder='Search by destination' value={destinationSearch}
-              onChange={e => setDestinationSearch(e.target.value)} 
-              style={{padding: '10px',  width: '500px'}}
-            />
 
+          <div className='search-destination'>
+            <div className='input-wrapper'>
+              <input
+                  type="text" placeholder='Search by destination' value={destinationSearch}
+                  onChange={e => setDestinationSearch(e.target.value)} 
+                  style={{padding: '10px',  width: '500px'}}
+                />
+              <FaMagnifyingGlassLocation className='destination-icon'/>
+            </div>
           </div>
         </div>
+
+        
       <div className='list-container' 
       style={{ display: 'flex', flexDirection: 'row',gap: '20px', margin : '20px 20px'}}>
       <div className='flights-box' 
@@ -109,7 +121,7 @@ const FlightList = () => {
               <h2>Flight ID : {flight.flightId}</h2>
               <h3>Flight from {flight.location_origin} -- to {flight.location_destination}</h3>
               <p>Departure: {flight.dateDepart} --- Arrival: {flight.dateArrival}</p>
-              <p>Class: {flight.flight_class} - Rating: {flight.rating}</p>
+              <p>Class: {flight.flight_class} - Rating: {flight.rating} -- Price: ${flight.price}</p>
               <Link to={`/book/${flight.flightId}`}>
                 <button style={{width: '90%'}}>BOOK THIS FLIGHT</button>
               </Link>
@@ -119,6 +131,8 @@ const FlightList = () => {
           <p>Loading flights...</p>
         )}
       </div>
+
+
       <div className='booked-box' 
       style={{ display: 'flex', flexDirection: 'column', padding: '50px', width: '500px'}}>
         <h2>Your Booked Flights</h2>
@@ -126,13 +140,12 @@ const FlightList = () => {
           booked.map(booking => (
             <div key={booking.fbookId} 
             style={{ border: "1px solid #ddd", padding: "10px", margin: "10px 0" }}>
-              <h2>Flight ID: {booking.flight.flightId} -- Booking ID: {booking.fbookId}</h2> 
-              <p>Passenger Amount: {booking.passengerAmount}</p>
-              <p>Fare Class: {booking.fareClass}</p>
+              <h2>Flight ID: {booking.flight.flightId} -- Booking ID: {booking.fbookId} -- Price: {booking.flight.price}</h2> 
+              <p style={{fontWeight: 'bold'}}>Passenger Amount: {booking.passengerAmount} ----- Fare Class: {booking.fareClass}</p>
               <Link to={`/bookUpdate/${booking.fbookId}`}>
                 <button style={{width: '40%'}}>UPDATE</button>
               </Link>
-              <button onClick={() => handleDeleteBooking(booking.fbookId)} style={{margin: '0px 0px 5px 5px',width: '40%'}}>
+              <button id='delete-button' onClick={() => handleDeleteBooking(booking.fbookId)} style={{margin: '0px 0px 5px 5px',width: '40%'}}>
                 DELETE
               </button>
             </div>

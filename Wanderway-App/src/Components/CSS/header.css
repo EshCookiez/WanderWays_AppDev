@@ -1,0 +1,47 @@
+.header-box {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    gap: 100px;
+    width: 100%;
+    height: inherit;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    position: fixed;  
+    top: 0;  
+    left: 0;  
+    right: 0; 
+    z-index: 1000; 
+    background-color: white; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+
+.features{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.account-details{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.airplane-icon, .bed-icon, .user-icon{
+     margin: 0px 5px 0px 0px;
+     width: 18px;
+     height: 18px;
+     
+}
+
+.find{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

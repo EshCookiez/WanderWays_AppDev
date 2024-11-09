@@ -3,40 +3,41 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    min-height: 70vh;
+    min-height: 80vh;
     padding-top: 20px; 
-    max-width: 1280px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 2rem;
-    text-align: center;
     background-color: white;
     font-family: 'Roboto', sans-serif; 
   }
 
-button{
-    background-Color: 'aquamarine',
-}
 .main-box{
      display: 'flex';
      flex-Direction: 'column';
-}
-.sample-header{
-    display: 'flex';
-    justify-Content: 'start';
-    width: '100%';
-    margin: '10px 10px 10px 10px';
-    position: 'sticky';
-    top: '0';
-    z-Index: '1000';
+     overflow: 'auto';
+     width: 200vh;
+     justify-content: center;
+     align-items: center;
 }
 
-.list-container{
-    display: 'flex';
-    flex-Direction: 'row';
-    border: "1px solid #ddd";
-    margin: '20px 20px 20px 20px'
-}
+.search-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 100px 20px 20px 60px;
+    gap: 20px;
+  }
+  
+  .list-container {
+    display: flex;
+    flex-direction: row; 
+    width: 100%; 
+    justify-content: center;
+    margin: 20px; 
+  }
+
 .booked-box, .flights-box{
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
 }
@@ -53,6 +54,37 @@ button{
     color: rgb(154, 231, 138);
 }
 
+#delete-button:hover{
+    background-color:#fa2600;
+    color:#48ff63;
+}
+
+.search-origin{
+    display: flex;
+    flex-direction: row;
+}
+
+.input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 500px;
+  }
+  
+  .input-wrapper input {
+    width: 100%;
+    padding-right: 40px; 
+    box-sizing: border-box;
+  }
+  
+  .loop-icon, .destination-icon{
+    position: absolute;
+    top: 50%;
+    right: 10px; 
+    transform: translateY(-50%);
+    color: gray; 
+    pointer-events: none; 
+  }
+
 /*Flight bookiong and update CSS below here*/
 
 .book-box, .update-box{
@@ -64,6 +96,7 @@ button{
     width: 400px;
     margin-top: 15%;
     box-shadow: 15px 15px 15px 15px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
 }
 .button-box{
     display: flex;
@@ -96,7 +129,7 @@ button{
     width: 100%;
 }
 
-.input-icon {
+.input-icon{
     position: absolute;
     right: 10px;
     top: 50%;

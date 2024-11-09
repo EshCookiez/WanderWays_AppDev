@@ -31,10 +31,13 @@ public class Flight{
     @JsonProperty("location_destination")
     private String locationDestination;
 
+    @JsonProperty("price")
+    private Integer price;
+
     public Flight() {}
 
     public Flight(Integer flight_id, String rating,  LocalDateTime dateDepart, LocalDateTime dateArrival,
-    String flightClass, String locationOrigin, String locationDestination) {
+    String flightClass, String locationOrigin, String locationDestination, Integer price) {
         this.flight_id = flight_id;
         this.rating = rating;
         this.dateDepart = dateDepart;
@@ -42,6 +45,7 @@ public class Flight{
         this.flightClass = flightClass;
         this.locationOrigin = locationOrigin;
         this.locationDestination = locationDestination;
+        this.price = price;
     }
 
     //getters
@@ -73,6 +77,9 @@ public class Flight{
         return locationDestination;
     }
 
+    public Integer getPrice(){
+        return price;
+    }
     // setters
     public void setFlightId(Integer flight_id) {
         this.flight_id = flight_id;
@@ -102,4 +109,7 @@ public class Flight{
         this.locationDestination = location_destination;
     }
 
+    public void setPrice(Integer price){
+        this.price = price;
+    }
 }
