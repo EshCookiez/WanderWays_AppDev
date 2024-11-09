@@ -1,0 +1,20 @@
+.button {
+    background-color: #8dd3bb;
+    color: #121;
+    font-family: Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #7ac2aa;
+  }
+  
+  .fullWidth {
+    width: 100%;
+  }

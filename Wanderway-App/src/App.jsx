@@ -13,6 +13,7 @@ import RoomList from './Pages/Rooms/RoomList';
 import RoomForm from './Pages/Rooms/RoomForm';
 import Home from './Pages/Home';
 import LoginPage from './Pages/LogIn/LoginPage';
+import SignUpForm from './Pages/SignUp/SignUpForm';
 
 function App() {
     return (
@@ -37,6 +38,7 @@ function App() {
                     <Route path="/addRoom" element={<RoomForm />} />
                     <Route path="/updateRoom/:id" element={<RoomForm />} />
                     <Route path="/login" element={<LoginPage />} />
+                    <Route path="/signup" element={<SignUpForm />} />
                 </Routes>
             </div>
         </Router>

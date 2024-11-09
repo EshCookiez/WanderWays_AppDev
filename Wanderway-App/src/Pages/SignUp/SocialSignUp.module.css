@@ -1,0 +1,27 @@
+.socialSignUp {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  
+  .socialButton {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid #8dd3bb;
+    border-radius: 4px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .socialButton:hover {
+    background-color: rgba(141, 211, 187, 0.1);
+  }
+  
+  .socialIcon {
+    width: 24px;
+    height: 24px;
+  }

@@ -33,7 +33,7 @@ const LoginPage = () => {
               <Button type="submit">Login</Button>
             </form>
             <p className={styles.signUpPrompt}>
-              Don't have an account? <a href="#" className={styles.signUpLink}>Sign up</a>
+              Don't have an account? <a href="/signup" className={styles.signUpLink}>Sign up</a>
             </p>
             <div className={styles.divider}>
               <span className={styles.dividerLine}></span>
