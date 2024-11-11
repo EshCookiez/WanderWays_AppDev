@@ -4,14 +4,16 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import FlightBooking from './Pages/FlightBooking/FlightBooking';
 import FlightBooking_Update from './Pages/FlightBooking/FlightBooking_Update';
 import FlightList from './Pages/FlightBooking/FlightList';
-import CustomerList from './Pages/CustomerList';
-import CustomerForm from './Pages/CustomerForm';
+import CustomerList from './Pages/Customer/CustomerList';
+import CustomerForm from './Pages/Customer/CustomerForm';
 import AcmBooking from './Pages/AcmBooking'; 
 import AcmList from './Pages/AcmList';
 import AcmForm from './Pages/AcmForm';
 import RoomList from './Pages/Rooms/RoomList';
 import RoomForm from './Pages/Rooms/RoomForm';
 import Home from './Pages/Home';
+import LoginPage from './Pages/LogIn/LoginPage';
+import SignUpForm from './Pages/SignUp/SignUpForm';
 
 function App() {
     return (
@@ -35,6 +37,8 @@ function App() {
                     <Route path="/roomList" element={<RoomList />} />
                     <Route path="/addRoom" element={<RoomForm />} />
                     <Route path="/updateRoom/:id" element={<RoomForm />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/signup" element={<SignUpForm />} />
                 </Routes>
             </div>
         </Router>

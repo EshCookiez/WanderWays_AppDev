@@ -1,0 +1,37 @@
+.textField {
+    position: relative;
+    width: 100%;
+    min-width: 240px;
+    flex: 1;
+  }
+  
+  .label {
+    position: absolute;
+    left: 16px;
+    top: -8px;
+    background-color: #fff;
+    padding: 0 4px;
+    font-size: 14px;
+    color: #121;
+    font-family: Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #79747e;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    color: #1c1b1f;
+  }
+  
+  .toggleIcon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }

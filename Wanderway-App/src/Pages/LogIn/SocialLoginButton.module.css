@@ -1,0 +1,26 @@
+.socialButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 56px;
+    height: 56px;
+    border: 1px solid #8dd3bb;
+    border-radius: 4px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .socialButton:hover {
+    background-color: rgba(141, 211, 187, 0.1);
+  }
+  
+  .socialButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #8dd3bb, 0 0 0 4px rgba(141, 211, 187, 0.5);
+  }
+  
+  .socialIcon {
+    width: 24px;
+    height: 24px;
+  }
