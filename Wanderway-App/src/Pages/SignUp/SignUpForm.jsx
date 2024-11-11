@@ -6,12 +6,12 @@ import styles from './SignUpForm.module.css';
 
 const SignUpForm = () => {
   const fields = [
-    { label: 'First Name', placeholder: 'Vince Kimlo' },
-    { label: 'Last Name', placeholder: 'Tan' },
-    { label: 'Email', placeholder: 'vincekimlo.tan@cit.edu' },
-    { label: 'Phone Number', placeholder: '09665566551' },
-    { label: 'Password', placeholder: '•••••••••••••••••••••••••', type: 'password' },
-    { label: 'Confirm Password', placeholder: '•••••••••••••••••••••••••', type: 'password' }
+    { label: 'First Name' },
+    { label: 'Last Name' },
+    { label: 'Email'},
+    { label: 'Phone Number' },
+    { label: 'Password', type: 'password' },
+    { label: 'Confirm Password', type: 'password' }
   ];
 
   return (

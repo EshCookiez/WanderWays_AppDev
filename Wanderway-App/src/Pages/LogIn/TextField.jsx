@@ -25,7 +25,7 @@ const TextField = ({ label, type = 'text', defaultValue = '', showPasswordToggle
           className={styles.togglePassword}
           aria-label={inputType === 'password' ? 'Show password' : 'Hide password'}
         >
-          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/63ae0ae246a0b90feebf192979f7a6b12b620dc89c644bd3d45b90c10b29f90a?placeholderIfAbsent=true&apiKey=918132c67bed4c9f95d44f9d99b73e78" alt="" className={styles.toggleIcon} />
+         
         </button>
       )}
     </div>

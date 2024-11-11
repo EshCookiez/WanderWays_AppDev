@@ -46,4 +46,8 @@ public class CustomerService {
         return "Customer deleted with id: " + id;
     }
 
+    public Optional<Customer> login(String email, String password) {
+        return crepo.findByEmailAndPassword(email, password);
+    }
+
 }

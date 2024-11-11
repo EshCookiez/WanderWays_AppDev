@@ -14,7 +14,7 @@ const TextField = ({ label, placeholder, type = 'text' }) => {
         className={styles.input}
       />
       {type === 'password' && (
-        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/70bd6d991a505b479114bbbc98c23ce41a59c538932b97852e60ad0ca1131ee9?placeholderIfAbsent=true&apiKey=918132c67bed4c9f95d44f9d99b73e78" alt="Toggle password visibility" className={styles.toggleIcon} />
+        <img src="" />
       )}
     </div>
   );

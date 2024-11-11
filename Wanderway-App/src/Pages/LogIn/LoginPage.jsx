@@ -1,15 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import styles from './LoginPage.module.css';
 import TextField from './TextField';
 import Button from './Button';
 import SocialLoginButton from './SocialLoginButton';
 
 const LoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
   const socialLoginOptions = [
     { icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/7801fbea496dc51ca3b70e3dfb946fc34d027948fccb7a8ef44f4de0f1384fff?placeholderIfAbsent=true&apiKey=918132c67bed4c9f95d44f9d99b73e78', alt: 'Facebook login' },
     { icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/2b3e976746d37f22c98a198729208f812b1b5e3ea2563e924cd36e882006f164?placeholderIfAbsent=true&apiKey=918132c67bed4c9f95d44f9d99b73e78', alt: 'Google login' },
     { icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/05cfacf3e63557364865a890553d52383d1fd6f384db5ac442bfd3560424c5cd?placeholderIfAbsent=true&apiKey=918132c67bed4c9f95d44f9d99b73e78', alt: 'Apple login' }
   ];
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrorMessage('');
+    
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/customer/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
+      console.log("Login Successful:", response.data);
+      // Redirect after successful login
+      navigate('/dashboard'); // Use react-router's navigate function
+    } catch (error) {
+      console.error("Login failed:", error);
+      // Show error message to user
+    }
+  };
 
   return (
     <main className={styles.loginPage}>
@@ -19,9 +47,10 @@ const LoginPage = () => {
           <div className={styles.loginForm}>
             <h1 className={styles.title}>Login</h1>
             <p className={styles.subtitle}>Login to access your WanderWays account</p>
-            <form>
-              <TextField label="Email" type="email" defaultValue="ethan.autistic@gmail.com" />
-              <TextField label="Password" type="password" defaultValue="•••••••••••••••••••••••••" showPasswordToggle />
+            <form onSubmit={handleLogin}>
+              <TextField label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <TextField label="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} showPasswordToggle />
+              {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
               <div className={styles.formOptions}>
                 <label className={styles.rememberMe}>
                   <input type="checkbox" />
@@ -30,7 +59,7 @@ const LoginPage = () => {
                 </label>
                 <a href="#" className={styles.forgotPassword}>Forgot Password</a>
               </div>
-              <Button type="submit">Login</Button>
+              <Button type="submit" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</Button>
             </form>
             <p className={styles.signUpPrompt}>
               Don't have an account? <a href="/signup" className={styles.signUpLink}>Sign up</a>
