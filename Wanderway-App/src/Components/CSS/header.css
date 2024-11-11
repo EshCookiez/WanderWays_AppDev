@@ -4,7 +4,6 @@
     padding: 10px;
     gap: 100px;
     width: 100%;
-    height: inherit;
     justify-content: space-between;
     align-items: center;
     margin: 0;
@@ -17,6 +16,12 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
+h3{
+    color: black;
+}
+a{
+    text-decoration: none;
+}
 
 .features{
     display: flex;
@@ -31,17 +36,19 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin: 0px 40px 0px 0px;
 }
 
-.airplane-icon, .bed-icon, .user-icon{
+.airplane-icon, .bed-icon, .user-icon , .favorites-icon{
      margin: 0px 5px 0px 0px;
-     width: 18px;
-     height: 18px;
-     
+     width: 20px;
+     height: 20px;
+     padding: 0px 0px 0px 10px
 }
 
-.find{
+.find, .user, .favorites, .user{
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0px 0px 0px 0px
 }

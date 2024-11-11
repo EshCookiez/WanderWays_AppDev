@@ -21,7 +21,7 @@ function App() {
                     {/* Route diri para sa html or react pages gi gamit para sa ato features*/}
                     <Route path="/" element={<Home/>} />
 
-                    <Route path="/book/:flightId" element={<FlightBooking />} />
+                    <Route path="/book/:flightId/:price" element={<FlightBooking />} />
                     <Route path="/list-flight" element={<FlightList />} />
                     <Route path="/bookUpdate/:fbookId" element={<FlightBooking_Update />} />
 

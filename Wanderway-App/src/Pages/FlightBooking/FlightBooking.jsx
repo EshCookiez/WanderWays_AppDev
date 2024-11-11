@@ -7,7 +7,7 @@ import './flightscss.css';
 
 
 const FlightBooking = () => {
-    const { flightId } = useParams(); 
+    const { flightId, price } = useParams(); 
     const [travellerCtr, setTravellersCtr] = useState(1);
     const [fareclass, setFareclass] = useState("");
     const [message, setMessage] = useState("");
@@ -19,6 +19,7 @@ const FlightBooking = () => {
             passengerAmount: parseInt(travellerCtr, 10),
             fbook_Id: null,
             flight: { flightId: parseInt(flightId, 10) }
+
         };
     
         try {
@@ -39,7 +40,7 @@ const FlightBooking = () => {
         <div className='book-page'>
             <div className='book-box'>
                 <h1>Book Your Flights</h1>
-                <h2>Flight ID: {flightId}</h2>
+                <h2>Flight ID: {flightId} -- Price: ${price}</h2>
                 {message && <p>{message}</p>}
                 <form onSubmit={handleSubmit} style={{ margin: '20px'}}>
                     <label>Seat Class</label>
@@ -67,7 +68,7 @@ const FlightBooking = () => {
                      <FaUser className="input-icon" />
                     </div>
                     <div className='button-box'>
-                        <button type='submit' style={{width: '150px'}}>Book Flight</button>
+                        <button type='submit' style={{width: '150px'}}>Pay and Book</button>
                         <Link to={`/list-flight`}>
                             <button style={{width: '130px'}}>Available Flights</button>
                         </Link>

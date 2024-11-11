@@ -99,7 +99,9 @@ const FlightList = () => {
           <div className='search-destination'>
             <div className='input-wrapper'>
               <input
-                  type="text" placeholder='Search by destination' value={destinationSearch}
+                  type="text" 
+                  placeholder='Search by destination'
+                   value={destinationSearch}
                   onChange={e => setDestinationSearch(e.target.value)} 
                   style={{padding: '10px',  width: '500px'}}
                 />
@@ -122,7 +124,7 @@ const FlightList = () => {
               <h3>Flight from {flight.location_origin} -- to {flight.location_destination}</h3>
               <p>Departure: {flight.dateDepart} --- Arrival: {flight.dateArrival}</p>
               <p>Class: {flight.flight_class} - Rating: {flight.rating} -- Price: ${flight.price}</p>
-              <Link to={`/book/${flight.flightId}`}>
+              <Link to={`/book/${flight.flightId}/${flight.price}`}>
                 <button style={{width: '90%'}}>BOOK THIS FLIGHT</button>
               </Link>
             </div>
@@ -140,8 +142,8 @@ const FlightList = () => {
           booked.map(booking => (
             <div key={booking.fbookId} 
             style={{ border: "1px solid #ddd", padding: "10px", margin: "10px 0" }}>
-              <h2>Flight ID: {booking.flight.flightId} -- Booking ID: {booking.fbookId} -- Price: {booking.flight.price}</h2> 
-              <p style={{fontWeight: 'bold'}}>Passenger Amount: {booking.passengerAmount} ----- Fare Class: {booking.fareClass}</p>
+              <h2>Flight ID: {booking.flight.flightId} -- Booking ID: {booking.fbookId} -- Price: ${booking.flight.price}</h2> 
+              <p style={{fontWeight: 'bold'}}>Passenger Amount: {booking.passengerAmount} ---- Fare Class: {booking.fareClass}</p>
               <Link to={`/bookUpdate/${booking.fbookId}`}>
                 <button style={{width: '40%'}}>UPDATE</button>
               </Link>
