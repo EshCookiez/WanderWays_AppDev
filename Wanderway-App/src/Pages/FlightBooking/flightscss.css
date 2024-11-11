@@ -44,7 +44,7 @@
 }
 
 .list-container button{
-    background-color: rgba(162,228,184);
+    background-color: #8dd3bb;
     color: rgba(21,71,52);
     font-weight: bold;
     font-size: small;
@@ -55,9 +55,20 @@
     color: rgb(154, 231, 138);
 }
 
+.airplane-icon{
+    margin: 0px 5px 0px 0px;
+    font-size: 0.8em;
+    vertical-align: middle;
+    padding: 0px 0px 0px 0px
+}
+
+#delete-button{
+    background-color:#AB0003;
+    color:white;
+}
 #delete-button:hover{
     background-color:#fa2600;
-    color:#48ff63;
+    color: white;
 }
 
 .search-origin{
@@ -106,7 +117,7 @@
     gap: 30px;
 }
 .button-box button{
-    background-color: rgba(162,228,184);
+    background-color:#8dd3bb;
     color: rgba(21,71,52);
     margin: 10px;
     border-radius: 5px;
@@ -118,8 +129,6 @@
     background-color: rgba(68,105,61);
     color: rgb(154, 231, 138);
 }
-
-
 
 .input-travellers, .input-fareclass {
     position: relative;

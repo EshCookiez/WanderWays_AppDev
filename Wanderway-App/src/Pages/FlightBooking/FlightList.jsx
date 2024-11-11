@@ -4,6 +4,7 @@ import Header from '../../Components/Header.jsx'
 import { RxLoop } from "react-icons/rx";
 import { FaMagnifyingGlassLocation } from "react-icons/fa6";
 import './flightscss.css';
+import { IoAirplane } from 'react-icons/io5';
 
 const FlightList = () => {
   const [flights, setFlights] = useState([]);
@@ -87,7 +88,7 @@ const FlightList = () => {
             <div className="input-wrapper">
               <input
                 type="text" 
-                placeholder="Search by origin"
+                placeholder="From"
                 value={originSearch}
                 onChange={e => setOriginSearch(e.target.value)} 
                 style={{ padding: '10px 40px 10px 10px', width: '500px' }}
@@ -100,7 +101,7 @@ const FlightList = () => {
             <div className='input-wrapper'>
               <input
                   type="text" 
-                  placeholder='Search by destination'
+                  placeholder='To'
                    value={destinationSearch}
                   onChange={e => setDestinationSearch(e.target.value)} 
                   style={{padding: '10px',  width: '500px'}}
@@ -121,7 +122,7 @@ const FlightList = () => {
             <div key={flight.flight_id} 
             style={{border: "1px solid #ddd", padding: "10px", margin: "10px 0"}}>
               <h2>Flight ID : {flight.flightId}</h2>
-              <h3>Flight from {flight.location_origin} -- to {flight.location_destination}</h3>
+              <h4>from {flight.location_origin} -<IoAirplane className='airplane-icon'/>- to {flight.location_destination}</h4>
               <p>Departure: {flight.dateDepart} --- Arrival: {flight.dateArrival}</p>
               <p>Class: {flight.flight_class} - Rating: {flight.rating} -- Price: ${flight.price}</p>
               <Link to={`/book/${flight.flightId}/${flight.price}`}>

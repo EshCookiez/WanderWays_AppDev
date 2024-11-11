@@ -30,13 +30,16 @@ function App() {
                     <Route path="/customerList" element={<CustomerList />} />
                     <Route path="/addCustomer" element={<CustomerForm />} />
                     <Route path="/updateCustomer/:id" element={<CustomerForm />} />
+
                     <Route path="/book-accommodation" element={<AcmBooking />} /> 
                     <Route path="/list-accommodation" element={<AcmList />} />
                     <Route path="/addAccommodation" element={<AcmForm />} />
                     <Route path="/acmForm/:id" element={<AcmForm />} />
+
                     <Route path="/roomList" element={<RoomList />} />
                     <Route path="/addRoom" element={<RoomForm />} />
                     <Route path="/updateRoom/:id" element={<RoomForm />} />
+                    
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignUpForm />} />
                 </Routes>

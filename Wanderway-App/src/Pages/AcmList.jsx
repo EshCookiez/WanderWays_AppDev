@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AcmService from '../services/AcmService';
 import { useNavigate } from 'react-router-dom';
 import './AcmList.css';
+import Header from '../Components/Header';
 
 const AcmList = () => {
   const [accommodations, setAccommodations] = useState([]);
@@ -32,6 +33,7 @@ const AcmList = () => {
 
   return (
     <div className="acm-list-container">
+      <Header/>
       <h2>Accommodation List</h2>
       {/* <button className="add-acm-button" onClick={() => navigate('/addAccommodation')}>
         Add Accommodation

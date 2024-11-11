@@ -15,19 +15,15 @@ const Header = () =>{
                     <IoAirplane className="airplane-icon"/>Find Places
                 </h3>
             </Link>
-
             <Link to="/list-accommodation">
                 <h3 className="find">
                     <IoIosBed className="bed-icon"/> Find Stays
                 </h3>
             </Link>
             </div>
-
             <Logo/>
-
-
             <div className="account-details">
-                <h3 className="favorites"><MdFavorite className="favorites-icon" />Favorites</h3>
+                <h3 className="favorites"><MdFavorite className="favorites-icon" />Favorites  | </h3>
                 <h3 className="user"><AiOutlineUser className="user-icon"/> placeholder</h3>
             </div>
         </div>

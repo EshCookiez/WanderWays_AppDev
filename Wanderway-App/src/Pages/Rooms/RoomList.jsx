@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import RoomService from '../../services/RoomService';
 import { useNavigate } from 'react-router-dom';
 import './RoomList.css';
+import Header from '../../Components/Header';
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
@@ -31,6 +32,7 @@ const RoomList = () => {
 
   return (
     <div className="room-list-container">
+      <Header/>
       <h2>Room List</h2>
       <button className="add-room-button" onClick={() => navigate('/addRoom')}>
         Add Room
