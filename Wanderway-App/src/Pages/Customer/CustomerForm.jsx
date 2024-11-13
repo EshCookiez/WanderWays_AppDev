@@ -4,6 +4,9 @@ import CustomerService from '../../services/CustomerService';
 import './CustomerForm.css';
 import axios from 'axios';
 
+// Add FontAwesome for the eye icon (you can install FontAwesome or use inline SVG)
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const CustomerForm = () => {
   const { id } = useParams();
@@ -16,6 +19,7 @@ const CustomerForm = () => {
     customerAddress: '',
     birthdate: '',
   });
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false); // State to manage password visibility
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,27 +59,39 @@ const CustomerForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log('Customer Data:', customer); // Log the data to see if it's being correctly captured
-      
-      const response = await axios.post(
-        'http://localhost:8080/api/customer/signup', 
-        customer, 
-        {
-          headers: {
-            'Content-Type': 'application/json', // Ensure this header is set
+      if (id) {
+        // Updating an existing customer
+        const response = await axios.put(
+          `http://localhost:8080/api/customer/updateCustomer/${id}`,
+          customer,
+          {
+            headers: { 'Content-Type': 'application/json' }
           }
-        }
-      );
-      
-      console.log('Customer successfully added:', response.data);
-      // Navigate to the customer list after successful addition
+        );
+        console.log('Customer successfully updated:', response.data);
+      } else {
+        // Adding a new customer
+        const response = await axios.post(
+          'http://localhost:8080/api/customer/signup',
+          customer,
+          {
+            headers: { 'Content-Type': 'application/json' }
+          }
+        );
+        console.log('Customer successfully added:', response.data);
+      }
+
+      // Navigate to the customer list after success
       navigate('/customerList');
     } catch (error) {
       console.error('Error saving customer:', error);
     }
   };
-  
-  
+
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible((prevState) => !prevState);
+  };
 
   return (
     <div>
@@ -113,14 +129,24 @@ const CustomerForm = () => {
           placeholder="Phone Number"
           required
         />
-        <input
-          type="password"
-          name="password"
-          value={customer.password} // Ensure correct state binding
-          onChange={handleChange}
-          placeholder="Password"
-          required
-        />
+
+        {/* Password Input with Icon Inside */}
+        <div className="password-container">
+          <input
+            type={isPasswordVisible ? 'text' : 'password'}
+            name="password"
+            value={customer.password} // Ensure correct state binding
+            onChange={handleChange}
+            placeholder="Password"
+            required
+          />
+          <FontAwesomeIcon 
+            icon={isPasswordVisible ? faEyeSlash : faEye} 
+            onClick={togglePasswordVisibility} 
+            className="password-toggle-icon" 
+          />
+        </div>
+
         <input
           type="text"
           name="customerAddress"

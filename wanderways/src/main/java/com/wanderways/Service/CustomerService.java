@@ -24,6 +24,9 @@ public class CustomerService {
         return crepo.findAll();
     }
 
+    public Optional<Customer> findCustomerById(int id) {
+        return crepo.findById(id);
+    }
     public Customer updateCustomer(int id, Customer customer) {
         Optional<Customer> existingCustomer = crepo.findById(id);
         if (existingCustomer.isPresent()) {
