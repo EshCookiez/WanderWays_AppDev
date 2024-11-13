@@ -27,10 +27,14 @@ const Home = () => {
                     </Link>
                     <Link to="/roomList">
                         <button>Room List</button>
-                        </Link>
-                        <Link to="/login">
+                    </Link>
+                    <Link to="/login">
                         <button>Log In</button>
-                        </Link>
+                    </Link>
+                    
+                    <Link to="/homeLanding">
+                        <button>Home Landing</button>
+                    </Link>
                     </div>
         </div>
     );

@@ -1,0 +1,506 @@
+.landingPage {
+  background-color: #fafbfc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  padding-top: 0px;
+  width: 500vh; /* Set the width to 100% of the parent container */
+  max-width: 1500px; /* Set a maximum width for the column */
+  margin: 0 auto; /* Center the column horizontally */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 0px  ;
+  width: 100%;
+  padding-top: 0px 0px 50px;
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  position: relative; /* Ensure the header has a stacking context */
+  z-index: 1; /* Ensure the header is in front of the background image */
+  
+  border-radius: 16px;
+}
+
+.rectangle{
+  height: 800px;
+  position: absolute;
+  padding-top: 500px;
+  width: 100%;
+  max-width: 1500px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nav {
+  display: flex;
+  z-index: 2; /* Ensure the nav is in front of the background image */
+}
+
+.navList {
+  display: flex;
+  list-style: none;
+  z-index: 2; /* Ensure the nav list is in front of the background image */
+}
+
+.navItem {
+  margin-right: 20px;
+  z-index: 2; /* Ensure the nav item is in front of the background image */
+}
+
+.navLink {
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  z-index: 2; /* Ensure the nav link is in front of the background image */
+}
+
+.navIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  z-index: 2; /* Ensure the nav icon is in front of the background image */
+}
+
+.logo {   
+  z-index: 2; /* Ensure the logo is in front of the background image */
+}
+
+.authButtons {
+  display: flex;
+  z-index: 2; /* Ensure the auth buttons are in front of the background image */
+}
+
+.loginButton{
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+}
+.signupButton {
+  margin-left: 10px;
+  margin-right: 50px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  z-index: 2; /* Ensure the buttons are in front of the background image */
+}
+.loginButton:hover,.signupButton:hover{
+  background-color: #8dd3bb;
+  color: #000000;
+}
+.loginButton {
+  color: #fff;
+  background-color: transparent;
+}
+
+.signupButton {
+  color: #000000;
+  background-color: white;
+}
+
+.mainContent {
+  width: 100%;
+  max-width: 1380px;
+  padding: 50px 32px 324px;
+  border-radius: 24px;
+  position: relative;
+}
+
+.mainTitle {
+  text-align: center;
+  margin: 8px 0 -65px 10px;
+  position: relative;
+  padding: 50px;
+  z-index: 1;
+}
+
+.mainTitlePrefix {
+  display: block;
+  font: 600 20px Montserrat, sans-serif;
+  color: #fff;
+}
+
+.mainTitleHighlight {
+  display: block;
+  text-transform: uppercase;
+  font: 700 80px 'Libre Franklin', sans-serif;
+  color: #fff;
+  margin-top: 4px;
+}
+
+.searchSection {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(141, 211, 187, 0.15);
+  padding: 16px 50px 50px;
+  margin-top: 150px;
+  margin-left: 30px;
+  margin-right: 30px;
+  position: relative;
+  z-index: 10;
+}
+
+.tabContainer {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.tabButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: #121;
+  cursor: pointer;
+  font: 600 16px Montserrat, sans-serif;
+  padding: 0;
+}
+
+.tabButton.active {
+  position: relative;
+}
+
+.tabButton.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #8dd3bb;
+}
+
+.tabIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.searchForm {
+  display: flex;
+  gap: 24px;
+  align-items: flex-end;
+}
+
+.inputGroup {
+  flex: 1;
+  position: relative;
+}
+
+.label {
+  position: absolute;
+  top: -16px;
+  left: -4px;
+  background-color: #fff;
+  padding: 0 4px;
+  font-size: 14px;
+  color: #121;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid #79747e;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+  color: #1c1b1f;
+}
+
+.inputIcon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+}
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #8dd3bb;
+  border: none;
+  border-radius: 4px;
+  color: #121;
+  cursor: pointer;
+  font: 500 14px Montserrat, sans-serif;
+  padding: 16px;
+}
+
+.searchIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.destinationSection {
+  margin-top: 80px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.sectionTitle {
+  font: 600 32px Montserrat, sans-serif;
+  color: #000;
+}
+
+.sectionDescription {
+  font: 400 16px Montserrat, sans-serif;
+  color: #121;
+  opacity: 0.75;
+}
+
+.seeMoreButton {
+  background: none;
+  border: 1px solid #8dd3bb;
+  border-radius: 4px;
+  color: #121;
+  cursor: pointer;
+  font: 500 14px Montserrat, sans-serif;
+  padding: 12px 16px;
+}
+
+.destinationGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 32px;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(17, 34, 17, 0.05);
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+}
+
+.content {
+  padding: 16px;
+}
+
+.name {
+  font: 600 16px Montserrat, sans-serif;
+  color: #121;
+  opacity: 0.7;
+  margin: 0 0 8px;
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+  font: 500 14px Montserrat, sans-serif;
+  color: #121;
+}
+
+.tagSeparator {
+  opacity: 0.5;
+}
+
+.travelOptions {
+  display: flex;
+  gap: 24px;
+  margin-top: 80px;
+}
+
+.optionCard {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(17, 34, 17, 0.05);
+  overflow: hidden;
+}
+
+.optionImage {
+  width: 100%;
+  height: 279px;
+  object-fit: cover;
+}
+
+.optionContent {
+  padding: 32px;
+  text-align: center;
+}
+
+.optionTitle {
+  font: 700 40px 'Libre Franklin', sans-serif;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.optionDescription {
+  font: 400 16px Montserrat, sans-serif;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.optionButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #fff;
+  border: none;
+  border-radius: 4px;
+  color: #121;
+  cursor: pointer;
+  font: 500 14px Montserrat, sans-serif;
+  padding: 12px 16px;
+}
+
+.buttonIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.newsletter {
+  background-color: #8dd3bb;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  margin-top: 80px;
+}
+
+.newsletterContent {
+  max-width: 593px;
+}
+
+.newsletterTitle {
+  font: 700 44px/54px 'Libre Franklin', sans-serif;
+  color: #121;
+  margin: 0 0 25px;
+}
+
+.newsletterDescription {
+  margin-bottom: 16px;
+}
+
+.newsletterSubtitle {
+  font: 700 20px 'Libre Franklin', sans-serif;
+  color: #121;
+  opacity: 0.8;
+  margin: 0 0 8px;
+}
+
+.newsletterText {
+  font: 500 16px Montserrat, sans-serif;
+  color: #121;
+  opacity: 0.7;
+}
+
+.newsletterForm {
+  display: flex;
+  gap: 16px;
+}
+
+.newsletterInputWrapper {
+  flex: 1;
+  position: relative;
+}
+
+.newsletterLabel {
+  position: absolute;
+  top: -16px;
+  left: -4px;
+  background-color: #fff;
+  padding: 0 4px;
+  font-size: 14px;
+  color: #121;
+}
+
+.newsletterInput {
+  width: 100%;
+  border: 1px solid #79747e;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+  color: #1c1b1f;
+}
+
+.newsletterButton {
+  background-color: #121;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font: 600 14px Montserrat, sans-serif;
+  padding: 8px 16px;
+  white-space: nowrap;
+}
+
+.newsletterImage {
+  width: 400px;
+  height: auto;
+}
+
+.footer {
+  margin-top: 64px;
+  padding: 24px 0;
+  text-align: center;
+}
+
+.footerLogo {
+  width: 328px;
+  height: auto;
+}
+
+@media (max-width: 991px) {
+  .header {
+    padding: 24px 20px;
+  }
+
+  .mainContent {
+    padding: 0 20px 100px;
+  }
+
+  .mainTitleHighlight {
+    font-size: 40px;
+  }
+
+  .searchSection {
+    padding: 16px 20px 32px;
+  }
+
+  .searchForm {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .destinationSection {
+    margin-top: 40px;
+  }
+
+  .travelOptions {
+    flex-direction: column;
+    margin-top: 40px;
+  }
+
+  .newsletter {
+    flex-direction: column;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .newsletterImage {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 24px;
+  }
+}

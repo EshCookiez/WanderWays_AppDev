@@ -6,14 +6,15 @@ import FlightBooking_Update from './Pages/FlightBooking/FlightBooking_Update';
 import FlightList from './Pages/FlightBooking/FlightList';
 import CustomerList from './Pages/Customer/CustomerList';
 import CustomerForm from './Pages/Customer/CustomerForm';
-import AcmBooking from './Pages/AcmBooking'; 
-import AcmList from './Pages/AcmList';
-import AcmForm from './Pages/AcmForm';
+import AcmBooking from './Pages/Acm/AcmBooking'; 
+import AcmList from './Pages/Acm/AcmList';
+import AcmForm from './Pages/Acm/AcmForm';
 import RoomList from './Pages/Rooms/RoomList';
 import RoomForm from './Pages/Rooms/RoomForm';
 import Home from './Pages/Home';
 import LoginPage from './Pages/LogIn/LoginPage';
 import SignUpForm from './Pages/SignUp/SignUpForm';
+import HomeLanding from './Pages/HomeLanding/HomeLanding'
 
 function App() {
     return (
@@ -42,6 +43,7 @@ function App() {
                     
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignUpForm />} />
+                    <Route path="/homeLanding" element={<HomeLanding />} />
                 </Routes>
             </div>
         </Router>
