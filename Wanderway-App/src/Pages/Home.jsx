@@ -31,10 +31,11 @@ const Home = () => {
                     <Link to="/login">
                         <button>Log In</button>
                     </Link>
-                    
-                    <Link to="/homeLanding">
-                        <button>Home Landing</button>
+                    <Link to="/Favorites">
+                        <button>Favorites</button>
                     </Link>
+                    
+                    
                     </div>
         </div>
     );

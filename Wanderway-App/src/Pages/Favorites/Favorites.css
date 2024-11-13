@@ -1,0 +1,76 @@
+.favorites-container {
+    max-width: 1200px; /* Increase the width as desired */
+    margin: 0 auto; /* Center the container */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .favorites-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .tabs button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #f5f5f5;
+    color: #333;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .tabs button.active {
+    background-color: #00bfa6;
+    color: #fff;
+  }
+  
+  .favorites-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .place-card {
+    display: flex;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    align-items: center;
+  }
+  
+  .place-image {
+    width: 150px;
+    height: 150px;
+    background-color: #ddd;
+    border-radius: 8px;
+    margin-right: 20px;
+    position: relative;
+  }
+  
+  .image-count {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  
+  .place-info {
+    flex: 1;
+  }
+  
+  .place-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  

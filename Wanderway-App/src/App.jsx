@@ -15,14 +15,15 @@ import Home from './Pages/Home';
 import LoginPage from './Pages/LogIn/LoginPage';
 import SignUpForm from './Pages/SignUp/SignUpForm';
 import HomeLanding from './Pages/HomeLanding/HomeLanding'
-
+import Favorites from './Pages/Favorites/FavoriteList'
+import HotelSearch from './Pages/Acm/HotelSearch';
 function App() {
     return (
         <Router>
             <div>
                 <Routes>
                     {/* Route diri para sa html or react pages gi gamit para sa ato features*/}
-                    <Route path="/" element={<Home/>} />
+                    <Route path="/" element={<HomeLanding/>} />
 
                     <Route path="/book/:flightId/:price" element={<FlightBooking />} />
                     <Route path="/list-flight" element={<FlightList />} />
@@ -36,6 +37,7 @@ function App() {
                     <Route path="/list-accommodation" element={<AcmList />} />
                     <Route path="/addAccommodation" element={<AcmForm />} />
                     <Route path="/acmForm/:id" element={<AcmForm />} />
+                    <Route path="/hotelsearch" element={<HotelSearch/>}/>
 
                     <Route path="/roomList" element={<RoomList />} />
                     <Route path="/addRoom" element={<RoomForm />} />
@@ -43,7 +45,10 @@ function App() {
                     
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignUpForm />} />
-                    <Route path="/homeLanding" element={<HomeLanding />} />
+                    
+                    <Route path="/favorites" element={<Favorites/>}/>
+
+                    <Route path="/home" element={<Home />} />
                 </Routes>
             </div>
         </Router>

@@ -59,6 +59,9 @@
   align-items: center;
   z-index: 2; /* Ensure the nav link is in front of the background image */
 }
+.homeLinkTemporary{
+  z-index: 2;
+}
 
 .navIcon {
   width: 24px;
@@ -68,7 +71,7 @@
 }
 
 .logo {   
-  z-index: 2; /* Ensure the logo is in front of the background image */
+  z-index: 3; /* Ensure the logo is in front of the background image */
 }
 
 .authButtons {

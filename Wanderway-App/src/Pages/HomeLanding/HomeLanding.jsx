@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './HomeLanding.module.css';
-import logo from '../../assets/LogoIMG.png';
+import logo from '../../assets/LogoMain.png'
 import pic from '../../assets/Picture.png';
 import './HomeLanding.css';
 
@@ -25,7 +25,7 @@ function HomeLanding() {
               </Link>
             </li>
             <li className={styles.navItem}>
-              <Link to="/list-accommodation" className={styles.navLink}>
+              <Link to="/hotelsearch" className={styles.navLink}>
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/5f89685dfe33ac9dae4aed888369ae4284d69c8a9dacf22bf885758f978f709a?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
                   alt=""
@@ -36,7 +36,9 @@ function HomeLanding() {
             </li>
           </ul>
         </nav>
+        <Link to="/home" className={styles.homeLinkTemporary}>
         <img src={logo} alt="WanderWays Logo" className={styles.logo} />
+        </Link>
         <div className={styles.authButtons}>
           <Link to="/login">
           <button className={styles.loginButton}>Login</button>

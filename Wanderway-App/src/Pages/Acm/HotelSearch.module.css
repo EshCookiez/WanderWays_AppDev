@@ -1,0 +1,582 @@
+.hotelSearch {
+    background-color: #fafbfc;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 500vh; /* Set the width to 100% of the parent container */
+  max-width: 1500px; /* Set a maximum width for the column */
+  margin: 0 auto;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(17, 34, 17, 0.05);
+    color: #121;
+    padding: 21px 95px 21px 104px;
+    font: 600 14px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    position: relative;
+  }
+  
+  .headerIndicator {
+    background: #8dd3bb;
+    position: absolute;
+    width: 103px;
+    height: 5px;
+    bottom: 0;
+  }
+  
+  .headerIndicator:first-child {
+    right: 250px;
+  }
+  
+  .headerIndicator:last-child {
+    left: 104px;
+  }
+  
+  .navigation {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navList {
+    display: flex;
+    list-style-type: none;
+    gap: 32px;
+    padding: 0;
+  }
+  
+  .navItem {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .navIcon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .logo {
+    width: 203px;
+  }
+  
+  .userActions {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  
+  .favorites {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .separator {
+    margin: 0 16px;
+  }
+  
+  .userProfile {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+  }
+  
+  .userAvatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+  }
+  
+  .userStatus {
+    background-color: #121;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    left: 33px;
+    bottom: 2px;
+  }
+  
+  .dropdownIcon {
+    width: 14px;
+  }
+  
+  .heroSection {
+    position: relative;
+    min-height: 200px;
+    color: #fff;
+    padding: 80px 174px 200px 126px;
+  }
+  
+  .heroImage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .heroContent {
+    position: relative;
+    max-width: 440px;
+  }
+  
+  .heroTitle {
+    font: 700 45px Libre Franklin, -apple-system, Roboto, Helvetica, sans-serif;
+  }
+  
+  .heroSubtitle {
+    margin-top: 8px;
+    font: 500 20px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+  }
+  
+  .searchForm {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(17, 34, 17, 0.05);
+    margin-top: -74px;
+    padding: 32px 24px;
+    max-width: 1232px;
+    width: 100%;
+    align-self: center;
+    z-index: 10;
+  }
+  
+  .searchTitle {
+    color: #121;
+    font: 600 20px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+  }
+  
+  .formContainer {
+    display: flex;
+    margin-top: 32px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  
+  .inputGroup {
+    flex: 1;
+    min-width: 240px;
+    position: relative;
+  }
+  
+  .formInput {
+    width: 100%;
+    border: 1px solid #79747e;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-family: Montserrat, sans-serif;
+    color: #1c1b1f;
+  }
+  
+  .inputIcon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+  }
+  
+  .formActions {
+    display: flex;
+    margin-top: 32px;
+    justify-content: flex-end;
+    gap: 24px;
+  }
+  
+  .promoButton,
+  .searchButton {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  .promoButton {
+    border: 1px solid #8dd3bb;
+    background-color: transparent;
+    color: #121;
+  }
+  
+  .searchButton {
+    background-color: #8dd3bb;
+    border: none;
+    color: #121;
+  }
+  
+  .buttonIcon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .travelDestinations {
+    margin-top: 80px;
+    padding: 0 104px;
+  }
+  
+  .sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  
+  .sectionTitle {
+    font: 700 32px Libre Franklin, -apple-system, Roboto, Helvetica, sans-serif;
+    color: #000;
+  }
+  
+  .sectionDescription {
+    max-width: 600px;
+    font: 400 16px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    color: #000;
+  }
+  
+  .seeAllButton {
+    border: 1px solid #8dd3bb;
+    background-color: transparent;
+    color: #121;
+    padding: 12px 16px;
+    border-radius: 4px;
+    font: 500 14px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    cursor: pointer;
+  }
+  
+  .destinationGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  
+  .destinationCard {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .destinationImage {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .destinationInfo {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: #fff;
+  }
+  
+  .destinationHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 16px;
+  }
+  
+  .destinationName {
+    font: 600 24px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    margin: 0;
+  }
+  
+  .destinationDescription {
+    font: 400 14px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    margin: 0;
+  }
+  
+  .destinationPrice {
+    font: 600 24px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    margin: 0;
+  }
+  
+  .bookButton {
+    width: 100%;
+    background-color: #8dd3bb;
+    border: none;
+    color: #121;
+    padding: 16px;
+    border-radius: 4px;
+    font: 500 14px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    cursor: pointer;
+  }
+  
+  .travelExperience {
+    display: flex;
+    margin-top: 80px;
+    padding: 0 104px;
+    gap: 24px;
+  }
+  
+  .experienceContent {
+    flex: 1;
+    background-color: #8dd3bb;
+    border-radius: 20px;
+    padding: 26px 24px;
+    color: #121;
+  }
+  
+  .experienceTitle {
+    font: 700 40px Libre Franklin, -apple-system, Roboto, Helvetica, sans-serif;
+    margin-bottom: 24px;
+  }
+  
+  .experiencePrice {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 24px;
+  }
+  
+  .experiencePrice span {
+    font: 400 14px Libre Franklin, -apple-system, Roboto, Helvetica, sans-serif;
+  }
+  
+  .experiencePrice strong {
+    font: 600 20px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    margin-top: 4px;
+  }
+  
+  .experienceDescription {
+    font: 400 14px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    margin-bottom: 24px;
+  }
+  
+  .bookFlightButton {
+    width: 100%;
+    background-color: #fff;
+    border: none;
+    color: #121;
+    padding: 16px;
+    border-radius: 4px;
+    font: 500 14px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    cursor: pointer;
+  }
+  
+  .experienceGallery {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .galleryImage {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  
+  .newsletter {
+    margin-top: 80px;
+    background-color: #8dd3bb;
+    border-radius: 30px 30px 0 0;
+    padding: 64px 104px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .newsletterContent {
+    max-width: 600px;
+  }
+  
+  .newsletterTitle {
+    font: 700 44px/54px Libre Franklin, -apple-system, Roboto, Helvetica, sans-serif;
+    color: #121;
+    margin-bottom: 24px;
+  }
+  
+  .newsletterDescription {
+    font: 500 16px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    color: #121;
+    opacity: 0.7;
+    margin-bottom: 16px;
+  }
+  
+  .subscribeForm {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .emailInput {
+    flex: 1;
+    border: none;
+    border-radius: 4px;
+    padding: 16px;
+    font-size: 16px;
+    font-family: Montserrat, sans-serif;
+  }
+  
+  .subscribeButton {
+    background-color: #121;
+    border: none;
+    color: #fff;
+    padding: 16px 24px;
+    border-radius: 4px;
+    font: 600 14px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    cursor: pointer;
+  }
+  
+  .newsletterImage {
+    max-width: 400px;
+    height: auto;
+  }
+  
+  .companyLogo {
+    width: 328px;
+    height: auto;
+    margin-top: 64px;
+  }
+  
+  .visuallyHidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  @media (max-width: 1200px) {
+    .header,
+    .heroSection,
+    .travelDestinations,
+    .travelExperience,
+    .newsletter {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+  
+    .heroTitle {
+      font-size: 36px;
+    }
+  
+    .heroSubtitle {
+      font-size: 18px;
+    }
+  
+    .experienceTitle {
+      font-size: 32px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .header {
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 16px;
+    }
+  
+    .navigation,
+    .userActions {
+      width: 100%;
+      justify-content: center;
+      margin-top: 16px;
+    }
+  
+    .heroSection {
+      padding: 40px 20px;
+    }
+  
+    .searchForm {
+      padding: 20px;
+    }
+  
+    .formContainer {
+      flex-direction: column;
+    }
+  
+    .inputGroup {
+      width: 100%;
+    }
+  
+    .formActions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .travelDestinations,
+    .travelExperience,
+    .newsletter {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  
+    .sectionHeader {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .seeAllButton {
+      margin-top: 16px;
+    }
+  
+    .travelExperience {
+      flex-direction: column;
+    }
+  
+    .experienceGallery {
+      margin-top: 24px;
+    }
+  
+    .newsletter {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .subscribeForm {
+      flex-direction: column;
+    }
+  
+    .newsletterImage {
+      margin-top: 24px;
+      max-width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .heroTitle {
+      font-size: 28px;
+    }
+  
+    .heroSubtitle {
+      font-size: 16px;
+    }
+  
+    .searchTitle {
+      font-size: 18px;
+    }
+  
+    .sectionTitle {
+      font-size: 24px;
+    }
+  
+    .experienceTitle {
+      font-size: 28px;
+    }
+  
+    .newsletterTitle {
+      font-size: 32px;
+      line-height: 1.2;
+    }
+  }
