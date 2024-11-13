@@ -16,6 +16,7 @@ const CustomerList = () => {
   const fetchCustomers = async () => {
     try {
       const response = await CustomerService.getAllCustomers();
+      console.log(response.data);
       setCustomers(response.data);
     } catch (error) {
       console.error('Error fetching customers:', error);

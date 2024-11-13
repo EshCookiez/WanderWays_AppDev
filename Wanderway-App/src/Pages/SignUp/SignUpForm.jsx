@@ -19,7 +19,7 @@ const SignUpForm = () => {
     phoneNumber: '',
     password: '',
     confirmPassword: '',
-    address: '',
+    customerAddress: '',
     birthdate: ''
   });
 
@@ -37,10 +37,16 @@ const SignUpForm = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    console.log(formData);  // Before sending the request
+
     // Check if the terms are agreed
     if (!isAgreed) {
       setIsFormValid(false);
+      return;
+    }
+
+    if (formData.password.length < 8) {
+      setErrorMessage('Password must be at least 8 characters long');
       return;
     }
   
@@ -57,7 +63,7 @@ const SignUpForm = () => {
         firstName: formData.firstName,
         lastName: formData.lastName,
         phoneNumber: formData.phoneNumber,
-        address: formData.address,
+        customerAddress: formData.customerAddress,
         birthdate: formData.birthdate
       });
   
@@ -72,7 +78,7 @@ const SignUpForm = () => {
           phoneNumber: '',
           password: '',
           confirmPassword: '',
-          address: '',
+          customerAddress: '',
           birthdate: ''
         });
         setSuccessMessage('Account created successfully! Redirecting to login page.');
@@ -108,9 +114,10 @@ const SignUpForm = () => {
     { label: 'Phone Number', name: 'phoneNumber', value: formData.phoneNumber },
     { label: 'Password', name: 'password', type: 'password', value: formData.password },
     { label: 'Confirm Password', name: 'confirmPassword', type: 'password', value: formData.confirmPassword },
-    { label: 'Address', name: 'address', value: formData.address },
+    { label: 'Address', name: 'customerAddress', value: formData.customerAddress },  // Update 'address' to 'customerAddress'
     { label: 'Birthdate', name: 'birthdate', type: 'date', value: formData.birthdate }
   ];
+  
 
   return (
     <section className={styles.signUp}>
