@@ -1,133 +1,161 @@
 .signUp {
-    background-color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 75px 70px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 75px 70px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1232px;
+  width: 100%;
+  gap: 20px;  /* Adjusts space between the form and image sections */
+}
+
+.formWrapper {
+  flex: 1;
+  padding-right: 20px;
+}
+
+.logo {
+  width: 269px;
+  max-width: 100%;
+  margin-bottom: 38px;
+}
+
+.formContent {
+  max-width: 640px;
+  width: 100%; /* Ensures it fills the available space */
+}
+
+.title {
+  font-family: 'TradeGothic LT Extended', -apple-system, Roboto, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  color: #000;
+  margin-bottom: 16px;
+}
+
+.description {
+  font-family: Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 16px;
+  color: #121;
+  opacity: 0.75;
+  margin-bottom: 48px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-wrap: wrap;  /* Allow wrapping of fields to next line if necessary */
+  gap: 20px;        /* Space between fields */
+}
+
+.fieldWrapper {
+  display: flex;
+  flex-direction: column;  /* Stack label and input vertically */
+  gap: 10px;               /* Space between label and input */
+  width: calc(50% - 10px);  /* Adjust to take 50% of width, accounting for gap */
+}
+
+.termsAgreement {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ff8682;
+  font-family: Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 40px;
+}
+
+.checkIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.highlight {
+  font-weight: 600;
+  color: #ff8682;
+}
+
+.loginLink {
+  text-align: center;
+  margin-top: 16px;
+  font-family: Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 40px 0;
+  color: #121;
+  font-family: Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background-color: rgba(17, 34, 17, 0.25);
+}
+
+.dividerText {
+  padding: 0 16px;
+  opacity: 0.5;
+}
+
+.imageWrapper {
+  flex: 1;
+}
+
+.sideImage {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 991px) {
+  .signUp {
+    padding: 40px 20px;
   }
-  
+
   .container {
-    display: flex;
-    max-width: 1232px;
-    width: 100%;
-  }
-  
-  .formWrapper {
-    flex: 1;
-    padding-right: 20px;
-  }
-  
-  .logo {
-    width: 269px;
-    max-width: 100%;
-    margin-bottom: 38px;
-  }
-  
-  .formContent {
-    max-width: 640px;
-  }
-  
-  .title {
-    font-family: 'TradeGothic LT Extended', -apple-system, Roboto, Helvetica, sans-serif;
-    font-weight: 700;
-    font-size: 40px;
-    color: #000;
-    margin-bottom: 16px;
-  }
-  
-  .description {
-    font-family: Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
-    font-size: 16px;
-    color: #121;
-    opacity: 0.75;
-    margin-bottom: 48px;
-  }
-  
-  .fieldGroup {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-    margin-bottom: 24px;
-  }
-  
-  .termsAgreement {
-    display: flex;
+    flex-direction: column-reverse; /* Stack image and form on smaller screens */
     align-items: center;
-    gap: 8px;
-    color: #ff8682;
-    font-family: Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
-    font-size: 14px;
-    font-weight: 500;
+  }
+
+  .formWrapper,
+  .imageWrapper {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .sideImage {
     margin-bottom: 40px;
   }
-  
-  .checkIcon {
-    width: 24px;
-    height: 24px;
+
+  .fieldGroup {
+    flex-direction: column;
+    gap: 15px; /* Adjust spacing for mobile view */
   }
-  
-  .highlight {
-    font-weight: 600;
-    color: #ff8682;
+
+  .fieldWrapper {
+    width: 100%; /* Make fields take full width on smaller screens */
   }
-  
-  .loginLink {
-    text-align: center;
-    margin-top: 16px;
-    font-family: Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
-    font-size: 14px;
+}
+
+@media (max-width: 767px) {
+  .title {
+    font-size: 32px;  /* Adjust title size for smaller screens */
   }
-  
-  .divider {
-    display: flex;
-    align-items: center;
-    margin: 40px 0;
-    color: #121;
-    font-family: Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
-    font-size: 14px;
+
+  .description {
+    font-size: 14px;  /* Reduce description font size */
+    margin-bottom: 32px;
   }
-  
-  .dividerLine {
-    flex: 1;
-    height: 1px;
-    background-color: rgba(17, 34, 17, 0.25);
-  }
-  
-  .dividerText {
-    padding: 0 16px;
-    opacity: 0.5;
-  }
-  
-  .imageWrapper {
-    flex: 1;
-  }
-  
-  .sideImage {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-  
-  @media (max-width: 991px) {
-    .signUp {
-      padding: 40px 20px;
-    }
-  
-    .container {
-      flex-direction: column-reverse;
-    }
-  
-    .formWrapper,
-    .imageWrapper {
-      width: 100%;
-      padding-right: 0;
-    }
-  
-    .sideImage {
-      margin-bottom: 40px;
-    }
-  
-    .fieldGroup {
-      flex-direction: column;
-    }
-  }
+}

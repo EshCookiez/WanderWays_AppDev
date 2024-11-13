@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import CustomerService from '../../services/CustomerService';
 import { useNavigate } from 'react-router-dom';
 import './CustomerList.css';
+import Header from '../../Components/Header';
+
 
 const CustomerList = () => {
   const [customers, setCustomers] = useState([]);
@@ -14,6 +16,7 @@ const CustomerList = () => {
   const fetchCustomers = async () => {
     try {
       const response = await CustomerService.getAllCustomers();
+      console.log(response.data);
       setCustomers(response.data);
     } catch (error) {
       console.error('Error fetching customers:', error);
@@ -34,7 +37,7 @@ const CustomerList = () => {
 
   return (
     <div className="customer-list-container">
-
+      <Header/>
 
 
       <h2>Customer List</h2>

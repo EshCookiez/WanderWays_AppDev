@@ -46,12 +46,19 @@ public ResponseEntity<String> login(@RequestParam String email, @RequestParam St
     }
 }
 
-
-
-    @PostMapping("/addCustomer")
-    public Customer addCustomer(@RequestBody Customer customer) {
-        return custService.addCustomer(customer);
+    // add customer
+    @PostMapping("/signup")
+    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
+    System.out.println("Received customer: " + customer);  // Logging the request body
+    try {
+        Customer createdCustomer = custService.addCustomer(customer);
+        return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
+}
+
 
     @GetMapping("/getAllCustomer")
     public List<Customer> getAllCustomer() {
@@ -59,9 +66,19 @@ public ResponseEntity<String> login(@RequestParam String email, @RequestParam St
     }
 
     @PutMapping("/updateCustomer/{id}")
-    public Customer updateCustomer(@PathVariable int id, @RequestBody Customer customer) {
-        return custService.updateCustomer(id, customer);
+    public ResponseEntity<Customer> updateCustomer(@PathVariable int id, @RequestBody Customer customer) {
+    Optional<Customer> existingCustomer = custService.findCustomerById(id);
+
+    if (existingCustomer.isPresent()) {
+        // Perform the update if customer exists
+        Customer updatedCustomer = custService.updateCustomer(id, customer);
+        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+    } else {
+        // Return 404 Not Found if customer does not exist
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+}
+
 
     @DeleteMapping("/deleteCustomer/{id}")
     public String deleteCustomer(@PathVariable int id) {
