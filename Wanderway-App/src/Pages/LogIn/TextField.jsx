@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styles from './TextField.module.css';
 
-const TextField = ({ label, type = 'text', defaultValue = '', showPasswordToggle = false }) => {
+const TextField = ({ label, type = 'text', value, onChange, showPasswordToggle = false }) => {
   const [inputType, setInputType] = useState(type);
 
   const togglePasswordVisibility = () => {
-    setInputType(prevType => prevType === 'password' ? 'text' : 'password');
+    setInputType((prevType) => (prevType === 'password' ? 'text' : 'password'));
   };
 
   return (
@@ -14,7 +14,8 @@ const TextField = ({ label, type = 'text', defaultValue = '', showPasswordToggle
         <span className={styles.labelText}>{label}</span>
         <input
           type={inputType}
-          defaultValue={defaultValue}
+          value={value} // Use value to bind to the component's state
+          onChange={onChange} // Pass the onChange function to handle updates
           className={styles.input}
         />
       </label>
@@ -25,7 +26,7 @@ const TextField = ({ label, type = 'text', defaultValue = '', showPasswordToggle
           className={styles.togglePassword}
           aria-label={inputType === 'password' ? 'Show password' : 'Hide password'}
         >
-         
+          {inputType === 'password' ? 'Show' : 'Hide'}
         </button>
       )}
     </div>

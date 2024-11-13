@@ -1,21 +1,18 @@
 import React from 'react';
 import styles from './TextField.module.css';
 
-const TextField = ({ label, placeholder, type = 'text' }) => {
+const TextField = ({ label, type = 'text', value, onChange, name }) => {
   return (
-    <div className={styles.textField}>
-      <label className={styles.label} htmlFor={label.toLowerCase().replace(' ', '-')}>
-        {label}
-      </label>
+    <div className={styles.fieldWrapper}>
+      <label>{label}</label>
       <input
         type={type}
-        id={label.toLowerCase().replace(' ', '-')}
-        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        name={name}
         className={styles.input}
+        required
       />
-      {type === 'password' && (
-        <img src="" />
-      )}
     </div>
   );
 };

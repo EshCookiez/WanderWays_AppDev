@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import styles from './LoginPage.module.css';
 import TextField from './TextField';
 import Button from './Button';
@@ -10,6 +11,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   const socialLoginOptions = [
     { icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/7801fbea496dc51ca3b70e3dfb946fc34d027948fccb7a8ef44f4de0f1384fff?placeholderIfAbsent=true&apiKey=918132c67bed4c9f95d44f9d99b73e78', alt: 'Facebook login' },
@@ -19,23 +21,36 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setErrorMessage('');
-    
+
+    // Check for empty fields
+    if (!email || !password) {
+      setErrorMessage('Please fill in both email and password.');
+      return;
+    }
+
+    setLoading(true);
+
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/customer/login",
-        {
-          email: email,
-          password: password,
-        }
-      );
+      // Use URLSearchParams to match curl format
+      const params = new URLSearchParams();
+      params.append('email', email);
+      params.append('password', password);
+
+      const response = await axios.post("http://localhost:8080/api/customer/login", params, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+      
       console.log("Login Successful:", response.data);
       // Redirect after successful login
-      navigate('/dashboard'); // Use react-router's navigate function
+      navigate('/customerList');
     } catch (error) {
       console.error("Login failed:", error);
-      // Show error message to user
+      setErrorMessage("Login failed. Please check your credentials and try again.");
+    } finally {
+      setLoading(false);
     }
   };
 

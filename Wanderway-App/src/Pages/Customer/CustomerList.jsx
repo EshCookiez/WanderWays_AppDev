@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import CustomerService from '../../services/CustomerService';
 import { useNavigate } from 'react-router-dom';
 import './CustomerList.css';
+import Header from '../../Components/Header';
+
 
 const CustomerList = () => {
   const [customers, setCustomers] = useState([]);
@@ -34,7 +36,7 @@ const CustomerList = () => {
 
   return (
     <div className="customer-list-container">
-
+      <Header/>
 
 
       <h2>Customer List</h2>

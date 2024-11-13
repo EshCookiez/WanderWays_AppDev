@@ -46,12 +46,19 @@ public ResponseEntity<String> login(@RequestParam String email, @RequestParam St
     }
 }
 
-
-
-    @PostMapping("/addCustomer")
-    public Customer addCustomer(@RequestBody Customer customer) {
-        return custService.addCustomer(customer);
+    // add customer
+    @PostMapping("/signup")
+    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
+    System.out.println("Received customer: " + customer);  // Logging the request body
+    try {
+        Customer createdCustomer = custService.addCustomer(customer);
+        return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
+}
+
 
     @GetMapping("/getAllCustomer")
     public List<Customer> getAllCustomer() {

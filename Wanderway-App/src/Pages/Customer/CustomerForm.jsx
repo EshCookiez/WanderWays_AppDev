@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import CustomerService from '../../services/CustomerService';
 import './CustomerForm.css';
+import axios from 'axios';
+
 
 const CustomerForm = () => {
   const { id } = useParams();
@@ -53,17 +55,27 @@ const CustomerForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (id) {
-        await CustomerService.updateCustomer(id, customer);
-      } else {
-        await CustomerService.addCustomer(customer);
-      }
-      // Navigate back to the customer list after submitting
+      console.log('Customer Data:', customer); // Log the data to see if it's being correctly captured
+      
+      const response = await axios.post(
+        'http://localhost:8080/api/customer/signup', 
+        customer, 
+        {
+          headers: {
+            'Content-Type': 'application/json', // Ensure this header is set
+          }
+        }
+      );
+      
+      console.log('Customer successfully added:', response.data);
+      // Navigate to the customer list after successful addition
       navigate('/customerList');
     } catch (error) {
       console.error('Error saving customer:', error);
     }
   };
+  
+  
 
   return (
     <div>
