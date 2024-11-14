@@ -79,10 +79,7 @@ const FlightList = () => {
 
   return (
     <div className='main-box'>
-        <div className='sample-header' > 
           <Header/>
-        </div>
-        
         <div className='search-box'>
           <div className="search-origin">
             <div className="input-wrapper">
@@ -112,38 +109,35 @@ const FlightList = () => {
         </div>
 
         
-      <div className='list-container' 
-      style={{ display: 'flex', flexDirection: 'row',gap: '20px', margin : '20px 20px'}}>
-      <div className='flights-box' 
-      style={{ display: 'flex', flexDirection: 'column', padding: '50px', width: '500px' }}>
+      <div className='list-container'>
+      <div className='flights-box'>
         <h2>Available Flights</h2>
         {flights.length > 0 ? (
           filteredFlights.map(flight => (
-            <div key={flight.flight_id} 
-            style={{border: "1px solid #ddd", padding: "10px", margin: "10px 0"}}>
-              <h2>Flight ID : {flight.flightId}</h2>
-              <h4>from {flight.location_origin} -<IoAirplane className='airplane-icon'/>- to {flight.location_destination}</h4>
-              <p>Departure: {flight.dateDepart} --- Arrival: {flight.dateArrival}</p>
-              <p>Class: {flight.flight_class} - Rating: {flight.rating} -- Price: ${flight.price}</p>
+            <div key={flight.flight_id} className='list-content'>
+              <h3>Flight ID : {flight.flightId}</h3>
+              <h4>From: {flight.location_origin} -<IoAirplane className='airplane-icon'/>- To: {flight.location_destination}</h4>
+              <p><b>Departure:</b> {flight.dateDepart} --- <b>Arrival:</b> {flight.dateArrival}</p>
+              <p><b>Class:</b> {flight.flight_class} -- <b>Rating:</b> {flight.rating} -- <b>Price:</b> ${flight.price}</p>
               <Link to={`/book/${flight.flightId}/${flight.price}`}>
                 <button style={{width: '90%'}}>BOOK THIS FLIGHT</button>
               </Link>
             </div>
           ))
         ) : (
-          <p>Loading flights...</p>
+          <p>Loading Available flights...</p>
         )}
       </div>
 
-
-      <div className='booked-box' 
-      style={{ display: 'flex', flexDirection: 'column', padding: '50px', width: '500px'}}>
+      <div className='booked-box'>
         <h2>Your Booked Flights</h2>
         {booked.length > 0 ? (
           booked.map(booking => (
-            <div key={booking.fbookId} 
-            style={{ border: "1px solid #ddd", padding: "10px", margin: "10px 0" }}>
-              <h2>Flight ID: {booking.flight.flightId} -- Booking ID: {booking.fbookId} -- Price: ${booking.flight.price}</h2> 
+            <div key={booking.fbookId} className='list-content'>
+              <h3>Flight ID: {booking.flight.flightId} -- Booking ID: {booking.fbookId} -- Price: ${booking.flight.price}</h3>
+              <p><b>From:</b> {booking.flight.location_origin} -<IoAirplane className='airplane-icon'/>- <b>to:</b> {booking.flight.location_destination}</p> 
+              <p><b>Departure:</b> {booking.flight.dateDepart} --- <b>Arrival:</b> {booking.flight.dateArrival}</p>
+              <p><b>Flight Class:</b> {booking.flight.flight_class} -- <b>Rating:</b> {booking.flight.rating}</p>
               <p style={{fontWeight: 'bold'}}>Passenger Amount: {booking.passengerAmount} ---- Fare Class: {booking.fareClass}</p>
               <Link to={`/bookUpdate/${booking.fbookId}`}>
                 <button style={{width: '40%'}}>UPDATE</button>
@@ -157,6 +151,7 @@ const FlightList = () => {
           <p>Loading booked flights...</p>
         )}
         </div>
+
       </div>
     </div>
   );

@@ -101,14 +101,16 @@ function HomeLanding() {
                   </select>
                   
                 </div>
-                <button type="submit" className={styles.searchButton}>
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ebb0d5ae989a073bbe0b35604d2c7f478d137cf3f362ac925b59ce14ded9be8?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
-                    alt=""
-                    className={styles.searchIcon}
-                  />
-                  Show Flights
-                </button>
+                <Link to="/list-flight">
+                  <button type="submit" className={styles.searchButton}>
+                    <img
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ebb0d5ae989a073bbe0b35604d2c7f478d137cf3f362ac925b59ce14ded9be8?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
+                      alt=""
+                      className={styles.searchIcon}
+                    />
+                    Show Flights
+                  </button>
+                </Link>
               </form>
             </div>
           ) : (
@@ -149,11 +151,14 @@ function HomeLanding() {
         <section className={styles.destinationSection}>
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>Plan your perfect trip</h2>
-            <p className={styles.sectionDescription}>
-              Search Flights & Places Hire to our most popular destinations
-            </p>
+            <button className={styles.seeMoreButton}>See more places</button>
           </div>
-          <button className={styles.seeMoreButton}>See more places</button>
+          <div className="section-Description">
+          <p className={styles.sectionDescription}>
+              Search Flights & Places Hire to our most popular destinations
+          </p>
+          </div>
+
           <div className={styles.destinationGrid}>
             {[
               { id: 1, name: 'Istanbul, Turkey', image: 'https://cdn.builder.io/api/v1/image/assets/TEMP/7ed5a748c9c1cc1aff3acedaf6eebcc4ac1160ab982b9aa08bef79ea1755110d?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7' },
@@ -191,10 +196,13 @@ function HomeLanding() {
               <p className={styles.optionDescription}>
                 Search Flights & Places Hire to our most popular destinations
               </p>
-              <button className={styles.optionButton}>
-                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/1621daca02bcb5aacc082af98626b872482611b9ffab1cee341ef40025380ef1?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.buttonIcon} />
-                Show Flights
-              </button>
+              <Link to="/list-flight">
+                <button className={styles.optionButton}>
+                  <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/1621daca02bcb5aacc082af98626b872482611b9ffab1cee341ef40025380ef1?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.buttonIcon} />
+                  Show Flights
+                </button>              
+              </Link>
+
             </div>
           </div>
           <div className={styles.optionCard}>
@@ -204,10 +212,12 @@ function HomeLanding() {
               <p className={styles.optionDescription}>
                 Search hotels & Places Hire to our most popular destinations
               </p>
-              <button className={styles.optionButton}>
-                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/936a6564ba922fa9343b13081aaf959dd62af07cc90b98dd33e6d6167c5234ca?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.buttonIcon} />
-                Show Hotels
-              </button>
+              <Link to="/list-accommodation">
+                <button className={styles.optionButton}>
+                  <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/936a6564ba922fa9343b13081aaf959dd62af07cc90b98dd33e6d6167c5234ca?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.buttonIcon} />
+                  Show Hotels
+                </button>
+              </Link> 
             </div>
           </div>
         </section>

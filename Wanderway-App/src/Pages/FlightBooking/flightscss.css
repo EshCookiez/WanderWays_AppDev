@@ -36,11 +36,24 @@
     flex-direction: row; 
     width: 100%; 
     justify-content: center;
-    margin: 20px; 
+    margin: 20px 20px; 
+    gap: 20px;
   }
 
 .booked-box, .flights-box{
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0.3, 0.5);
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    width: 550px;
+    border-radius: 20px;
+}
+
+.list-content{
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
 }
 
 .list-container button{

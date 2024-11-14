@@ -265,7 +265,11 @@
   opacity: 0.75;
 }
 
+.section-Description{
+  left: 0;
+}
 .seeMoreButton {
+  display: flex;
   background: none;
   border: 1px solid #8dd3bb;
   border-radius: 4px;
