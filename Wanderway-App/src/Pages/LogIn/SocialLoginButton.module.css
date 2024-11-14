@@ -2,13 +2,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 56px;
+    width: 100px;
     height: 56px;
     border: 1px solid #8dd3bb;
     border-radius: 4px;
     background-color: transparent;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-left: 45px;
   }
   
   .socialButton:hover {

