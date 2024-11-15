@@ -2,6 +2,7 @@ package com.wanderways.Entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
@@ -19,7 +20,11 @@ public class Flight{
     private Integer flight_id;
 
     private String rating;
+    
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dateDepart; 
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dateArrival;
 
     @JsonProperty("flight_class")

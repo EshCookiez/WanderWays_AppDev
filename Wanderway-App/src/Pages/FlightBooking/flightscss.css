@@ -112,7 +112,7 @@
 
 /*Flight bookiong and update CSS below here*/
 
-.book-box, .update-box{
+.book-box, .update-box, .flightform-box{
     display: flex;
     flex-direction: column;
     justify-content: 'center';
@@ -143,12 +143,12 @@
     color: rgb(154, 231, 138);
 }
 
-.input-travellers, .input-fareclass {
+.input-travellers, .input-fareclass, .input {
     position: relative;
     width: 100%;
 }
 
-.input-travellers, .input-fareclass  input {
+.input-travellers, .input-fareclass , .input {
     width: 100%;
 }
 

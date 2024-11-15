@@ -17,6 +17,8 @@ import SignUpForm from './Pages/SignUp/SignUpForm';
 import HomeLanding from './Pages/HomeLanding/HomeLanding'
 import Favorites from './Pages/Favorites/FavoriteList'
 import HotelSearch from './Pages/Acm/HotelSearch';
+import Addfav from './Pages/Favorites/favorites'
+import CreateFlight from './Pages/FlightBooking/CreateFlight';
 function App() {
     return (
         <Router>
@@ -27,6 +29,7 @@ function App() {
 
                     <Route path="/book/:flightId/:price" element={<FlightBooking />} />
                     <Route path="/list-flight" element={<FlightList />} />
+                    <Route path="/create/flight" element={<CreateFlight/>} />
                     <Route path="/bookUpdate/:fbookId" element={<FlightBooking_Update />} />
 
                     <Route path="/customerList" element={<CustomerList />} />
@@ -47,7 +50,7 @@ function App() {
                     <Route path="/signup" element={<SignUpForm />} />
                     
                     <Route path="/favorites" element={<Favorites/>}/>
-
+                    <Route path ="/addFav" element={<Addfav/>}/>
                     <Route path="/home" element={<Home />} />
                 </Routes>
             </div>

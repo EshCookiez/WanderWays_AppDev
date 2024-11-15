@@ -68,7 +68,7 @@ const FlightBooking = () => {
                      <FaUser className="input-icon" />
                     </div>
                     <div className='button-box'>
-                        <button type='submit' style={{width: '150px'}}>Pay and Book</button>
+                        <button type='submit' style={{width: '150px'}}>Book Flight</button>
                         <Link to={`/list-flight`}>
                             <button style={{width: '130px'}}>Available Flights</button>
                         </Link>

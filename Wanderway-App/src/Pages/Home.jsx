@@ -10,10 +10,14 @@ const Home = () => {
             <h1>Main App for Customers</h1>
                  <div className='router-buttons' style={{display: 'flex', flexDirection: 'row', padding: '20px', gap: '10px'}}>
                     {/* Ari e link nato ato pages */}
-
                     <Link to="/list-flight">
                         <button style={{ display: 'flex', alignItems: 'center' }}>
                             Flight List <IoAirplane style={{ marginLeft: '8px' }}/>
+                        </button>
+                    </Link>
+                    <Link to="/create/flight">
+                        <button>
+                            Book Flight
                         </button>
                     </Link>
                     <Link to="/customerList">
@@ -34,7 +38,9 @@ const Home = () => {
                     <Link to="/Favorites">
                         <button>Favorites</button>
                     </Link>
-                    
+                    <Link to="/Addfav">
+                        <button>AddFavorites</button>
+                    </Link>
                     
                     </div>
         </div>
