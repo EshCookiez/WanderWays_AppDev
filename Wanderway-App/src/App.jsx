@@ -21,6 +21,7 @@ import Addfav from './Pages/Favorites/favorites'
 import CreateFlight from './Pages/FlightBooking/CreateFlight';
 import CustomerProfile from './Pages/CustomerProfile/CustomerProfile';
 import HotelListing from './Pages/Acm/HotelListing';
+import FlightSearch from './Pages/FlightBooking/FlightSearch/FlightSearch';
 function App() {
     return (
         <Router>
@@ -33,6 +34,7 @@ function App() {
                     <Route path="/list-flight" element={<FlightList />} />
                     <Route path="/create/flight" element={<CreateFlight/>} />
                     <Route path="/bookUpdate/:fbookId" element={<FlightBooking_Update />} />
+                    <Route path="/flight-search" element={<FlightSearch/>}/>
 
                     <Route path="/customerList" element={<CustomerList />} />
                     <Route path="/addCustomer" element={<CustomerForm />} />

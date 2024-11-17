@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import { CgUser } from "react-icons/cg";
-import { MdAirlineSeatReclineExtra } from "react-icons/md";
 import './flightscss.css';
+import styles from './Forms.module.css'
+import TextField from '../../Components/TextField/TextField';
+import OptionsField from '../../Components/OptionsField/OptionsField';
+import Button from '../../Components/Button/Button';
+import AirplaneImage from './assets/image1.jpg';
 
 
 function FlightBooking_Update() {
@@ -15,8 +18,8 @@ function FlightBooking_Update() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const BookingData = {
-            fare_class: fareclass,
-            passenger_amount: parseInt(travellerCtr, 10),
+            fareClass: fareclass,
+            passengerAmount: parseInt(travellerCtr, 10),
             flight: { flightId: parseInt(flightId, 10) },
             fbook_Id: fbookId
         };
@@ -47,8 +50,8 @@ function FlightBooking_Update() {
             try {
                 const response = await axios.get(`http://localhost:8080/api/bookings/${fbookId}`);
                 const booking = response.data;
-                setTravellersCtr(booking.passenger_amount);
-                setFareclass(booking.fare_class);
+                setTravellersCtr(booking.passengerAmount);
+                setFareclass(booking.fareClass);
             } catch (error) {
                 setMessage('');
             }
@@ -60,26 +63,31 @@ function FlightBooking_Update() {
 
 
     return (
-        <div className='update-page'>
-            <div className='update-box'>
-                <h1>Update your Booking</h1>
-                <h2>Booking ID: {fbookId}</h2>
-                <form onSubmit={handleSubmit} style={{ margin: '20px'}}>
-                    <label>Seat Class</label>
-                    <div className='input-fareclass'>
-                    <input 
-                        type="text" 
-                        placeholder="(Economy, Business, First-Class)" 
-                        value={fareclass}
-                        onChange={(e) => setFareclass(e.target.value)}
-                        required 
-                        style={{ padding: '10px', width: '90%'}}
-                    />
-                    <MdAirlineSeatReclineExtra className="input-icon"/>
-                    </div>
-                    <label>Number of Travellers</label>
-                    <div className='input-travellers'>
-                        <input 
+        <main className={styles.FormsPage}>
+            <aside className={styles.imageSection}>
+                <img src={AirplaneImage} alt="Scenic travel destination" className={styles.scenicImage} />
+            </aside>
+            <div className={styles.contentWrapper}>
+                <section className={styles.formSection}>
+                    <Link to='/'>
+                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/633aaaa339ee7af67a22595035717caa8c4a23d51c73dfdc999464c1de6a97bb?placeholderIfAbsent=true&apiKey=918132c67bed4c9f95d44f9d99b73e78" alt="WanderWays logo" className={styles.logo} />
+                    </Link>  
+                    <h1 className={styles.title}>Update your Booking</h1>
+                    <h2 className={styles.title}>Booking ID: {fbookId}</h2>
+                    {message && <p>{message}</p>}
+                    <form onSubmit={handleSubmit} style={{ margin: '20px'}}>
+                    <OptionsField
+                            label="Seat Class"
+                            type="select"
+                            name="fareclass"
+                            value={fareclass}
+                            onChange={(e) => setFareclass(e.target.value)}
+                            options={['Economy', 'Business', 'First-Class']}
+                            required 
+                            style={{ padding: '10px', width: '90%'}}
+                        />
+                        <TextField
+                            label='Number of Travellers'
                             type="number" 
                             placeholder="Enter Number of Travellers" 
                             value={travellerCtr}
@@ -87,18 +95,16 @@ function FlightBooking_Update() {
                             required 
                             style={{ padding: '10px', width: '90%'}}
                         />
-                         <CgUser className="input-icon" />
-                    </div>
-                        <div className='button-box'>
-                            <button type='submit'>Update Booking</button>
+                        <Button type='submit' className={styles.button}>Update Booking</Button>
+                        <div className={styles.formOptions}>
                             <Link to={`/list-flight`}>
-                                <button>Available Flights</button>
+                               <p className={styles.flightList}>Available Flights</p>
                             </Link>
                         </div>
-                </form>
-                {message && <p>{message}</p>}
+                    </form>
+                </section>
             </div>
-        </div>
+        </main>
     );
 }
 

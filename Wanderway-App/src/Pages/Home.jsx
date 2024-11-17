@@ -7,17 +7,12 @@ const Home = () => {
     return (
         <div className='Title' style={{display: 'flex', flexDirection: 'column', padding: '20px'}}>
         <Header/>
-            <h1>Main App for Customers</h1>
-                 <div className='router-buttons' style={{display: 'flex', flexDirection: 'row', padding: '20px', gap: '10px'}}>
+            <h1>CRUD functionality</h1>
+                 <div className='router-buttons' style={{display: 'flex', flexDirection: 'row', flexWrap:'wrap',padding: '20px', gap: '10px'}}>
                     {/* Ari e link nato ato pages */}
                     <Link to="/list-flight">
                         <button style={{ display: 'flex', alignItems: 'center' }}>
                             Flight List <IoAirplane style={{ marginLeft: '8px' }}/>
-                        </button>
-                    </Link>
-                    <Link to="/create/flight">
-                        <button>
-                            Book Flight
                         </button>
                     </Link>
                     <Link to="/customerList">
@@ -40,6 +35,16 @@ const Home = () => {
                     </Link>
                     <Link to="/Addfav">
                         <button>AddFavorites</button>
+                    </Link>
+                    <Link to="/create/flight">
+                        <button>
+                            Create Flight
+                        </button>
+                    </Link>
+                    <Link to="/flight-search">
+                        <button>
+                            Search Flight
+                        </button>
                     </Link>
                     
                     </div>

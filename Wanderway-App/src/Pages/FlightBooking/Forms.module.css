@@ -1,0 +1,88 @@
+.FormsPage{
+    display: flex;
+    background-color: #fff;
+    overflow: hidden;
+  }
+  
+  .contentWrapper {
+    flex: 1;
+    padding: 63px 68px 104px;
+  }
+
+  .createForm {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .formSection {
+    max-width: 512px;
+  }
+
+  .logo {
+    width: 269px;
+    height: auto;
+    margin-bottom: 58px;
+  }
+
+  .title {
+    font: 700 40px 'TradeGothic LT Extended', -apple-system, Roboto, Helvetica, sans-serif;
+    color: #000;
+  }
+  
+  .imageSection {
+    flex: 1;
+  }
+
+  .formOptions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font: 500 14px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+  }
+
+  .flightList {
+    text-align: center;
+    font: 500 14px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    color: #ff8682;
+    text-decoration: none;
+  }
+  
+  .flightList:visited, .flightList:active, .flightList:hover {
+    text-decoration: none; 
+    color: #ff8682;
+  }
+  .scenicImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+  }
+  
+  @media (max-width: 991px) {
+    .loginPage {
+      flex-direction: column;
+    }
+  
+    .contentWrapper {
+      padding: 40px 20px;
+    }
+  
+    .loginSection {
+      max-width: 100%;
+    }
+  
+    .logo {
+      margin-bottom: 40px;
+    }
+  
+    .imageSection {
+      order: -1;
+    }
+  
+    .scenicImage {
+      max-height: 300px;
+    }
+  }
+
+  
