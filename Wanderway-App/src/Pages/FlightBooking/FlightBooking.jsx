@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { FaUser } from 'react-icons/fa';
-import { MdAirlineSeatReclineExtra } from "react-icons/md";
 import axios from 'axios';
 import './flightscss.css';
-
+import styles from './Forms.module.css'
+import TextField from '../../Components/TextField/TextField';
+import OptionsField from '../../Components/OptionsField/OptionsField';
+import Button from '../../Components/Button/Button';
+import AirplaneImage from './assets/image1.jpg';
 
 const FlightBooking = () => {
     const { flightId, price } = useParams(); 
@@ -37,47 +39,48 @@ const FlightBooking = () => {
     };
 
     return (
-        <div className='book-page'>
-            <div className='book-box'>
-                <h1>Book Your Flights</h1>
-                <h2>Flight ID: {flightId} -- Price: ${price}</h2>
-                {message && <p>{message}</p>}
-                <form onSubmit={handleSubmit} style={{ margin: '20px'}}>
-                    <label>Seat Class</label>
-                    <div className='input-fareclass'>
-                    <input 
-                        type="text" 
-                        placeholder="(Economy, Business, First-Class)" 
-                        value={fareclass}
-                        onChange={(e) => setFareclass(e.target.value)}
-                        required 
-                        style={{ padding: '10px', width: '90%'}}
-                    />
-                    <MdAirlineSeatReclineExtra className="input-icon"/>
-                    </div>
-                    <label>Number of Travellers</label>
-                    <div className='input-travellers'>
-                    <input 
-                        type="number" 
-                        placeholder="Enter Number of Travellers" 
-                        value={travellerCtr}
-                        onChange={(e) => setTravellersCtr(e.target.value)} 
-                        required 
-                        style={{ padding: '10px', width: '90%'}}
-                    />
-                     <FaUser className="input-icon" />
-                    </div>
-                    <div className='button-box'>
-                        <button type='submit' style={{width: '150px'}}>Book Flight</button>
-                        <Link to={`/list-flight`}>
-                            <button style={{width: '130px'}}>Available Flights</button>
-                        </Link>
-                    </div>
-
-                </form>
-                
+        <main className={styles.FormsPage}>
+            <aside className={styles.imageSection}>
+                <img src={AirplaneImage} alt="Scenic travel destination" className={styles.scenicImage} />
+            </aside>
+            <div className={styles.contentWrapper}>
+                <section className={styles.formSection}>
+                <Link to='/'>
+                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/633aaaa339ee7af67a22595035717caa8c4a23d51c73dfdc999464c1de6a97bb?placeholderIfAbsent=true&apiKey=918132c67bed4c9f95d44f9d99b73e78" alt="WanderWays logo" className={styles.logo} />
+                </Link>  
+                    <h1 className={styles.title}>Book Your Flights</h1>
+                    <h2 h1 className={styles.title}>Flight ID: {flightId} -- Price: ${price}</h2>
+                    {message && <p>{message}</p>}
+                    <form onSubmit={handleSubmit} style={{ margin: '20px'}}>
+                        <OptionsField
+                            label="Seat Class"
+                            type="select"
+                            name="fareclass"
+                            value={fareclass}
+                            onChange={(e) => setFareclass(e.target.value)}
+                            options={['Economy', 'Business', 'First-Class']}
+                            required 
+                            style={{ padding: '10px', width: '90%'}}
+                        />
+                        <TextField
+                            label='Number of Travellers'
+                            type="number" 
+                            placeholder="Enter Number of Travellers" 
+                            value={travellerCtr}
+                            onChange={(e) => setTravellersCtr(e.target.value)} 
+                            required 
+                            style={{ padding: '10px', width: '90%'}}
+                        />
+                        <Button type='submit' className={styles.button}>Book Flight</Button>
+                        <div className={styles.formOptions}>
+                            <Link to={`/list-flight`}>
+                               <p className={styles.flightList}>Available Flights</p>
+                            </Link>
+                        </div>
+                    </form>
+                </section>
             </div>
-        </div>
+        </main>
     );
 };
 

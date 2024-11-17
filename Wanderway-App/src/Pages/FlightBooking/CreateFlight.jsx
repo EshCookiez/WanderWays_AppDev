@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import styles from './Forms.module.css'
+import TextField from '../../Components/TextField/TextField';
+import Button from '../../Components/Button/Button';
 import './flightscss.css';
 import dayjs from 'dayjs';
-
+import AirplaneImage from '../../assets/Airplane.jpg';
 
 const CreateFlight=() => {
     const [message, setMessage] = useState("");
@@ -31,14 +34,14 @@ const CreateFlight=() => {
             dateArrival: dayjs(flightData.dateArrival).format('YYYY-MM-DD HH:mm'),
         };
 
-        try {
-            const response = await fetch(`http://localhost:8080/api/flights/add`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formattedFlightData),
-            });
+    try {
+        const response = await fetch(`http://localhost:8080/api/flights/add`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formattedFlightData),
+        });
     
             if (response.ok) {
                 setMessage('Flight created successfully!');
@@ -52,99 +55,85 @@ const CreateFlight=() => {
 
 
     return (
-        <div className='flightform-page'>
-            <div className='flightform-box'>
-                <h1>Create Flight</h1>
-                <form onSubmit={handleSubmit} style={{ margin: '20px'}}>
-                    <label>Flight Rating</label>
-                    <div className='input'>
-                        <input
+        <main className={styles.FormsPage}>
+            <aside className={styles.imageSection}>
+                <img src={AirplaneImage} alt="Scenic travel destination" className={styles.scenicImage} />
+            </aside>
+            <div className={styles.contentWrapper}>
+            <section className={styles.formSection}>
+            <Link to='/'>
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/633aaaa339ee7af67a22595035717caa8c4a23d51c73dfdc999464c1de6a97bb?placeholderIfAbsent=true&apiKey=918132c67bed4c9f95d44f9d99b73e78" alt="WanderWays logo" className={styles.logo} />
+            </Link>  
+                <h1 className={styles.title}>Create Flight</h1>
+                <form onSubmit={handleSubmit}>
+                        <TextField
+                            label='Rating'
                             type="text" 
                             name="rating" 
                             value={flightData.rating || ''} 
                             onChange={handleInputChange}
                             placeholder="Rating" 
-                            required 
-                            style={{ padding: '10px', width: '90%'}}/>
-                    </div>
-                    <label>Departure Time </label> 
-                    <div className='input'>
-                        <input 
+                            required />
+                        <TextField
+                            label='Departure time'
                             type="datetime-local"
                             name="dateDepart" 
                             value={flightData.dateDepart || ''} 
                             onChange={handleInputChange} 
                             placeholder="Departure Date"
-                            required 
-                            style={{ padding: '10px', width: '90%'}} />
-                    </div>
-                    <label>Arrival Time</label>
-                    <div className='input'>
-                        <input 
+                            required/>
+                        <TextField
+                            label='Arrival Time'
                             type="datetime-local"
                             name="dateArrival"  
                             value={flightData.dateArrival || ''}
                             onChange={handleInputChange} 
                             placeholder="Arrival Date"
-                            required 
-                            style={{ padding: '10px', width: '90%'}} />
-                    </div>
-                    <label>Flight Class</label>
-                    <div className='input'>
-                        <input 
+                            required />
+                        <TextField
+                            label='Flight Class'
                             type="text" 
                             name="flight_class" 
                             value={flightData.flight_class || ''}  
                             onChange={handleInputChange} 
                             placeholder="Flight Class"
-                            required 
-                            style={{ padding: '10px', width: '90%'}} />
-                    </div>
-                    <label>Flight Origin</label>
-                    <div className='input'>
-                        <input 
+                            required />
+                        <TextField
+                            label='Location Origin'
                             type="text" 
                             name="location_origin" 
                             value={flightData.location_origin || ''} 
                             onChange={handleInputChange} 
                             placeholder="Origin"
-                            required 
-                            style={{ padding: '10px', width: '90%'}} />
-                    </div>
-                    <label>Flight Destination</label>
-                    <div className='input'>
-                        <input 
+                            required/>
+                        <TextField
+                            label='Flight Destination'
                             type="text" 
                             name="location_destination" 
                             value={flightData.location_destination || ''} 
                             onChange={handleInputChange} 
                             placeholder="Destination"
-                            required 
-                            style={{ padding: '10px', width: '90%'}} />
-                    </div>
-                    <label>Price</label>
-                    <div className='input'>
-                        <input
+                            required />
+                        <TextField
+                            label='Price'
                             type="number" 
                             name="price" 
                             value={flightData.price || ''}  
                             onChange={handleInputChange} 
                             placeholder="Price"
-                            required 
-                            style={{ padding: '10px', width: '90%'}} />
-                    </div>
-
-                    <div className='button-box'>
-                        <button type='submit'>Create Flight</button>
-                        <Link to={`/list-flight`}>
-                            <button type='button'>Available Flights</button>
-                        </Link>
-                    </div>
+                            required/>
+                            <Button type='submit' className={styles.button}>Create Flight</Button>
+                            <div className={styles.formOptions}>
+                            <Link to={`/list-flight`}>
+                               <p className={styles.flightList}>Available Flights</p>
+                            </Link>
+                            </div>
                 </form>
                 {message && <p>{message}</p>}
+                </section>
             </div>
-        </div>
+        </main>
     );
-}
+};
 
 export default CreateFlight;

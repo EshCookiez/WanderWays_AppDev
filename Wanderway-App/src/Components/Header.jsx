@@ -10,7 +10,7 @@ const Header = () =>{
     return(
         <div className="header-box" >
             <div className="features">
-            <Link to="/list-flight">
+            <Link to="/flight-search">
                 <h3 className="find">
                     <IoAirplane className="airplane-icon"/>Find Places
                 </h3>

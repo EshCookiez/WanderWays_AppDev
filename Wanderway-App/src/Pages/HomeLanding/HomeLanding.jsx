@@ -15,7 +15,7 @@ function HomeLanding() {
         <nav className={styles.nav}>
           <ul className={styles.navList}>
             <li className={styles.navItem}>
-              <Link to="/list-flight" className={styles.navLink}>
+              <Link to="/flight-search" className={styles.navLink}>
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/acb46477b92a1f8acae7e0a99465929b356bd9f589f08663921d25fe23505374?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
                   alt=""
@@ -196,7 +196,7 @@ function HomeLanding() {
               <p className={styles.optionDescription}>
                 Search Flights & Places Hire to our most popular destinations
               </p>
-              <Link to="/list-flight">
+              <Link to="/flight-search">
                 <button className={styles.optionButton}>
                   <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/1621daca02bcb5aacc082af98626b872482611b9ffab1cee341ef40025380ef1?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.buttonIcon} />
                   Show Flights

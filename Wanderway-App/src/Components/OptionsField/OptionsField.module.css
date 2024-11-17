@@ -1,0 +1,45 @@
+.OptionsField {
+    position: relative;
+    margin-bottom: 24px;
+  }
+  
+  .label {
+    display: block;
+    position: relative;
+  }
+  
+  .labelText {
+    position: absolute;
+    left: 16px;
+    top: -8px;
+    background-color: #fff;
+    padding: 0 4px;
+    font-size: 14px;
+    color: #121;
+    z-index: 1;
+  }
+  
+  .input {
+    width: 107%;
+    padding: 16px;
+    border: 1px solid #79747e;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: Montserrat, sans-serif;
+    color: #1c1b1f;
+  }
+  
+  .togglePassword {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .toggleIcon {
+    width: 24px;
+    height: 24px;
+  }
