@@ -19,6 +19,7 @@ import Favorites from './Pages/Favorites/FavoriteList'
 import HotelSearch from './Pages/Acm/HotelSearch';
 import Addfav from './Pages/Favorites/favorites'
 import CreateFlight from './Pages/FlightBooking/CreateFlight';
+import CustomerProfile from './Pages/CustomerProfile/CustomerProfile';
 function App() {
     return (
         <Router>
@@ -52,6 +53,7 @@ function App() {
                     <Route path="/favorites" element={<Favorites/>}/>
                     <Route path ="/addFav" element={<Addfav/>}/>
                     <Route path="/home" element={<Home />} />
+                    <Route path="/customerProfile" element={<CustomerProfile />} />
                 </Routes>
             </div>
         </Router>

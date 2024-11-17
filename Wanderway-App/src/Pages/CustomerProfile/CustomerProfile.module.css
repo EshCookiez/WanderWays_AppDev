@@ -1,0 +1,434 @@
+.customerProfile {
+    background-color: #fafbfc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .headerLoggedIn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(17, 34, 17, 0.05);
+    width: 100%;
+    padding: 21px 104px;
+    font: 600 14px Montserrat, sans-serif;
+    color: #121;
+  }
+  
+  .navigation {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navGroup {
+    display: flex;
+    gap: 32px;
+  }
+  
+  .navLink {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .navIcon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .logo {
+    width: 203px;
+  }
+  
+  .userSection {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  
+  .favourites {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .userProfile {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+  }
+  
+  .userAvatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+  }
+  
+  .userName {
+    margin-left: 4px;
+  }
+  
+  .notificationDot {
+    width: 10px;
+    height: 10px;
+    background-color: #121;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 2px;
+    left: 33px;
+  }
+  
+  .dropdownIcon {
+    width: 14px;
+    height: 15px;
+  }
+  
+  .profileInfo {
+    width: 100%;
+    max-width: 1232px;
+    margin-top: 48px;
+  }
+  
+  .coverImageContainer {
+    position: relative;
+    height: 350px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .coverImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .uploadButton {
+    position: absolute;
+    bottom: 26px;
+    right: 80px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #8dd3bb;
+    border: none;
+    border-radius: 4px;
+    padding: 16px;
+    font: 500 14px Montserrat, sans-serif;
+    color: #121;
+    cursor: pointer;
+  }
+  
+  .uploadIcon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .profileDetails {
+    display: flex;
+    align-items: center;
+    margin-top: -70px;
+    padding: 0 80px;
+  }
+  
+  .profilePicture {
+    width: 154px;
+    height: 154px;
+    border-radius: 50%;
+    margin-right: 24px;
+  }
+  
+  .userInfo {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .userName {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .userEmail {
+    font-size: 16px;
+    opacity: 0.75;
+    margin: 8px 0 0;
+  }
+  
+  .profileNav {
+    display: flex;
+    justify-content: start;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(17, 34, 17, 0.05);
+    margin-top: 32px;
+    padding: 16px 24px;
+  }
+  
+  .navItem {
+    flex: 1;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #121;
+    text-decoration: none;
+    padding: 16px 0;
+  }
+  
+  .navItem.active {
+    position: relative;
+  }
+  
+  .navItem.active::after {
+    content: '';
+    position: absolute;
+    bottom: -16px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #8dd3bb;
+  }
+  
+  .accountDetails {
+    width: 100%;
+    max-width: 1232px;
+    margin-top: 40px;
+  }
+  
+  .sectionTitle {
+    font: 700 32px 'TradeGothic LT Extended', sans-serif;
+    color: #000;
+    margin: 0 0 16px;
+  }
+  
+  .fieldsContainer {
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(17, 34, 17, 0.05);
+    padding: 32px 24px;
+  }
+  
+  .accountField {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  
+  .accountField:last-child {
+    margin-bottom: 0;
+  }
+  
+  .fieldInfo {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .fieldLabel {
+    font-size: 16px;
+    opacity: 0.75;
+    margin-bottom: 8px;
+  }
+  
+  .fieldValue {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  
+  .changeButton {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: 1px solid #8dd3bb;
+    border-radius: 4px;
+    padding: 16px;
+    font: 500 14px Montserrat, sans-serif;
+    color: #121;
+    cursor: pointer;
+  }
+  
+  .changeIcon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .footer {
+    width: 100%;
+    background-color: #8dd3bb;
+    margin-top: 126px;
+    padding: 64px 104px;
+  }
+  
+  .footerContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #cdeae1;
+    border-radius: 20px;
+    padding: 24px;
+  }
+  
+  .subscriptionSection {
+    max-width: 593px;
+  }
+  
+  .footerTitle {
+    font: 700 44px/54px 'Libre Franklin', sans-serif;
+    color: #121;
+    margin: 0 0 25px;
+  }
+  
+  .footerDescription {
+    font: 500 16px Montserrat, sans-serif;
+    color: #121;
+    opacity: 0.7;
+    margin: 0 0 16px;
+  }
+  
+  .subscriptionForm {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .emailInput {
+    flex: 1;
+    min-height: 56px;
+    border-radius: 4px;
+    border: none;
+    padding: 8px 16px;
+    font: 400 16px Montserrat, sans-serif;
+  }
+  
+  .subscribeButton {
+    background-color: #121;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font: 600 14px Montserrat, sans-serif;
+    cursor: pointer;
+  }
+  
+  .footerImage {
+    width: 400px;
+    object-fit: contain;
+  }
+  
+  .footerLogo {
+    display: block;
+    width: 328px;
+    margin: 64px auto 0;
+  }
+  
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  @media (max-width: 991px) {
+    .headerLoggedIn {
+      max-width: 100%;
+      padding: 0 20px;
+    }
+  
+    .profileInfo {
+      margin-top: 40px;
+    }
+  
+    .coverImageContainer {
+      height: auto;
+    }
+  
+    .uploadButton {
+      right: 20px;
+      bottom: 20px;
+      display: none;
+    }
+  
+    .profileDetails {
+      flex-direction: column;
+      align-items: center;
+      padding: 0 20px;
+    }
+  
+    .profilePicture {
+      margin-right: 0;
+      margin-bottom: 16px;
+    }
+  
+    .userInfo {
+      text-align: center;
+    }
+  
+    .profileNav {
+      flex-wrap: wrap;
+    }
+  
+    .navItem {
+      flex-basis: 100%;
+    }
+  
+    .accountDetails {
+      padding: 0 20px;
+    }
+  
+    .fieldsContainer {
+      padding: 24px 16px;
+    }
+  
+    .accountField {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .changeButton {
+      margin-top: 16px;
+    }
+  
+    .footer {
+      padding: 40px 20px;
+    }
+  
+    .footerContent {
+      flex-direction: column;
+    }
+  
+    .subscriptionSection {
+      max-width: 100%;
+      margin-bottom: 24px;
+    }
+  
+    .subscriptionForm {
+      flex-direction: column;
+    }
+  
+    .footerImage {
+      width: 100%;
+      max-width: 300px;
+    }
+  
+    .footerLogo {
+      width: 100%;
+      max-width: 250px;
+    }
+
+    .fileInput {
+        display: none;
+      }
+      
+  }

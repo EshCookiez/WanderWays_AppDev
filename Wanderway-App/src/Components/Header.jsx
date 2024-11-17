@@ -26,7 +26,10 @@ const Header = () =>{
                 <Link to ="/Favorites">
                     <h3 className="favorites"><MdFavorite className="favorites-icon" />Favorites  | </h3>
                 </Link>
-                <h3 className="user"><AiOutlineUser className="user-icon"/> placeholder</h3>
+                <Link to ="/customerProfile">
+                <h3 className="user"><AiOutlineUser className="user-icon"/> Vince K.</h3>
+                </Link>
+               
             </div>
         </div>
     );
