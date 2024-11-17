@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import Header from '../../Components/Header';
+import TextField from '@mui/material/TextField';
 import styles from './HotelSearch.module.css';
 import logo from './acmAssets/HotelSearchBg.png';
-import wander from '../../assets/LogoIMG.png';
+import MenuItem from '@mui/material/MenuItem';
+import Box from '@mui/material/Box'
+
 const destinations = [
   { name: 'Melbourne', description: 'An amazing journey', price: '$ 700', image: 'https://cdn.builder.io/api/v1/image/assets/TEMP/37fe1a318de4cd8f7f690a808f8ab0a4e85c60478cec2cc36b434cbbabf3fe2e?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7' },
   { name: 'Paris', description: 'A Paris Adventure', price: '$ 600', image: 'https://cdn.builder.io/api/v1/image/assets/TEMP/c15c171de52a6ac99b6f0aee1e2bc93c03a0677cfb9c422d9920a898ced0e191?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7' },
@@ -11,57 +15,45 @@ const destinations = [
 ];
 
 function HotelSearch() {
-  const [destination, setDestination] = useState('');
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckOut] = useState('');
-  const [roomsGuests, setRoomsGuests] = useState('');
+  const location = useLocation();
+  const { selectedTab, destination, checkIn, checkOut, roomsGuests } = location.state || { 
+    selectedTab: "Stays",
+    destination: '',
+    checkIn: '',
+    checkOut: '',
+    roomsGuests: ''
+  };
+
+  const [destinationState, setDestinationState] = useState(destination);
+  const [checkInState, setCheckInState] = useState(checkIn);
+  const [checkOutState, setCheckOutState] = useState(checkOut);
+  const [roomsGuestsState, setRoomsGuestsState] = useState(roomsGuests);
   const [email, setEmail] = useState('');
+  const [dateError, setDateError] = useState('');
 
   const handleSearch = (e) => {
     e.preventDefault();
+    if (new Date(checkInState) >= new Date(checkOutState)) {
+      setDateError('Check-out date must be after check-in date.');
+      return;
+    }
+    setDateError('');
+    // Perform search logic here
   };
 
   const handleSubscribe = (e) => {
     e.preventDefault();
+    // Perform subscribe logic here
+  };
+
+  const getCurrentDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
   };
 
   return (
     <main className={styles.hotelSearch}>
-      <header className={styles.header}>
-        <div className={styles.headerIndicator} />
-        <div className={styles.headerIndicator} />
-        <nav className={styles.navigation}>
-          <ul className={styles.navList}>
-            <li className={styles.navItem}>
-              <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d01ba79be3645eb156fe1bf65e7fdf1552523bdee469da5dc9a9a3857874f4ba?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.navIcon} />
-              <a href="#findFlight">Find Flight</a>
-            </li>
-            <li className={styles.navItem}>
-              <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/59d964d72298f8718f8057b3b3cf1836eac579d801be71c433672b0c729783f8?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.navIcon} />
-              <a href="#findStays">Find Stays</a>
-            </li>
-          </ul>
-        </nav>
-        <Link to="/">
-        <img src={wander} alt="Logo" className={styles.logo} />
-        </Link>
-        <div className={styles.userActions}>
-          <div className={styles.favorites}>
-            <Link to="/favorites" className={styles.favorites}>
-            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/a28ab6692507910b4b244f8bc0576178216381a4d124644325124c862f7ad6ac?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.navIcon} />
-            
-            <span>Favourites</span>
-            </Link>
-          </div>
-          <span className={styles.separator}>|</span>
-          <div className={styles.userProfile}>
-            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/37549d2d96f1b3c7d7388bc8db4642b5df8094db435487ff329eef0cabb96b63?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="User avatar" className={styles.userAvatar} />
-            <span>Vince K.</span>
-            <div className={styles.userStatus} />
-            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/8e6300b8e17304b876e6482ef78961bb42bd3f915b39c9b39d23eedd80078eeb?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.dropdownIcon} />
-          </div>
-        </div>
-      </header>
+      <Header className={styles.header} />
 
       <section className={styles.heroSection}>
         <img src={logo} alt="Travel destination" className={styles.heroImage} />
@@ -75,69 +67,83 @@ function HotelSearch() {
         <h2 className={styles.searchTitle}>Where are you staying?</h2>
         <form onSubmit={handleSearch} className={styles.formContainer}>
           <div className={styles.inputGroup}>
-            <label htmlFor="destination" className={styles.visuallyHidden}>Enter Destination</label>
-            <input
-              type="text"
+            <TextField
               id="destination"
-              className={styles.formInput}
-              placeholder="Cebu, Philippines"
-              aria-label="Enter Destination"
-              value={destination}
-              onChange={(e) => setDestination(e.target.value)}
+              label="Enter Destination"
+              variant="outlined"
+              fullWidth
+              multiline
+              value={destinationState}
+              onChange={(e) => setDestinationState(e.target.value)}
+              className={styles.customTextField}
+              InputLabelProps={{
+                style: { textAlign: 'center', marginTop: '0px' } // Center the label text
+              }}
             />
-            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d31d1300ee5999b99bed53a98f31e50b947fbb664fd83fb9448e1adf8215cfbb?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.inputIcon} />
           </div>
           <div className={styles.inputGroup}>
-            <label htmlFor="checkIn" className={styles.visuallyHidden}>Check In</label>
-            <input
-              type="text"
+            <TextField
               id="checkIn"
-              className={styles.formInput}
-              placeholder="Fri 12/2"
-              aria-label="Check In Date"
-              value={checkIn}
-              onChange={(e) => setCheckIn(e.target.value)}
+              label="Check In"
+              type="date"
+              variant="outlined"
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={checkInState}
+              min={getCurrentDate()}
+              inputProps={{ min: getCurrentDate() }} 
+              onChange={(e) => setCheckInState(e.target.value)}
             />
-            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/5bd01c8d2046e2d99796de5c03865284dad82fe80f830c5097331ec55f0d1954?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.inputIcon} />
           </div>
           <div className={styles.inputGroup}>
-            <label htmlFor="checkOut" className={styles.visuallyHidden}>Check Out</label>
-            <input
-              type="text"
+            <TextField
               id="checkOut"
-              className={styles.formInput}
-              placeholder="Sun 12/4"
-              aria-label="Check Out Date"
-              value={checkOut}
-              onChange={(e) => setCheckOut(e.target.value)}
+              label="Check Out"
+              type="date"
+              variant="outlined"
+              fullWidth
+              
+              className={styles.customTextField}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={checkOutState}
+              inputProps={{ min: checkInState }}
+              onChange={(e) => setCheckOutState(e.target.value)}
             />
-            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/5bd01c8d2046e2d99796de5c03865284dad82fe80f830c5097331ec55f0d1954?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.inputIcon} />
           </div>
           <div className={styles.inputGroup}>
-            <label htmlFor="roomsGuests" className={styles.visuallyHidden}>Rooms & Guests</label>
-            <input
-              type="text"
+            <TextField
               id="roomsGuests"
-              className={styles.formInput}
-              placeholder="1 room, 2 guests"
-              aria-label="Rooms and Guests"
-              value={roomsGuests}
-              onChange={(e) => setRoomsGuests(e.target.value)}
-            />
-            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/e97fdca654d48ed0d599f0b8084d6e57d66c163d17a016e9d3b24f3bedc3f841?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.inputIcon} />
-            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/e1cf7c3f17008bea66f4d4017b6e7de5c5fd105cef9d09b5eb87da37baf792db?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.inputIcon} />
+              label="Rooms & Guests"
+              select
+              variant="outlined"
+              fullWidth
+              value={roomsGuestsState}
+              onChange={(e) => setRoomsGuestsState(e.target.value)}
+              InputLabelProps={{
+                style: { textAlign: 'left', marginTop: '0px' } 
+              }}
+            >
+              <MenuItem value="1 room, 1 guest" >1 room, 1 guest</MenuItem>
+              <MenuItem value="1 room, 2 guests">1 room, 2 guests</MenuItem>
+              <MenuItem value="2 rooms, 4 guests">2 rooms, 4 guests</MenuItem>
+              <MenuItem value="3 rooms, 6 guests">3 rooms, 6 guests</MenuItem>
+            </TextField>
           </div>
-          <div className={styles.formActions}>
-            <button type="button" className={styles.promoButton}>
-              <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fcc71c9333e1e93d37ec5e537a9ff799f13d327420f759b5ebb16134b3e31926?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.buttonIcon} />
-              Add Promo Code
-            </button>
+          
+        </form>
+        {dateError && <p className={styles.error}>{dateError}</p>}
+        <div className={styles.formActions}>
+          <Link to="/hotelListing">
             <button type="submit" className={styles.searchButton}>
               <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/3841b1045beb14d265982d29d508bce5abea64959f24625829fde09ae69aa5f6?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.buttonIcon} />
               Show Places
             </button>
+            </Link>
           </div>
-        </form>
       </section>
 
       <section className={styles.travelDestinations}>

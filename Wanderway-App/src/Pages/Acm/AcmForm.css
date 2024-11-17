@@ -22,7 +22,7 @@ button {
     padding: 10px 15px;
     font-size: 16px;
     border: none;
-    background-color: #007bff; /* Bootstrap primary color */
+    background-color: #8e9eaf; /* Bootstrap primary color */
     color: white;
     border-radius: 4px;
     cursor: pointer;
@@ -30,4 +30,7 @@ button {
 
 button:hover {
     background-color: #0056b3; /* Darker blue on hover */
+}
+button:active{
+    background-color: aquamarine;
 }

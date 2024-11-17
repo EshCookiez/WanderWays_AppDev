@@ -1,38 +1,40 @@
-import Logo from "./Logo";
-import { AiOutlineUser } from "react-icons/ai";
-import './css/header.css';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { MdFavorite } from "react-icons/md";
 import { IoAirplane } from "react-icons/io5";
 import { IoIosBed } from "react-icons/io";
-import { MdFavorite } from "react-icons/md";
+import { AiOutlineUser } from "react-icons/ai";
+import Logo from './Logo'; 
+import styles from './CSS/header.module.css';
+import './CSS/header.css'
+const Header = () => {
+  const location = useLocation();
 
-const Header = () =>{
-    return(
-        <div className="header-box" >
-            <div className="features">
-            <Link to="/list-flight">
-                <h3 className="find">
-                    <IoAirplane className="airplane-icon"/>Find Places
-                </h3>
-            </Link>
-            <Link to="/list-accommodation">
-                <h3 className="find">
-                    <IoIosBed className="bed-icon"/> Find Stays
-                </h3>
-            </Link>
-            </div>
-            <Logo/>
-            <div className="account-details">
-                <Link to ="/Favorites">
-                    <h3 className="favorites"><MdFavorite className="favorites-icon" />Favorites  | </h3>
-                </Link>
-                <Link to ="/customerProfile">
-                <h3 className="user"><AiOutlineUser className="user-icon"/> Vince K.</h3>
-                </Link>
-               
-            </div>
-        </div>
-    );
+  return (
+    <div className={styles.headerBox}>
+      <div className={styles.features}>
+        <Link to="/list-flight">
+          <h3 className={`${styles.find} ${location.pathname === '/list-flight' ? styles.active : ''}`}>
+            <IoAirplane className={styles.airplaneIcon} />Find Places
+          </h3>
+        </Link>
+        <Link to="/hotelsearch">
+          <h3 className={`${styles.find} ${location.pathname === '/hotelsearch' ? styles.active : ''}`}>
+            <IoIosBed className={styles.bedIcon} /> Find Stays
+          </h3>
+        </Link>
+      </div>
+      <Logo />
+      <div className={styles.accountDetails}>
+        <Link to="/Favorites">
+          <h3 className={styles.favorites}><MdFavorite className={styles.favoritesIcon} />Favorites  | </h3>
+        </Link>
+        <Link to="/customerProfile">
+          <h3 className={styles.user}><AiOutlineUser className={styles.userIcon} /> Vince K.</h3>
+        </Link>
+      </div>
+    </div>
+  );
+};
 
-;}
 export default Header;

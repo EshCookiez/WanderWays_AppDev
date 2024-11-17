@@ -101,7 +101,7 @@
     left: 33px;
     bottom: 2px;
   }
-  
+ 
   .dropdownIcon {
     width: 14px;
   }
@@ -146,10 +146,16 @@
     align-self: center;
     z-index: 10;
   }
-  
+  .css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input {
+    text-align: left !important; /* Align the selected option text to the left */
+  }
+  .TextField2{
+    text-align: left;
+  }
   .searchTitle {
     color: #121;
     font: 600 20px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    text-align: left;
   }
   
   .formContainer {

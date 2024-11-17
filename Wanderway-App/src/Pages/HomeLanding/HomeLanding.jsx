@@ -1,12 +1,46 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './HomeLanding.module.css';
-import logo from '../../assets/LogoMain.png'
+import logo from '../../assets/LogoMain.png';
 import pic from '../../assets/Picture.png';
 import './HomeLanding.css';
 
 function HomeLanding() {
   const [selectedTab, setSelectedTab] = useState("Flights");
+  const [destination, setDestination] = useState('');
+  const [checkIn, setCheckIn] = useState('');
+  const [checkOut, setCheckOut] = useState('');
+  const [roomsGuests, setRoomsGuests] = useState('');
+  const [dateError, setDateError] = useState('');
+  const navigate = useNavigate();
+
+  const handleShowFlights = (e) => {
+    e.preventDefault();
+    navigate('/flight', { state: { selectedTab: "Flights" } });
+  };
+
+  const handleShowPlaces = (e) => {
+    e.preventDefault();
+    if (new Date(checkIn) >= new Date(checkOut)) {
+      setDateError('Check-out date must be after check-in date.');
+      return;
+    }
+    setDateError('');
+    navigate('/hotelsearch', { 
+      state: { 
+        selectedTab: "Stays",
+        destination,
+        checkIn,
+        checkOut,
+        roomsGuests
+      } 
+    });
+  };
+
+  const getCurrentDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
 
   return (
     <div className={styles.landingPage}>
@@ -83,7 +117,7 @@ function HomeLanding() {
 
           {selectedTab === "Flights" ? (
             <div>
-              <form className={styles.searchForm}>
+              <form className={styles.searchForm} onSubmit={handleShowFlights}>
                 <div className={styles.inputGroup}>
                   <label htmlFor="fromTo" className={styles.label}>From - To</label>
                   <input type="text" id="fromTo" className={styles.input} placeholder="Cebu - Philippines" />
@@ -99,42 +133,68 @@ function HomeLanding() {
                     <option value="return">Return</option>
                     <option value="one-way">One-way</option>
                   </select>
-                  
                 </div>
-                <Link to="/list-flight">
-                  <button type="submit" className={styles.searchButton}>
-                    <img
-                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ebb0d5ae989a073bbe0b35604d2c7f478d137cf3f362ac925b59ce14ded9be8?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
-                      alt=""
-                      className={styles.searchIcon}
-                    />
-                    Show Flights
-                  </button>
-                </Link>
+                <button type="submit" className={styles.searchButton}>
+                  <img
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ebb0d5ae989a073bbe0b35604d2c7f478d137cf3f362ac925b59ce14ded9be8?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
+                    alt=""
+                    className={styles.searchIcon}
+                  />
+                  Show Flights
+                </button>
               </form>
             </div>
           ) : (
             <div>
-              <form className={styles.searchForm}>
+              <form className={styles.searchForm} onSubmit={handleShowPlaces}>
                 <div className={styles.inputGroup}>
                   <label htmlFor="destination" className={styles.label}>Enter Destination</label>
-                  <input type="text" id="destination" className={styles.input} placeholder="Cebu, Philippines" />
+                  <input 
+                    type="text" 
+                    id="destination" 
+                    className={styles.input} 
+                    placeholder="Cebu, Philippines" 
+                    value={destination}
+                    onChange={(e) => setDestination(e.target.value)}
+                  />
                 </div>
                 <div className={styles.inputGroup}>
                   <label htmlFor="checkIn" className={styles.label}>Check In</label>
-                  <input type="date" id="checkIn" className={styles.input} />
+                  <input 
+                    type="date" 
+                    id="checkIn" 
+                    className={styles.input} 
+                    value={checkIn}
+                    min={getCurrentDate()}
+                    onChange={(e) => setCheckIn(e.target.value)}
+                  />
                 </div>
                 <div className={styles.inputGroup}>
                   <label htmlFor="checkOut" className={styles.label}>Check Out</label>
-                  <input type="date" id="checkOut" className={styles.input} />
+                  <input 
+                    type="date" 
+                    id="checkOut" 
+                    className={styles.input} 
+                    value={checkOut}
+                    min={checkIn}
+                    onChange={(e) => setCheckOut(e.target.value)}
+                  />
                 </div>
                 <div className={styles.inputGroup}>
                   <label htmlFor="roomsGuests" className={styles.label}>Rooms & Guests</label>
-                  <select id="roomsGuests" className={styles.input}>
-                    <option value="1">1 room, 2 guests</option>
-                    <option value="2">2 rooms, 4 guests</option>
+                  <select 
+                    id="roomsGuests" 
+                    className={styles.input} 
+                    value={roomsGuests}
+                    onChange={(e) => setRoomsGuests(e.target.value)}
+                  >
+                    <option value="1 room, 1 guest">1 room, 1 guest</option>
+                    <option value="1 room, 2 guests">1 room, 2 guests</option>
+                    <option value="2 rooms, 4 guests">2 rooms, 4 guests</option>
+                    <option value="3 rooms, 6 guests">3 rooms, 6 guests</option>
                   </select>
                 </div>
+                {dateError && <p className={styles.error}>{dateError}</p>}
                 <button type="submit" className={styles.searchButton}>
                   <img
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ebb0d5ae989a073bbe0b35604d2c7f478d137cf3f362ac925b59ce14ded9be8?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"

@@ -21,8 +21,7 @@ label {
 button {
     padding: 10px 15px;
     font-size: 16px;
-    border: none;
-    background-color: #007bff; /* Bootstrap primary color */
+    border: none; /* Bootstrap primary color */
     color: white;
     border-radius: 4px;
     cursor: pointer;
