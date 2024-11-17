@@ -4,6 +4,7 @@ import { MdFavorite } from "react-icons/md";
 import { IoAirplane } from "react-icons/io5";
 import { IoIosBed } from "react-icons/io";
 import { AiOutlineUser } from "react-icons/ai";
+import { MdFavorite } from "react-icons/md";
 import Logo from './Logo'; 
 import styles from './CSS/header.module.css';
 import './CSS/header.css'
