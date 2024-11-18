@@ -20,6 +20,7 @@ import HotelSearch from './Pages/Acm/HotelSearch';
 import Addfav from './Pages/Favorites/favorites'
 import CreateFlight from './Pages/FlightBooking/CreateFlight';
 import CustomerProfile from './Pages/CustomerProfile/CustomerProfile';
+import HotelListing from './Pages/Acm/HotelListing';
 import FlightSearch from './Pages/FlightBooking/FlightSearch/FlightSearch';
 function App() {
     return (
@@ -44,6 +45,7 @@ function App() {
                     <Route path="/addAccommodation" element={<AcmForm />} />
                     <Route path="/acmForm/:id" element={<AcmForm />} />
                     <Route path="/hotelsearch" element={<HotelSearch/>}/>
+                    <Route path="/hotelListing" element={<HotelListing/>}/>
 
                     <Route path="/roomList" element={<RoomList />} />
                     <Route path="/addRoom" element={<RoomForm />} />

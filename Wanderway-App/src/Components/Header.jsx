@@ -1,12 +1,16 @@
-import Logo from "./Logo";
-import { AiOutlineUser } from "react-icons/ai";
-import './css/header.css';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { IoAirplane } from "react-icons/io5";
 import { IoIosBed } from "react-icons/io";
+import { AiOutlineUser } from "react-icons/ai";
 import { MdFavorite } from "react-icons/md";
+import Logo from './Logo'; 
+import styles from './CSS/header.module.css';
+import './CSS/header.css'
 
-const Header = () =>{
+const Header = () => {
+  const location = useLocation();
+
     return(
         <div className="header-box" >
             <div className="features">
@@ -33,6 +37,5 @@ const Header = () =>{
             </div>
         </div>
     );
-
-;}
+}
 export default Header;

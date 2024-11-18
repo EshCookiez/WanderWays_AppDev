@@ -46,6 +46,8 @@ const AcmList = () => {
             <th>Location</th>
             <th>Price</th>
             <th>Type</th>
+            <th>Amenities</th>
+            <th>Rate</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -57,6 +59,8 @@ const AcmList = () => {
               <td>{accommodation.acm_location}</td>
               <td>{accommodation.acm_price}</td>
               <td>{accommodation.acm_type}</td>
+              <td>{accommodation.amenities}</td>
+              <td>{accommodation.rate}</td>
               <td>
                 <button onClick={() => navigate(`/acmForm/${accommodation.id}`)}>Edit</button>
                 <button onClick={() => handleDelete(accommodation.id)}>Delete</button>
