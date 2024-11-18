@@ -4,6 +4,7 @@
     flex-direction: column;
     align-items: center;
     overflow: hidden;
+    padding: 10px;
   }
   
   .headerLoggedIn {
@@ -136,6 +137,10 @@
     align-items: center;
     margin-top: -70px;
     padding: 0 80px;
+    position: relative;
+    z-index: 1;
+    margin-left: 0.5%;
+    flex-direction: column;
   }
   
   .profilePicture {
@@ -148,6 +153,7 @@
   .userInfo {
     display: flex;
     flex-direction: column;
+    margin-top: 3%;
   }
   
   .userName {

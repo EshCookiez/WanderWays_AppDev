@@ -79,7 +79,7 @@ const FlightList = () => {
 
   return (
     <div className='main-box'>
-          <Header/>
+      <Header/>
         <div className='search-box'>
           <div className="search-origin">
             <div className="input-wrapper">

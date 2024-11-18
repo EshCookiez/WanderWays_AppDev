@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from './Header';
+import Header from '../../Components/Header'
 import ProfileInfo from './ProfileInfo';
 import AccountDetails from './AccountDetails';
-import Footer from './Footer';
+import Footer from '../../Components/Footer/Footer';
 import styles from './CustomerProfile.module.css';
 
 const CustomerProfile = () => {
