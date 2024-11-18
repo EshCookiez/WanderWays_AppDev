@@ -12,7 +12,7 @@ const Header = () =>{
             <div className="features">
             <Link to="/flight-search">
                 <h3 className="find">
-                    <IoAirplane className="airplane-icon"/>Find Places
+                    <IoAirplane className="airplane-icon"/>Find Flight
                 </h3>
             </Link>
             <Link to="/list-accommodation">

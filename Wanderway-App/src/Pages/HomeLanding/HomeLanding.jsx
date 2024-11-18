@@ -4,6 +4,7 @@ import styles from './HomeLanding.module.css';
 import logo from '../../assets/LogoMain.png'
 import pic from '../../assets/Picture.png';
 import './HomeLanding.css';
+import Footer from '../FlightBooking/FlightSearch/Components/Footer';
 
 function HomeLanding() {
   const [selectedTab, setSelectedTab] = useState("Flights");
@@ -223,29 +224,7 @@ function HomeLanding() {
         </section>
       </main>
 
-      <section className={styles.newsletter}>
-        <div className={styles.newsletterContent}>
-          <h2 className={styles.newsletterTitle}>Wander With Us!</h2>
-          <div className={styles.newsletterDescription}>
-            <h3 className={styles.newsletterSubtitle}>The Ways</h3>
-            <p className={styles.newsletterText}>
-              Get inspired! Receive travel discounts, tips and behind the scenes stories.
-            </p>
-          </div>
-          <form className={styles.newsletterForm}>
-            <div className={styles.newsletterInputWrapper}>
-              <label htmlFor="email" className={styles.newsletterLabel}>Your email address</label>
-              <input type="email" id="email" className={styles.newsletterInput} placeholder="Your email address" required />
-            </div>
-            <button type="submit" className={styles.newsletterButton}>Subscribe</button>
-          </form>
-        </div>
-        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/4a327d15f29a2a363d65feb56bfde3a34c995861662b582a6ce54a8ef1a5ce0b?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.newsletterImage} />
-      </section>
-
-      <footer className={styles.footer}>
-        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/cd1b6544ae9b1ea63b83722c7b828974b387eb05af6063fc1bc39fd1d9fecac3?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="WanderWays Logo" className={styles.footerLogo} />
-      </footer>
+      <Footer/>
     </div>
   );
 }
