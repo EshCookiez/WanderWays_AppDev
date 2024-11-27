@@ -19,14 +19,12 @@ label {
 }
 
 button {
-    padding: 10px 15px;
     font-size: 16px;
     border: none; /* Bootstrap primary color */
-    color: white;
     border-radius: 4px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #8dd3bb;/* Darker blue on hover */
 }

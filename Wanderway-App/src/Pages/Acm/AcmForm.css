@@ -19,18 +19,20 @@ label {
 }
 
 button {
-    padding: 10px 15px;
+    padding: 10px 2px;
     font-size: 16px;
     border: none;
     background-color: #8e9eaf; /* Bootstrap primary color */
-    color: white;
+   
     border-radius: 4px;
     cursor: pointer;
+    display: flex;
 }
 
 button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #8dd3bb;
+    color: black;/* Darker blue on hover */
 }
 button:active{
-    background-color: aquamarine;
+    background-color: #8dd3bb;
 }

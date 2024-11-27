@@ -5,7 +5,7 @@ import logo from '././Assets/Docked-Airplane4.jpg';
 import TravelSection from './TravelSection';
 import Header from '../../../Components/Header.jsx'
 import FallIntoTravel from './FallIntoTravel';
-import Footer from './Components/Footer.jsx';
+import Footer from '../../../Components/Footer/Footer.jsx';
 
 const FlightSearch = () => {
   return (

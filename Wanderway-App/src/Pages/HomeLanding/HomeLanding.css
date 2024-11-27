@@ -1,6 +1,10 @@
 /* In HomeLanding.css */
-body {
-    margin: 0 auto;
-
-    width: 100%;
-  }
+      body{
+        background-image: url("../../assets/beach.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; 
+  background-blend-mode: darken;
+  background-color: rgba(0, 0, 0, 0.5); 
+  color: white; 
+      }

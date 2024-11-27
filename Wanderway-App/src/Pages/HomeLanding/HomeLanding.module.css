@@ -34,6 +34,10 @@
   max-width: 1500px;
   left: 50%;
   transform: translateX(-50%);
+  box-shadow: 1px 13px 11px 9px rgba(0,0,0,0.75);
+-webkit-box-shadow: 1px 13px 11px 9px rgba(0,0,0,0.75);
+-moz-box-shadow: 1px 13px 11px 9px rgba(0,0,0,0.75);
+  border-radius: 30px;
 }
 
 .nav {
@@ -58,6 +62,11 @@
   display: flex;
   align-items: center;
   z-index: 2; /* Ensure the nav link is in front of the background image */
+  
+  transition: color 0.3s ease;
+}
+.navLink:hover {
+  color: #7fffd4;
 }
 .homeLinkTemporary{
   z-index: 2;
@@ -122,13 +131,25 @@
   padding: 50px;
   z-index: 1;
 }
+.homeLandingFooter {
+  width: 100%;
+}
 
 .mainTitlePrefix {
   display: block;
   font: 600 20px Montserrat, sans-serif;
   color: #fff;
 }
+.tabContent {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateX(20px);
+}
 
+.tabContent.active {
+  opacity: 1;
+  transform: translateX(0);
+}
 .mainTitleHighlight {
   display: block;
   text-transform: uppercase;
@@ -147,6 +168,10 @@
   margin-right: 30px;
   position: relative;
   z-index: 10;
+  
+  box-shadow: 10px 30px 17px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 10px 30px 17px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 30px 17px 0px rgba(0,0,0,0.75);
 }
 
 .tabContainer {

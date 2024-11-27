@@ -30,8 +30,8 @@
   }
   
   button {
-    background-color: #5c5c5c; /* Dark button background */
-    color: white; /* White text for buttons */
+    background-color: #ffffff; /* Dark button background */
+    color: rgb(0, 0, 0); /* White text for buttons */
     border: none; /* No border for buttons */
     padding: 5px 10px; /* Button padding */
     cursor: pointer; /* Pointer cursor on hover */
