@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import './flightscss.css';
 import styles from './Forms.module.css'
 import TextField from '../../Components/TextField/TextField';
 import OptionsField from '../../Components/OptionsField/OptionsField';

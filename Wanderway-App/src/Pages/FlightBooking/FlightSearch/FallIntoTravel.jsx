@@ -5,7 +5,6 @@ import Melbourne from '././Assets/Melbourne.png';
 import Paris from '././Assets/Paris.png';
 import London from '././Assets/London.png';
 import Columbia from '././Assets/Columbia.png';
-
 const destinations = [
   { name: 'Melbourne', description: 'An amazing journey', price: '700', image: Melbourne },
   { name: 'Paris', description: 'A Paris Adventure', price: '600', image: Paris},
@@ -14,6 +13,7 @@ const destinations = [
 ];
 
 function FallIntoTravel() {
+
   return (
     <section className={styles.fallIntoTravel}>
       <div className={styles.sectionHeader}>

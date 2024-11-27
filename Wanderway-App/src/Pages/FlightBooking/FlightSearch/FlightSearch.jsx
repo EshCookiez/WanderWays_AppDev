@@ -10,7 +10,7 @@ import Footer from './Components/Footer.jsx';
 const FlightSearch = () => {
   return (
     <div className={styles.flightSearchContainer}>
-     <Header/>
+      <Header/>
       <main className={styles.mainContent}>
         <section className={styles.heroSection}>
             <img src={logo} alt="Travel destination" className={styles.heroImage} />

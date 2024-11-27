@@ -1,6 +1,7 @@
 .OptionsField {
     position: relative;
     margin-bottom: 24px;
+    width: 100%;
   }
   
   .label {
@@ -20,7 +21,7 @@
   }
   
   .input {
-    width: 107%;
+    width: 100%;
     padding: 16px;
     border: 1px solid #79747e;
     border-radius: 4px;

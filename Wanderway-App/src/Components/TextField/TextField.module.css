@@ -1,6 +1,7 @@
 .textField {
     position: relative;
     margin-bottom: 24px;
+    width: 100%;
   }
   
   .label {
