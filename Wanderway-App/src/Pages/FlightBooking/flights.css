@@ -1,0 +1,13 @@
+.main-box{
+     width: 100%;
+     padding-top: 70px;
+     margin-left: 1vh;
+}
+.content-box{
+    display: flex;
+    flex-direction: column;
+    width: 150vh;
+}
+
+
+

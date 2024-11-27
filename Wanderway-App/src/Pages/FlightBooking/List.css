@@ -1,0 +1,80 @@
+.search-box {
+    display: flex;
+    flex-direction: row;
+    margin: 7px;
+    gap: 2%;
+    width: 134vh;
+  }
+
+.booked-box, .flights-box{
+    box-shadow: 5px 5px 15px rgba(0, 0, 0.3, 0.5);
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    width: 150vh;
+    border-radius: 20px;
+    min-height: 700px;
+}
+
+.list-content{
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
+}
+
+.list-content button{
+    background-color: #8dd3bb;
+    color: rgba(21,71,52);
+    font-weight: bold;
+    font-size: small;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-bottom: 0.5%;
+}
+
+.list-content button:hover {
+    background-color: rgba(68,105,61);
+    color: rgb(154, 231, 138);
+    transform: scale(1.01);
+}
+
+.airplane-icon{
+    margin: 0px 5px 0px 0px;
+    font-size: 0.8em;
+    vertical-align: middle;
+    padding: 0px 0px 0px 0px
+}
+
+#delete-button{
+    background-color:#AB0003;
+    color:white;
+}
+#delete-button:hover{
+    background-color:#fa2600;
+    color: white;
+}
+
+.list-items {
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+  }
+
+.rating{
+    padding: 10px;
+    border: 1px solid #8dd3bb; 
+    border-radius: 5px;
+    border-width: 2px;
+}
+
+.price{
+    color: #ec5752 !important;
+    font-size: larger !important;
+}
+
+.image-container{
+    display: flex;
+    width: 30%;
+    height: 20vh;
+    justify-content: center;
+  }

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import styles from './Forms.module.css'
 import TextField from '../../Components/TextField/TextField';
 import Button from '../../Components/Button/Button';
-import './flightscss.css';
 import dayjs from 'dayjs';
 import AirplaneImage from '../../assets/Airplane.jpg';
 

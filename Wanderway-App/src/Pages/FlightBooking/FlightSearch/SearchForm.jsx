@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './SearchForm.module.css';
+import TextField from '../../../Components/TextField/TextField'
 
 const SearchForm = () => {
   const [originSearch, setOriginSearch] = useState('');
@@ -24,7 +25,8 @@ const SearchForm = () => {
       <form className={styles.searchForm} onSubmit={handleSubmit}>
         <div className={styles.inputGroup}>
           <label htmlFor="from" className={styles.visuallyHidden}>From</label>
-          <input
+          <TextField
+            label="From"
             type="text"
             id="fromTo"
             className={styles.formInput}
@@ -35,7 +37,8 @@ const SearchForm = () => {
         </div>
         <div className={styles.inputGroup}>
           <label htmlFor="To" className={styles.visuallyHidden}>To</label>
-          <input
+          <TextField
+            label="To"
             type="text"
             id="To"
             className={styles.formInput}

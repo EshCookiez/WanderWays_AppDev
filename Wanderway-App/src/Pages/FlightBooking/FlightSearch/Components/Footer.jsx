@@ -14,11 +14,6 @@ function Footer() {
       <div className={styles.newsletterContent}>
         <h2 className={styles.newsletterTitle}>Wander With Us!</h2>
         <div className={styles.newsletterForm}>
-          <p className={styles.newsletterDescription}>
-            <strong>The Ways</strong>
-            <br />
-            Get inspired! Receive travel discounts, tips and behind-the-scenes stories.
-          </p>
           <form onSubmit={handleSubscribe} className={styles.subscribeForm}>
             <label htmlFor="emailInput" className={styles.visuallyHidden}>
               Your email address
