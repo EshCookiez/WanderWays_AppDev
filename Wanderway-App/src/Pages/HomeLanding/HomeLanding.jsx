@@ -46,6 +46,7 @@ function HomeLanding() {
   };
 
   return (
+    <body>
     <div className={styles.landingPage}>
       <header className={styles.header}>
         <img src={pic} alt="" className={styles.rectangle} />
@@ -333,6 +334,7 @@ function HomeLanding() {
             
       <Footer className={styles.homeLandingFooter} />
     </div>
+    </body>
     
   );
 }
