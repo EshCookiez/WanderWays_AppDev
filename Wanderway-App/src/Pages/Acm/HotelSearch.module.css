@@ -323,8 +323,9 @@
   .travelExperience {
     display: flex;
     margin-top: 80px;
-    padding: 0 104px;
+    padding: 0px 104px 30px;
     gap: 24px;
+
   }
   
   .experienceContent {

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 import styles from './HomeLanding.module.css';
 import logo from '../../assets/LogoMain.png';
 import pic from '../../assets/Picture.png';
 import './HomeLanding.css';
-import Footer from '../FlightBooking/FlightSearch/Components/Footer';
+import Footer from './Footer/Footer';
 
 function HomeLanding() {
   const [selectedTab, setSelectedTab] = useState("Flights");
@@ -91,123 +93,168 @@ function HomeLanding() {
         </h1>
 
         <section className={styles.searchSection}>
-          <div className={styles.tabContainer}>
-            <button
-              className={`${styles.tabButton} ${selectedTab === "Flights" ? styles.active : ""}`}
-              onClick={() => setSelectedTab("Flights")}
-            >
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/59924a9cb79a4f34e8b135a613c8a2b10d6e31cc2e9bad530639b7eb0d5fbf1b?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
-                alt=""
-                className={styles.tabIcon}
-              />
-              Flights
-            </button>
-            <button
-              className={`${styles.tabButton} ${selectedTab === "Stays" ? styles.active : ""}`}
-              onClick={() => setSelectedTab("Stays")}
-            >
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/d31d1300ee5999b99bed53a98f31e50b947fbb664fd83fb9448e1adf8215cfbb?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
-                alt=""
-                className={styles.tabIcon}
-              />
-              Stays
-            </button>
-          </div>
+      <div className={styles.tabContainer}>
+        <button
+          className={`${styles.tabButton} ${selectedTab === 'Flights' ? styles.active : ''}`}
+          onClick={() => setSelectedTab('Flights')}
+        >
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/59924a9cb79a4f34e8b135a613c8a2b10d6e31cc2e9bad530639b7eb0d5fbf1b?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
+            alt=""
+            className={styles.tabIcon}
+          />
+          Flights
+        </button>
+        <button
+          className={`${styles.tabButton} ${selectedTab === 'Stays' ? styles.active : ''}`}
+          onClick={() => setSelectedTab('Stays')}
+        >
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/d31d1300ee5999b99bed53a98f31e50b947fbb664fd83fb9448e1adf8215cfbb?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
+            alt=""
+            className={styles.tabIcon}
+          />
+          Stays
+        </button>
+      </div>
 
-          {selectedTab === "Flights" ? (
-            <div>
-              <form className={styles.searchForm} onSubmit={handleShowFlights}>
-                <div className={styles.inputGroup}>
-                  <label htmlFor="fromTo" className={styles.label}>From - To</label>
-                  <input type="text" id="fromTo" className={styles.input} placeholder="Cebu - Philippines" />
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/864668711294bfe60d913d9764b84c0e655a855677a954c4740a9a88f205f46d?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
-                    alt=""
-                    className={styles.inputIcon}
-                  />
-                </div>
-                <div className={styles.inputGroup}>
-                  <label htmlFor="trip" className={styles.label}>Trip</label>
-                  <select id="trip" className={styles.input}>
-                    <option value="return">Return</option>
-                    <option value="one-way">One-way</option>
-                  </select>
-                </div>
-                <button type="submit" className={styles.searchButton}>
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ebb0d5ae989a073bbe0b35604d2c7f478d137cf3f362ac925b59ce14ded9be8?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
-                    alt=""
-                    className={styles.searchIcon}
-                  />
-                  Show Flights
-                </button>
-              </form>
-            </div>
-          ) : (
-            <div>
-              <form className={styles.searchForm} onSubmit={handleShowPlaces}>
-                <div className={styles.inputGroup}>
-                  <label htmlFor="destination" className={styles.label}>Enter Destination</label>
-                  <input 
-                    type="text" 
-                    id="destination" 
-                    className={styles.input} 
-                    placeholder="Cebu, Philippines" 
-                    value={destination}
-                    onChange={(e) => setDestination(e.target.value)}
-                  />
-                </div>
-                <div className={styles.inputGroup}>
-                  <label htmlFor="checkIn" className={styles.label}>Check In</label>
-                  <input 
-                    type="date" 
-                    id="checkIn" 
-                    className={styles.input} 
-                    value={checkIn}
-                    min={getCurrentDate()}
-                    onChange={(e) => setCheckIn(e.target.value)}
-                  />
-                </div>
-                <div className={styles.inputGroup}>
-                  <label htmlFor="checkOut" className={styles.label}>Check Out</label>
-                  <input 
-                    type="date" 
-                    id="checkOut" 
-                    className={styles.input} 
-                    value={checkOut}
-                    min={checkIn}
-                    onChange={(e) => setCheckOut(e.target.value)}
-                  />
-                </div>
-                <div className={styles.inputGroup}>
-                  <label htmlFor="roomsGuests" className={styles.label}>Rooms & Guests</label>
-                  <select 
-                    id="roomsGuests" 
-                    className={styles.input} 
-                    value={roomsGuests}
-                    onChange={(e) => setRoomsGuests(e.target.value)}
-                  >
-                    <option value="1 room, 1 guest">1 room, 1 guest</option>
-                    <option value="1 room, 2 guests">1 room, 2 guests</option>
-                    <option value="2 rooms, 4 guests">2 rooms, 4 guests</option>
-                    <option value="3 rooms, 6 guests">3 rooms, 6 guests</option>
-                  </select>
-                </div>
-                {dateError && <p className={styles.error}>{dateError}</p>}
-                <button type="submit" className={styles.searchButton}>
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ebb0d5ae989a073bbe0b35604d2c7f478d137cf3f362ac925b59ce14ded9be8?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
-                    alt=""
-                    className={styles.searchIcon}
-                  />
-                  Show Places
-                </button>
-              </form>
-            </div>
-          )}
-        </section>
+      <div className={`${styles.tabContent} ${selectedTab === 'Flights' ? styles.active : ''}`}>
+        {selectedTab === 'Flights' && (
+          <div>
+            <form className={styles.searchForm} onSubmit={handleShowFlights}>
+              <div className={styles.inputGroup}>
+                <TextField
+                  id="fromTo"
+                  label="From - To"
+                  variant="outlined"
+                  fullWidth
+                  placeholder="Cebu - Philippines"
+                  className={styles.customTextField}
+                  InputLabelProps={{
+                    style: { textAlign: 'center', marginTop: '0px' } // Center the label text
+                  }}
+                />
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/864668711294bfe60d913d9764b84c0e655a855677a954c4740a9a88f205f46d?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
+                  alt=""
+                  className={styles.inputIcon}
+                />
+              </div>
+              <div className={styles.inputGroup}>
+                <TextField
+                  id="trip"
+                  label="Trip"
+                  select
+                  variant="outlined"
+                  fullWidth
+                  className={styles.customTextField}
+                  InputLabelProps={{
+                    style: { textAlign: 'center', marginTop: '0px' } // Center the label text
+                  }}
+                >
+                  <MenuItem value="return">Return</MenuItem>
+                  <MenuItem value="one-way">One-way</MenuItem>
+                </TextField>
+              </div>
+              <button type="submit" className={styles.searchButton}>
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ebb0d5ae989a073bbe0b35604d2c7f478d137cf3f362ac925b59ce14ded9be8?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
+                  alt=""
+                  className={styles.searchIcon}
+                />
+                Show Flights
+              </button>
+            </form>
+          </div>
+        )}
+      </div>
+
+      <div className={`${styles.tabContent} ${selectedTab === 'Stays' ? styles.active : ''}`}>
+        {selectedTab === 'Stays' && (
+          <div>
+            <form className={styles.searchForm} onSubmit={handleShowPlaces}>
+              <div className={styles.inputGroup}>
+                <TextField
+                  id="destination"
+                  label="Enter Destination"
+                  variant="outlined"
+                  fullWidth
+                  multiline
+                  placeholder="Cebu, Philippines"
+                  value={destination}
+                  onChange={(e) => setDestination(e.target.value)}
+                  className={styles.customTextField}
+                  InputLabelProps={{
+                    style: { textAlign: 'center', marginTop: '0px' } // Center the label text
+                  }}
+                />
+              </div>
+              <div className={styles.inputGroup}>
+                <TextField
+                  id="checkIn"
+                  label="Check In"
+                  type="date"
+                  variant="outlined"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={checkIn}
+                  inputProps={{ min: getCurrentDate() }}
+                  onChange={(e) => setCheckIn(e.target.value)}
+                  className={styles.customTextField}
+                />
+              </div>
+              <div className={styles.inputGroup}>
+                <TextField
+                  id="checkOut"
+                  label="Check Out"
+                  type="date"
+                  variant="outlined"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={checkOut}
+                  inputProps={{ min: checkIn }}
+                  onChange={(e) => setCheckOut(e.target.value)}
+                  className={styles.customTextField}
+                />
+              </div>
+              <div className={styles.inputGroup}>
+                <TextField
+                  id="roomsGuests"
+                  label="Rooms & Guests"
+                  select
+                  variant="outlined"
+                  fullWidth
+                  value={roomsGuests}
+                  onChange={(e) => setRoomsGuests(e.target.value)}
+                  className={styles.customTextField}
+                  InputLabelProps={{
+                    style: { textAlign: 'left', marginTop: '0px' } // Align the label text to the left
+                  }}
+                >
+                  <MenuItem value="1 room, 1 guest">1 room, 1 guest</MenuItem>
+                  <MenuItem value="1 room, 2 guests">1 room, 2 guests</MenuItem>
+                  <MenuItem value="2 rooms, 4 guests">2 rooms, 4 guests</MenuItem>
+                  <MenuItem value="3 rooms, 6 guests">3 rooms, 6 guests</MenuItem>
+                </TextField>
+              </div>
+              {dateError && <p className={styles.error}>{dateError}</p>}
+              <button type="submit" className={styles.searchButton}>
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ebb0d5ae989a073bbe0b35604d2c7f478d137cf3f362ac925b59ce14ded9be8?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
+                  alt=""
+                  className={styles.searchIcon}
+                />
+                Show Places
+              </button>
+            </form>
+          </div>
+        )}
+      </div>
+    </section>
 
         <section className={styles.destinationSection}>
           <div className={styles.sectionHeader}>
@@ -283,9 +330,10 @@ function HomeLanding() {
           </div>
         </section>
       </main>
-
-      <Footer/>
+            
+      <Footer className={styles.homeLandingFooter} />
     </div>
+    
   );
 }
 
