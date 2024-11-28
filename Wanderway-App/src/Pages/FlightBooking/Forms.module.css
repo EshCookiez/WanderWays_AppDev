@@ -1,12 +1,26 @@
 .FormsPage{
+    position: relative;
     display: flex;
     background-color: #fff;
-    overflow: hidden;
+    height: 100vh;
+    width: 100%;
+    padding: 0vh;
+
   }
   
   .contentWrapper {
-    flex: 1;
-    padding: 63px 68px 104px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50vw;
+    height: 100%;  
+    padding: 63px 10px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    background-color: #fff;    
+    padding: 10vh;
+    overflow: hidden;
   }
 
   .createForm {
@@ -16,7 +30,8 @@
   }
   
   .formSection {
-    max-width: 512px;
+    max-width: 600px;
+    overflow: hidden;
   }
 
   .logo {
@@ -31,7 +46,12 @@
   }
   
   .imageSection {
-    flex: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50vw;
+    height: 100%; 
+    overflow: hidden; 
   }
 
   .formOptions {
@@ -71,7 +91,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 20px;
+    overflow: hidden;
   }
   
   @media (max-width: 991px) {

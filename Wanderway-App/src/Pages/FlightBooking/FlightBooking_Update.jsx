@@ -5,7 +5,7 @@ import styles from './Forms.module.css'
 import TextField from '../../Components/TextField/TextField';
 import OptionsField from '../../Components/OptionsField/OptionsField';
 import Button from '../../Components/Button/Button';
-import AirplaneImage from './assets/image1.jpg';
+import AirplaneImage from './assets/FormsImage5.jpg';
 
 
 function FlightBooking_Update() {

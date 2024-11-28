@@ -17,7 +17,7 @@ function HomeLanding() {
 
   const handleShowFlights = (e) => {
     e.preventDefault();
-    navigate('/flight', { state: { selectedTab: "Flights" } });
+    navigate('/flight-search', { state: { selectedTab: "Flights" } });
   };
 
   const handleShowPlaces = (e) => {
