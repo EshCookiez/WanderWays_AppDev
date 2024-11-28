@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import AvailableFlights from './AvailableFlights.jsx';
 import BookedFlights from './BookedFlights.jsx';
 import { Tab, Tabs, Box } from '@mui/material';
-import './flights.css';
 import { styled } from '@mui/system';
 import Header from '../../Components/Header.jsx';
+import styles from './flights.module.css';
+
 
 const FlightList = () => {
   const [flights, setFlights] = useState([]);
@@ -77,9 +78,9 @@ const FlightList = () => {
   }));
 
   return (
-    <div className="main-box">
+    <div className={styles.main-box}>
       <Header/>
-      <main className='content-box'>
+      <main className={styles.content-box}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <StyledTabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
         <StyledTab label="Available Flights" {...a11yProps(0)} />
