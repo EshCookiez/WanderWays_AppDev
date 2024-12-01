@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { IoAirplane } from 'react-icons/io5';
 import TextField from '../../Components/TextField/TextField'
 import './List.css'
+import sampleimg from './samplelogo.png'
 const AvailableFlights = ({ flights, originSearch, destinationSearch, setOriginSearch, setDestinationSearch }) => {
   const filteredFlights = flights.filter(flight =>
     flight.location_origin.toLowerCase().includes(originSearch.toLowerCase()) &&
@@ -11,7 +12,6 @@ const AvailableFlights = ({ flights, originSearch, destinationSearch, setOriginS
 
   return (
     <div className="flights-box">
-      <h2>Available Flights</h2>
       <div className="search-box">
         <TextField
           label="From"
@@ -37,7 +37,7 @@ const AvailableFlights = ({ flights, originSearch, destinationSearch, setOriginS
           <div key={flight.flight_id} className="list-content">
             <li class="list-items">
               <div class="image-container">
-                <h1> Image</h1>
+                 <img src={sampleimg} alt="Sample Logo" />
               </div>
               <div class="container">
 
@@ -68,8 +68,8 @@ const AvailableFlights = ({ flights, originSearch, destinationSearch, setOriginS
                 <div class="row py-3">
                     <div class="col text-start">
                         <div class="row-button">
-                            <Link to={`/book/${flight.flightId}/${flight.price}`}>
-                              <button style={{ width: '100%' }}>BOOK THIS FLIGHT</button>
+                            <Link to={`/book/${flight.flightId}/${flight.price}`} style={{width: '100%'}}>
+                              <button style={{ width: '100%'}}>BOOK THIS FLIGHT</button>
                             </Link>
                         </div>
                       </div>

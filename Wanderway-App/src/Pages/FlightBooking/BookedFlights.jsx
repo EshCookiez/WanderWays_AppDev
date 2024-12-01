@@ -1,18 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { IoAirplane } from 'react-icons/io5';
+import sampleimg from './samplelogo.png'
 
 const BookedFlights = ({ booked, handleDeleteBooking }) => {
   return (
     <div className="booked-box">
-      <h2>Your Booked Flights</h2>
-
       {booked.length > 0 ? (
         booked.map((booking) => (
           <div key={booking.fbookId} className="list-content">
             <div className="list-items">
-              <div className="image-container">
-              <h1> Image</h1>
+              <div class="image-container">
+                 <img src={sampleimg} alt="Sample Logo" />
               </div>
               <div className="container">
                 <div className="row md-5 d-flex align-items-center">
@@ -65,7 +64,6 @@ const BookedFlights = ({ booked, handleDeleteBooking }) => {
                   </div>
 
                   <div className="col">
-                    <div className="row-button">
                       <button
                         id="delete-button"
                         onClick={() => handleDeleteBooking(booking.fbookId)}
@@ -73,7 +71,6 @@ const BookedFlights = ({ booked, handleDeleteBooking }) => {
                       >
                         DELETE
                       </button>
-                    </div>
                   </div>
                 </div>
               </div>

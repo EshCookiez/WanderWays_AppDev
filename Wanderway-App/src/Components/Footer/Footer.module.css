@@ -1,9 +1,15 @@
 /* Footer Styles */
 .footer {
-  margin-top: auto;
   padding: 64px 104px;
   background: #90d4bc;
+  height: auto; 
+  width: 206vh;
+  margin-top: auto;  
+  background-color: #90d4bc;
+  text-align: center;
+
 }
+
 .homeLandingFooter{
   width: 100%;
 }

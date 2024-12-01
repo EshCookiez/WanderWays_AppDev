@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { Box } from '@mui/material';
 import AvailableFlights from './AvailableFlights.jsx';
 import BookedFlights from './BookedFlights.jsx';
-import { Tab, Tabs, Box } from '@mui/material';
+import { Tab, Tabs } from '@mui/material';
 import { styled } from '@mui/system';
 import Header from '../../Components/Header.jsx';
+import Footer from '../../Components/Footer/Footer.jsx';
 import styles from './flights.module.css';
-
 
 const FlightList = () => {
   const [flights, setFlights] = useState([]);
@@ -38,6 +39,7 @@ const FlightList = () => {
       'aria-controls': `simple-tabpanel-${index}`,
     };
   };
+  
   useEffect(() => {
     fetch('http://localhost:8080/api/flights/all')
       .then((response) => response.json())
@@ -78,29 +80,32 @@ const FlightList = () => {
   }));
 
   return (
-    <div className={styles.main-box}>
+  <body className={styles.body}> 
+    <div className={styles.mainBox}>
       <Header/>
-      <main className={styles.content-box}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <StyledTabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
-        <StyledTab label="Available Flights" {...a11yProps(0)} />
-        <StyledTab label="Booked Flights" {...a11yProps(1)} />
-      </StyledTabs>
-      </Box>
-      <CustomTabPanel value={value} index={0}>
-      <AvailableFlights
-          flights={flights}
-          originSearch={originSearch}
-          destinationSearch={destinationSearch}
-          setOriginSearch={setOriginSearch}
-          setDestinationSearch={setDestinationSearch}
-        />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-      <BookedFlights booked={booked} handleDeleteBooking={handleDeleteBooking} />
-      </CustomTabPanel>
+      <main className={styles.contentBox}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <StyledTabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
+          <StyledTab label="Available Flights" {...a11yProps(0)} />
+          <StyledTab label="Booked Flights" {...a11yProps(1)} />
+        </StyledTabs>
+        </Box>
+        <CustomTabPanel value={value} index={0}>
+        <AvailableFlights
+            flights={flights}
+            originSearch={originSearch}
+            destinationSearch={destinationSearch}
+            setOriginSearch={setOriginSearch}
+            setDestinationSearch={setDestinationSearch}
+          />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+        <BookedFlights booked={booked} handleDeleteBooking={handleDeleteBooking} />
+        </CustomTabPanel>
       </main>
     </div>
+    <Footer/>
+    </body>
   );
 };
 

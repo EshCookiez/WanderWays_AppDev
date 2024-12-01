@@ -31,8 +31,12 @@
     justify-content: space-between;
     align-items: center; 
     font-family: Montserrat, sans-serif;
+    
   }
 
+  .travelPitch a{
+    text-decoration: none;
+  }
   .travelTitle {
     font-size: 32px;
     font-weight: 600;
@@ -58,6 +62,7 @@
     background: transparent;
     cursor: pointer;
     margin-top: 24px;
+    text-decoration: none;
   }
   
   .travelImage {

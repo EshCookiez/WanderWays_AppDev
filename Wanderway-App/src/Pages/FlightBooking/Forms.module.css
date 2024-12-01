@@ -2,10 +2,9 @@
     position: relative;
     display: flex;
     background-color: #fff;
-    height: 100vh;
+    height: 130vh;
     width: 100%;
     padding: 0vh;
-
   }
   
   .contentWrapper {
@@ -13,13 +12,12 @@
     top: 0;
     right: 0;
     width: 50vw;
-    height: 100%;  
-    padding: 63px 10px 30px 30px;
+    height: 130vh;  
+    padding: 5px 30px 100px 70px;
     display: flex;
     flex-direction: column;
     justify-content: center; 
     background-color: #fff;    
-    padding: 10vh;
     overflow: hidden;
   }
 
@@ -32,6 +30,7 @@
   .formSection {
     max-width: 600px;
     overflow: hidden;
+    height: 100%;
   }
 
   .logo {

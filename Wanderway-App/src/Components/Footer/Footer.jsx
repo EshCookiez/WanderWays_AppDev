@@ -6,7 +6,6 @@ const Footer = () => {
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    // Handle subscribe logic here
   };
 
   return (
