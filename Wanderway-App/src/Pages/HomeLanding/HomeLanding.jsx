@@ -7,7 +7,7 @@ import logo from '../../assets/LogoMain.png';
 import pic from '../../assets/Picture.png';
 import './HomeLanding.css';
 import Footer from './Footer/Footer';
-
+import HomePage from './HomePage';
 function HomeLanding() {
   const [selectedTab, setSelectedTab] = useState("Flights");
   const [destination, setDestination] = useState('');
@@ -46,8 +46,12 @@ function HomeLanding() {
   };
 
   return (
-    <body>
     <div className={styles.landingPage}>
+      
+      <div className={styles.homeHeader}>
+        
+     <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/a4e09e7844fd116f3107c234e89a7d00f11671aa40ee74cc658ac5d2d759609d?placeholderIfAbsent=true&apiKey=a15e519098c240a2b028acfbd9132f63" alt="" className={styles.heroBackground} />
+         
       <header className={styles.header}>
         <img src={pic} alt="" className={styles.rectangle} />
         <nav className={styles.nav}>
@@ -86,9 +90,7 @@ function HomeLanding() {
           </Link>
         </div>
       </header>
-
-      <main className={styles.mainContent}>
-        <h1 className={styles.mainTitle}>
+      <h1 className={styles.mainTitle}>
           <span className={styles.mainTitlePrefix}>Wander Far, Wander Free with</span>
           <span className={styles.mainTitleHighlight}>WanderWays.</span>
         </h1>
@@ -257,6 +259,10 @@ function HomeLanding() {
       </div>
     </section>
 
+    </div>
+      <main className={styles.mainContent}>
+        
+
         <section className={styles.destinationSection}>
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>Plan your perfect trip</h2>
@@ -332,9 +338,8 @@ function HomeLanding() {
         </section>
       </main>
             
-      <Footer className={styles.homeLandingFooter} />
+    <Footer/>
     </div>
-    </body>
     
   );
 }

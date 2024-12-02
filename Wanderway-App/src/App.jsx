@@ -22,6 +22,7 @@ import CreateFlight from './Pages/FlightBooking/CreateFlight';
 import CustomerProfile from './Pages/CustomerProfile/CustomerProfile';
 import HotelListing from './Pages/Acm/HotelListing';
 import FlightSearch from './Pages/FlightBooking/FlightSearch/FlightSearch';
+import HomePage from './Pages/NewHome/LandingPage';
 function App() {
     return (
         <Router>
