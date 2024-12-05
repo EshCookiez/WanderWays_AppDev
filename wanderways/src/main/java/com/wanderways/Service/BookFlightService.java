@@ -4,7 +4,6 @@ import com.wanderways.Entity.BookFlight;
 import com.wanderways.Repository.BookFlightRepo;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,6 @@ import java.util.Optional;
 public class BookFlightService{
     private final BookFlightRepo bookflightrepo;
 
-    @Autowired
     public BookFlightService(BookFlightRepo bookflightrepo) {
         this.bookflightrepo = bookflightrepo;
     }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../Components/Header';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
@@ -12,29 +12,36 @@ import Button from '@mui/material/Button';
 import styles from './HotelListing.module.css';
 
 const HotelListing = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { destination, checkIn, checkOut, roomsGuests } = location.state || {};
+
   const [accommodations, setAccommodations] = useState([]);
   const [filteredAccommodations, setFilteredAccommodations] = useState([]);
   const [selectedType, setSelectedType] = useState('Hotels');
-  const [destinationState, setDestinationState] = useState('');
-  const [checkInState, setCheckInState] = useState('');
-  const [checkOutState, setCheckOutState] = useState('');
-  const [roomsGuestsState, setRoomsGuestsState] = useState('');
+  const [destinationState, setDestinationState] = useState(destination || '');
+  const [checkInState, setCheckInState] = useState(checkIn || '');
+  const [checkOutState, setCheckOutState] = useState(checkOut || '');
+  const [roomsGuestsState, setRoomsGuestsState] = useState(roomsGuests || '');
   const [searchError, setSearchError] = useState('');
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchAccommodations();
   }, [selectedType]);
 
+  useEffect(() => {
+    if (destination || checkIn || checkOut || roomsGuests) {
+      handleSearch();
+    }
+  }, [destination, checkIn, checkOut, roomsGuests]);
+
   const fetchAccommodations = async () => {
     try {
       const response = await AcmService.getAllAccommodations();
-      console.log('Fetched accommodations:', response.data); // Debugging line
       const accommodationsWithImages = response.data.map(accommodation => {
         const imageSrc = accommodation.image && accommodation.image.length > 0
           ? `data:image/jpeg;base64,${accommodation.image}`
           : 'https://via.placeholder.com/150';
-        console.log('Image Source:', imageSrc); // Debugging line
         return {
           ...accommodation,
           imageSrc
@@ -48,7 +55,7 @@ const HotelListing = () => {
   };
 
   const handleSearch = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     const filtered = accommodations.filter(accommodation =>
       accommodation.acm_type === selectedType &&
       accommodation.acm_location.toLowerCase().includes(destinationState.toLowerCase())
@@ -70,8 +77,6 @@ const HotelListing = () => {
     }
   };
 
-  console.log('Filtered accommodations:', filteredAccommodations); // Debugging line
-
   return (
     <div className={styles.hotelListing}>
       <Header />
@@ -88,7 +93,7 @@ const HotelListing = () => {
               onChange={(e) => setDestinationState(e.target.value)}
               className={styles.customTextField}
               InputLabelProps={{
-                style: { textAlign: 'center', marginTop: '0px' } // Center the label text
+                style: { textAlign: 'center', marginTop: '0px' }
               }}
             />
           </div>
@@ -103,7 +108,7 @@ const HotelListing = () => {
                 shrink: true,
               }}
               value={checkInState}
-              inputProps={{ min: new Date().toISOString().split('T')[0] }} // Set min to current date
+              inputProps={{ min: new Date().toISOString().split('T')[0] }}
               onChange={(e) => setCheckInState(e.target.value)}
               className={styles.customTextField}
             />
@@ -119,7 +124,7 @@ const HotelListing = () => {
                 shrink: true,
               }}
               value={checkOutState}
-              inputProps={{ min: checkInState }} // Set min to check-in date
+              inputProps={{ min: checkInState }}
               onChange={(e) => setCheckOutState(e.target.value)}
               className={styles.customTextField}
             />
@@ -135,7 +140,7 @@ const HotelListing = () => {
               onChange={(e) => setRoomsGuestsState(e.target.value)}
               className={styles.customTextField}
               InputLabelProps={{
-                style: { textAlign: 'left', marginTop: '0px' } // Align the label text to the left
+                style: { textAlign: 'left', marginTop: '0px' }
               }}
             >
               <MenuItem value="1 room, 1 guest">1 room, 1 guest</MenuItem>

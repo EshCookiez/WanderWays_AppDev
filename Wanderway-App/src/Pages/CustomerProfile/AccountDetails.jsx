@@ -6,7 +6,7 @@ const AccountDetails = () => {
   const accountFields = [
     { label: 'Name', value: 'Vince Kimlo Tan' },
     { label: 'Email', value: 'vincekimlo.tan@cit.edu' },
-    { label: 'Password', value: '************' },
+    { label: 'Password', value: '**********' },
     { label: 'Phone number', value: '09665566551' },
     { label: 'Address', value: 'Blk 4 Lot 17, Chivas Cabancalan I, Bulacao Cebu City' },
     { label: 'Date of birth', value: '05-10-2003' }

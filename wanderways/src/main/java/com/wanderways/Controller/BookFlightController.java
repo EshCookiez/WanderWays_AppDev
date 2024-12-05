@@ -3,7 +3,6 @@ package com.wanderways.Controller;
 import com.wanderways.Entity.BookFlight;
 import com.wanderways.Service.BookFlightService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,6 @@ public class BookFlightController {
     
     private final BookFlightService bookFlightService;
 
-    @Autowired
     public BookFlightController(BookFlightService bookFlightService) {
         this.bookFlightService = bookFlightService;
     }

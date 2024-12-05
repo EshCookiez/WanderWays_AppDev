@@ -22,30 +22,34 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMessage('');
-
+  
     // Check for empty fields
     if (!email || !password) {
       setErrorMessage('Please fill in both email and password.');
       return;
     }
-
+  
     setLoading(true);
-
+  
     try {
       // Use URLSearchParams to match curl format
       const params = new URLSearchParams();
       params.append('email', email);
       params.append('password', password);
-
+  
       const response = await axios.post("http://localhost:8080/api/customer/login", params, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       });
-      
+  
       console.log("Login Successful:", response.data);
+  
+      // Store the JWT token in localStorage
+      localStorage.setItem('token', response.data);
+  
       // Redirect after successful login
-      navigate('/customerList');
+      navigate('/customerProfile');
     } catch (error) {
       console.error("Login failed:", error);
       setErrorMessage("Login failed. Please check your credentials and try again.");
@@ -53,6 +57,7 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <main className={styles.loginPage}>
@@ -71,7 +76,7 @@ const LoginPage = () => {
                   <input type="checkbox" />
                   Remember me
                 </label>
-                <a href="https://hotcore.info/act/kareff-112024p.html" className={styles.forgotPassword}>Forgot Password</a>
+                <a href="" className={styles.forgotPassword}>Forgot Password</a>
               </div>
               <Button type="submit" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</Button>
             </form>

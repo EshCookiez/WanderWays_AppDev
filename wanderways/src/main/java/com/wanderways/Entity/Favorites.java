@@ -19,7 +19,6 @@ public class Favorites {
 
     public Favorites(int acmId, int flightId) {
         this.acmId = acmId;
-        this.flightId = flightId;
     }
 
     // Getters and Setters
@@ -39,11 +38,4 @@ public class Favorites {
         this.acmId = acmId;
     }
 
-    public int getFlightId() {
-        return flightId;
-    }
-
-    public void setFlightId(int flightId) {
-        this.flightId = flightId;
-    }
 }
