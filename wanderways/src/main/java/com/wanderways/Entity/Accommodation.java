@@ -1,10 +1,17 @@
 package com.wanderways.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,9 +28,14 @@ public class Accommodation {
     private Float acm_price;
     private String amenities;
     private Integer rate;
+    private String overview;
 
     @Lob
     private byte[] image;
+
+    @JsonManagedReference  // This will prevent infinite recursion
+    @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rooms> rooms = new ArrayList<>();
 
     public Integer getAcm_id() {
         return this.acm_id;
@@ -96,5 +108,24 @@ public class Accommodation {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+    
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+    
+    public List<Rooms> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Rooms> rooms) {
+        this.rooms = rooms;
+        for (Rooms room : rooms) {
+            room.setAccommodation(this);
+        }
     }
 }

@@ -34,6 +34,7 @@ public class AcmService {
             updatedAccommodation.setAmenities(accommodation.getAmenities());
             updatedAccommodation.setRate(accommodation.getRate());
             updatedAccommodation.setImage(accommodation.getImage());
+            updatedAccommodation.setOverview(accommodation.getOverview());
             return acmRepo.save(updatedAccommodation);
         } else {
             throw new NoSuchElementException("Accommodation not found with id: " + id);

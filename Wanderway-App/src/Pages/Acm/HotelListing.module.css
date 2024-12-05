@@ -1,12 +1,11 @@
 .hotelListing {
-    background-color: #fafbfc;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    width: 500vh; /* Set the width to 100% of the parent container */
-    max-width: 1500px; /* Set a maximum width for the column */
+    width: 100%;
     margin: 0 auto;
     align-items: center;
+    margin-top: 200px;
   }
   
   .header {
@@ -21,7 +20,15 @@
     color: #121;
     font: 600 14px Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
   }
-  
+  .heroBackground {
+    position: absolute;
+    inset: 0;
+    height: 85%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -1000;
+  }
   .headerAccent1,
   .headerAccent2 {
     background: #8dd3bb;
@@ -71,6 +78,7 @@
   .hotelTypo{
     text-align: left;
     color: rgb(0, 0, 0);
+    font: 700 24px Montserrat, sans-serif;
   }
   .hotelCardContent{
     width: 250vh;
@@ -121,26 +129,47 @@
     width: 14px;
     height: 15px;
   }
-  
+  .searchMain{
+    margin-top: 150px;
+    background-color: #ffffff;
+    border-radius: 20px;
+  }
   .searchSection {
-    margin-top: 48px;
     display: flex;
     justify-content: center;
     padding: 20px;
   }
+  .mainTitleHighlight {
+    text-align: left;
+    text-transform: uppercase;
+    font: 700 50px 'Libre Franklin', sans-serif;
+    color: #fff;
+    margin-top: 4px;
+    padding-right: 500px;
+  }
+  .mainTitlePrefix {
+    text-align: left;
+    display: block;
+    font: 600 20px Montserrat, sans-serif;
+    color: #fff;
+  }
+  .searchTitle{
+    display: flex;
+    font: 600 20px Montserrat, sans-serif;
+    padding: 50px 0px 0px 30px;
+    
+  }
   
   .searchForm {
     display: flex;
-    gap: 16px;
+    gap: 20px;
     background: #fff;
     border-radius: 16px;
     box-shadow: 0 4px 16px rgba(17, 34, 17, 0.05);
     padding: 32px 24px;
-    max-width: 1232px;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
   }
   
   .inputGroup {
@@ -349,7 +378,7 @@
   
   .hotelList.active{
     font-weight: bold;
-    color: #007bff;
+    color: #8dd3bb;
   }
   .typeDivider {
     width: 1px;
@@ -425,7 +454,11 @@
     height: 200px;
     border-radius: 12px 0 0 12px;
   }
-  
+.solid {
+  border: none;
+  border-top: 3px solid #4c987e;
+  margin: 8px 0;
+}
   .imageCount {
     position: absolute;
     top: 8px;
@@ -442,7 +475,11 @@
     flex: 1;
     padding: 24px;
   }
-  
+  .hotelModal{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+  }
   .hotelName {
     font-family: 'Libre Franklin', -apple-system, Roboto, Helvetica, sans-serif;
     font-size: 20px;

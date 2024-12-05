@@ -3,6 +3,8 @@ package com.wanderways.Controller;
 import com.wanderways.Entity.Accommodation;
 import com.wanderways.Service.AcmService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,25 +26,46 @@ public class AcmController {
     }
 
     @PostMapping("/add")
-    public Accommodation addAccommodation(@RequestBody Accommodation accommodation) {
-        logger.info("Received request to add accommodation: " + accommodation);
-        Accommodation savedAccommodation = acmService.addAccommodation(accommodation);
-        logger.info("Saved accommodation: " + savedAccommodation);
-        return savedAccommodation;
+    public ResponseEntity<Accommodation> addAccommodation(@RequestBody Accommodation accommodation) {
+        try {
+            Accommodation savedAccommodation = acmService.addAccommodation(accommodation);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedAccommodation); // 201 Created
+        } catch (Exception e) {
+            logger.severe("Error saving accommodation: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // 400 Bad Request
+        }
     }
 
     @GetMapping("/all")
-    public List<Accommodation> getAllAccommodations() {
-        return acmService.getAllAccommodations();
+    public ResponseEntity<List<Accommodation>> getAllAccommodations() {
+        try {
+            List<Accommodation> accommodations = acmService.getAllAccommodations();
+            return ResponseEntity.ok(accommodations); // 200 OK
+        } catch (Exception e) {
+            logger.severe("Error fetching accommodations: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // 500 Internal Server Error
+        }
     }
 
     @PutMapping("/update/{id}")
-    public Accommodation updateAccommodation(@PathVariable int id, @RequestBody Accommodation accommodation) {
-        return acmService.updateAccommodation(id, accommodation);
+    public ResponseEntity<Accommodation> updateAccommodation(@PathVariable int id, @RequestBody Accommodation accommodation) {
+        try {
+            Accommodation updatedAccommodation = acmService.updateAccommodation(id, accommodation);
+            return ResponseEntity.ok(updatedAccommodation); // 200 OK with updated accommodation
+        } catch (Exception e) {
+            logger.severe("Error updating accommodation: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404 Not Found if accommodation doesn't exist
+        }
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteAccommodation(@PathVariable int id) {
-        return acmService.deleteAccommodation(id);
+    public ResponseEntity<String> deleteAccommodation(@PathVariable int id) {
+        try {
+            String message = acmService.deleteAccommodation(id);
+            return ResponseEntity.ok(message); // 200 OK with success message
+        } catch (Exception e) {
+            logger.severe("Error deleting accommodation: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Accommodation not found"); // 404 Not Found if accommodation doesn't exist
+        }
     }
 }

@@ -6,17 +6,11 @@ import FlightBooking_Update from './Pages/FlightBooking/FlightBooking_Update';
 import FlightList from './Pages/FlightBooking/FlightList';
 import CustomerList from './Pages/Customer/CustomerList';
 import CustomerForm from './Pages/Customer/CustomerForm';
-import AcmBooking from './Pages/Acm/AcmBooking'; 
-import AcmList from './Pages/Acm/AcmList';
-import AcmForm from './Pages/Acm/AcmForm';
-import RoomList from './Pages/Rooms/RoomList';
-import RoomForm from './Pages/Rooms/RoomForm';
 import Home from './Pages/Home';
 import LoginPage from './Pages/LogIn/LoginPage';
 import SignUpForm from './Pages/SignUp/SignUpForm';
 import HomeLanding from './Pages/HomeLanding/HomeLanding'
 import Favorites from './Pages/Favorites/FavoriteList'
-import HotelSearch from './Pages/Acm/HotelSearch';
 import Addfav from './Pages/Favorites/favorites'
 import CreateFlight from './Pages/FlightBooking/CreateFlight';
 import CustomerProfile from './Pages/CustomerProfile/CustomerProfile';
@@ -41,16 +35,8 @@ function App() {
                     <Route path="/addCustomer" element={<CustomerForm />} />
                     <Route path="/updateCustomer/:id" element={<CustomerForm />} />
 
-                    <Route path="/book-accommodation" element={<AcmBooking />} /> 
-                    <Route path="/list-accommodation" element={<AcmList />} />
-                    <Route path="/addAccommodation" element={<AcmForm />} />
-                    <Route path="/acmForm/:id" element={<AcmForm />} />
-                    <Route path="/hotelsearch" element={<HotelSearch/>}/>
-                    <Route path="/hotelListing" element={<HotelListing/>}/>
+                    <Route path="/hotel" element={<HotelListing/>}/>
 
-                    <Route path="/roomList" element={<RoomList />} />
-                    <Route path="/addRoom" element={<RoomForm />} />
-                    <Route path="/updateRoom/:id" element={<RoomForm />} />
                     
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignUpForm />} />

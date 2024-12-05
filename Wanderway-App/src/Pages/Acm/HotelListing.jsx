@@ -1,27 +1,67 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Header from '../../Components/Header';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import AcmService from '../../services/AcmService';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+import Backdrop from '@mui/material/Backdrop';
+import Fade from '@mui/material/Fade';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import StarIcon from '@mui/icons-material/Star';
+import EmojiFoodBeverageIcon from '@mui/icons-material/EmojiFoodBeverage';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+
+import Header from '../../Components/Header';
+import AcmService from '../../services/AcmService';
+
 import styles from './HotelListing.module.css';
+import logo from './acmAssets/HotelSearchBg.png';
+import Footer from '../HomeLanding/Footer/Footer';
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #4c987e',
+  boxShadow: 24,
+  p: 4,
+  borderRadius: '8px',
+};
 
 const HotelListing = () => {
+  const location = useLocation();
+  const { destination, checkIn, checkOut, roomsGuests } = location.state || {};
+
   const [accommodations, setAccommodations] = useState([]);
   const [filteredAccommodations, setFilteredAccommodations] = useState([]);
   const [selectedType, setSelectedType] = useState('Hotels');
-  const [destinationState, setDestinationState] = useState('');
-  const [checkInState, setCheckInState] = useState('');
-  const [checkOutState, setCheckOutState] = useState('');
-  const [roomsGuestsState, setRoomsGuestsState] = useState('');
+  const [destinationState, setDestinationState] = useState(destination || '');
+  const [checkInState, setCheckInState] = useState(checkIn || '');
+  const [checkOutState, setCheckOutState] = useState(checkOut || '');
+  const [roomsGuestsState, setRoomsGuestsState] = useState(roomsGuests || '');
   const [searchError, setSearchError] = useState('');
   const navigate = useNavigate();
 
+  const [open, setOpen] = useState(false);
+  const [selectedAccommodation, setSelectedAccommodation] = useState(null);
+
+  const [openAddRoom, setOpenAddRoom] = useState(false);
+  const [newRoom, setNewRoom] = useState({
+    name: '',
+    type: '',
+    price: '',
+  });
   useEffect(() => {
     fetchAccommodations();
   }, [selectedType]);
@@ -29,29 +69,49 @@ const HotelListing = () => {
   const fetchAccommodations = async () => {
     try {
       const response = await AcmService.getAllAccommodations();
-      console.log('Fetched accommodations:', response.data); // Debugging line
-      const accommodationsWithImages = response.data.map(accommodation => {
-        const imageSrc = accommodation.image && accommodation.image.length > 0
+      const accommodationsWithImages = response.data.map((accommodation) => ({
+        acm_id: accommodation.acm_id, // Mapped from acm_id
+        acm_name: accommodation.acm_name, // Mapped from acm_name
+        acm_type: accommodation.acm_type, // Mapped from acm_type
+        acm_location: accommodation.acm_location, // Mapped from acm_location
+        acm_price: accommodation.acm_price, // Mapped from acm_price
+        amenities: accommodation.amenities,
+        rate: accommodation.rate,
+        overview: accommodation.overview,
+        imageSrc: accommodation.image
           ? `data:image/jpeg;base64,${accommodation.image}`
-          : 'https://via.placeholder.com/150';
-        console.log('Image Source:', imageSrc); // Debugging line
-        return {
-          ...accommodation,
-          imageSrc
-        };
-      });
+          : 'https://via.placeholder.com/150',
+        rooms: accommodation.rooms.map((room) => ({
+          id: room.roomId, // Mapped from roomId
+          name: room.roomName, // Mapped from roomName
+          type: room.roomType, // Mapped from roomType
+          price: room.roomPrice, // Mapped from roomPrice
+          image: room.image ? `data:image/jpeg;base64,${room.image}`: null
+        })),
+      }));
       setAccommodations(accommodationsWithImages);
-      setFilteredAccommodations(accommodationsWithImages.filter(accommodation => accommodation.acm_type === selectedType));
+      setFilteredAccommodations(
+        accommodationsWithImages.filter(
+          (accommodation) => accommodation.acm_type === selectedType
+        )
+      );
     } catch (error) {
       console.error('Error fetching accommodations:', error);
+      setSearchError('Failed to load accommodations.');
     }
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = e => {
     e.preventDefault();
-    const filtered = accommodations.filter(accommodation =>
-      accommodation.acm_type === selectedType &&
-      accommodation.acm_location.toLowerCase().includes(destinationState.toLowerCase())
+    if (new Date(checkInState) >= new Date(checkOutState)) {
+      setSearchError('Check-out date must be after check-in date.');
+      return;
+    }
+    setSearchError('');
+    const filtered = accommodations.filter(
+      accommodation =>
+        accommodation.acm_type === selectedType &&
+        accommodation.acm_location.toLowerCase().includes(destinationState.toLowerCase())
     );
     setFilteredAccommodations(filtered);
     if (filtered.length === 0) {
@@ -61,7 +121,7 @@ const HotelListing = () => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async id => {
     try {
       await AcmService.deleteAccommodation(id);
       fetchAccommodations();
@@ -70,101 +130,128 @@ const HotelListing = () => {
     }
   };
 
-  console.log('Filtered accommodations:', filteredAccommodations); // Debugging line
+  const handleOpen = accommodation => {
+    setSelectedAccommodation(accommodation);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedAccommodation(null);
+  };
 
   return (
     <div className={styles.hotelListing}>
+      <h1 className={styles.mainTitle}>
+        <span className={styles.mainTitleHighlight}>Make Your Travel Now</span>
+        <span className={styles.mainTitlePrefix}>Special offers to suit your plan</span>
+      </h1>
       <Header />
-      <section className={styles.searchSection}>
-        <form onSubmit={handleSearch} className={styles.searchForm}>
-          <div className={styles.inputGroup}>
-            <TextField
-              id="destination"
-              label="Enter Destination"
-              variant="outlined"
-              fullWidth
-              multiline
-              value={destinationState}
-              onChange={(e) => setDestinationState(e.target.value)}
-              className={styles.customTextField}
-              InputLabelProps={{
-                style: { textAlign: 'center', marginTop: '0px' } // Center the label text
-              }}
-            />
-          </div>
-          <div className={styles.inputGroup}>
-            <TextField
-              id="checkIn"
-              label="Check In"
-              type="date"
-              variant="outlined"
-              fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-              value={checkInState}
-              inputProps={{ min: new Date().toISOString().split('T')[0] }} // Set min to current date
-              onChange={(e) => setCheckInState(e.target.value)}
-              className={styles.customTextField}
-            />
-          </div>
-          <div className={styles.inputGroup}>
-            <TextField
-              id="checkOut"
-              label="Check Out"
-              type="date"
-              variant="outlined"
-              fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-              value={checkOutState}
-              inputProps={{ min: checkInState }} // Set min to check-in date
-              onChange={(e) => setCheckOutState(e.target.value)}
-              className={styles.customTextField}
-            />
-          </div>
-          <div className={styles.inputGroup}>
-            <TextField
-              id="roomsGuests"
-              label="Rooms & Guests"
-              select
-              variant="outlined"
-              fullWidth
-              value={roomsGuestsState}
-              onChange={(e) => setRoomsGuestsState(e.target.value)}
-              className={styles.customTextField}
-              InputLabelProps={{
-                style: { textAlign: 'left', marginTop: '0px' } // Align the label text to the left
-              }}
-            >
-              <MenuItem value="1 room, 1 guest">1 room, 1 guest</MenuItem>
-              <MenuItem value="1 room, 2 guests">1 room, 2 guests</MenuItem>
-              <MenuItem value="2 rooms, 4 guests">2 rooms, 4 guests</MenuItem>
-              <MenuItem value="3 rooms, 6 guests">3 rooms, 6 guests</MenuItem>
-            </TextField>
-          </div>
-          <button type="submit" className={styles.searchButton}>
-            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/39e7d1fb343ed6c3f97bbaa288ebef6317c359d89415ed0d9cfa599f2a10f75b?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="Search" className={styles.searchIcon} />
-          </button>
-        </form>
-      </section>
+      <img src={logo} alt="background" className={styles.heroBackground} />
+      <div className={styles.searchMain}>
+        <h1 className={styles.mainTitle}>
+          <span className={styles.searchTitle}>Where are you staying?</span>
+        </h1>
+        <section className={styles.searchSection}>
+          <form onSubmit={handleSearch} className={styles.searchForm}>
+            <div className={styles.inputGroup}>
+              <TextField
+                id="destination"
+                label="Enter Destination"
+                variant="outlined"
+                fullWidth
+                multiline
+                value={destinationState}
+                onChange={e => setDestinationState(e.target.value)}
+                className={styles.customTextField}
+                InputLabelProps={{
+                  style: { textAlign: 'center', marginTop: '0px' },
+                }}
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <TextField
+                id="checkIn"
+                label="Check In"
+                type="date"
+                variant="outlined"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                value={checkInState}
+                inputProps={{ min: new Date().toISOString().split('T')[0] }}
+                onChange={e => setCheckInState(e.target.value)}
+                className={styles.customTextField}
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <TextField
+                id="checkOut"
+                label="Check Out"
+                type="date"
+                variant="outlined"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                value={checkOutState}
+                inputProps={{ min: checkInState }}
+                onChange={e => setCheckOutState(e.target.value)}
+                className={styles.customTextField}
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <TextField
+                id="roomsGuests"
+                label="Rooms & Guests"
+                select
+                variant="outlined"
+                fullWidth
+                value={roomsGuestsState}
+                onChange={e => setRoomsGuestsState(e.target.value)}
+                className={styles.customTextField}
+                InputLabelProps={{
+                  style: { textAlign: 'left', marginTop: '0px' },
+                }}
+              >
+                <MenuItem value="1 room, 1 guest">1 room, 1 guest</MenuItem>
+                <MenuItem value="1 room, 2 guests">1 room, 2 guests</MenuItem>
+                <MenuItem value="2 rooms, 4 guests">2 rooms, 4 guests</MenuItem>
+                <MenuItem value="3 rooms, 6 guests">3 rooms, 6 guests</MenuItem>
+              </TextField>
+            </div>
+            {searchError && (
+              <Typography variant="h6" color="error">
+                {searchError}
+              </Typography>
+            )}
+            <button type="submit" className={styles.searchButton}>
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/39e7d1fb343ed6c3f97bbaa288ebef6317c359d89415ed0d9cfa599f2a10f75b?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
+                alt="Search"
+                className={styles.searchIcon}
+              />
+            </button>
+          </form>
+        </section>
+      </div>
       <section className={styles.hotelType}>
         <div className={styles.hotelList}>
-          {['Hotels', 'Motels', 'Resorts'].map((type) => (
+          {['Hotels', 'Motels', 'Resorts'].map(type => (
             <Button
               key={type}
               className={`${styles.hotelTypeButton} ${selectedType === type ? styles.active : ''}`}
               onClick={() => setSelectedType(type)}
               sx={{
                 fontWeight: selectedType === type ? 'bold' : 'normal',
-                color: selectedType === type ? '#fff' : 'inherit',
-                backgroundColor: selectedType === type ? '#007bff' : 'inherit',
+                color: selectedType === type ? '#000000' : 'inherit',
+                backgroundColor: selectedType === type ? '#8dd3bb' : 'inherit',
                 textTransform: 'none',
-                padding: '10px',
+                padding: '1rem 4rem',
                 textAlign: 'center',
                 '&:hover': {
-                  backgroundColor: selectedType === type ? '#0056b3' : 'rgba(0, 0, 0, 0.08)',
+                  backgroundColor: selectedType === type ? '#8dd3bb' : 'rgba(0, 0, 0, 0.08)',
                 },
               }}
             >
@@ -173,37 +260,347 @@ const HotelListing = () => {
           ))}
         </div>
         <div className={styles.hotelList}>
-          {searchError && <Typography variant="h6" color="error">{searchError}</Typography>}
+          {searchError && (
+            <Typography variant="h6" color="error">
+              {searchError}
+            </Typography>
+          )}
           {filteredAccommodations.map(accommodation => (
             <Card key={accommodation.acm_id} className={styles.hotelCard}>
               <CardMedia
                 component="img"
-                height="140"
+                height="100%"
                 image={accommodation.imageSrc || 'https://via.placeholder.com/150'}
                 alt={accommodation.acm_name}
                 className={styles.hotelImage}
               />
               <CardContent className={styles.hotelCardContent}>
-                <Typography gutterBottom variant="h5" component="div" className={styles.hotelTypo}>
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  component="div"
+                  className={styles.hotelTypo}
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: '24px',
+                    fontFamily: 'Montserrat, sans-serif',
+                  }}
+                >
                   {accommodation.acm_name}
                 </Typography>
                 <Typography variant="body2" className={styles.hotelTypo}>
+                  <LocationOnIcon sx={{ fontSize: 15 }} />
                   Location: {accommodation.acm_location}
                 </Typography>
                 <Typography variant="body2" className={styles.hotelTypo}>
-                  Price: ${accommodation.acm_price}
-                </Typography>
-                <Typography variant="body2" className={styles.hotelTypo}>
+                  {Array.from({ length: accommodation.rate }, (_, index) => (
+                    <StarIcon key={index} sx={{ fontSize: 15, color: '#ff8484' }} />
+                  ))}
                   Rating: {accommodation.rate}
                 </Typography>
                 <Typography variant="body2" className={styles.hotelTypo}>
+                  <EmojiFoodBeverageIcon sx={{ fontSize: 15 }} />
                   Amenities: {accommodation.amenities}
                 </Typography>
+                <Typography variant="body2" className={styles.hotelTypo}>
+                  Description: {accommodation.overview}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  className={styles.hotelTypo}
+                  align="right"
+                  sx={{ fontSize: 11, opacity: 0.75 }}
+                >
+                  Starting from
+                </Typography>
+                <Typography
+                  variant="body2"
+                  className={styles.hotelTypo}
+                  align="right"
+                  sx={{
+                    color: '#ff8484',
+                    fontWeight: 700,
+                    fontSize: '24px',
+                    fontFamily: 'Montserrat, sans-serif',
+                  }}
+                >
+                  ${accommodation.acm_price}/night
+                </Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    '& button': { m: 1, opacity: 0.75 },
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    size="medium"
+                    sx={{
+                      fontWeight: 700,
+                      backgroundColor: '#fff',
+                      color: '#000000',
+                      width: '10%',
+                      border: '2px solid #4c987e',
+                      '&:hover': {
+                        backgroundColor: '#4c987e',
+                      },
+                    }}
+                  >
+                    <BookmarkBorderIcon />
+                  </Button>
+                  <Button
+                    variant="contained"
+                    size="medium"
+                    sx={{
+                      fontWeight: 700,
+                      backgroundColor: '#8dd3bb',
+                      color: '#000000',
+                      width: '100%',
+                      border: '2px solid #4c987e',
+                      fontFamily: 'Montserrat, sans-serif',
+                      '&:hover': {
+                        backgroundColor: '#4c987e',
+                        color: '#ffffff',
+                      },
+                    }}
+                    onClick={() => handleOpen(accommodation)}
+                  >
+                    View Place
+                  </Button>
+                </Box>
               </CardContent>
             </Card>
           ))}
         </div>
       </section>
+
+      {/* Modal Component */}
+      <Modal
+        aria-labelledby="accommodation-modal-title"
+        aria-describedby="accommodation-modal-description"
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
+      >
+        <Fade in={open}>
+          <Box sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: { xs: '90%', sm: '80%', md: '60%' },
+                maxHeight: '90vh', 
+                bgcolor: 'background.paper',
+                border: '2px solid #000',
+                boxShadow: 24,
+                p: 4,
+                borderRadius: '8px',
+                overflowY: 'auto', 
+              }}>
+            {selectedAccommodation && (
+              <>
+              
+                <h3 id="parent-modal-title">Overview</h3>
+
+                {/* Accommodation Image */}
+                <CardMedia
+                  component="img"
+                  height="100%"
+                  image={selectedAccommodation.imageSrc || 'https://via.placeholder.com/150'}
+                  alt={selectedAccommodation.acm_name}
+                  sx={{ borderRadius: '8px', mb: 2 }}
+                />
+
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      {/* Accommodation Name */}
+                      <Typography
+                        id="accommodation-modal-title"
+                        variant="h6"
+                        component="h2"
+                        sx={{ fontWeight: 700, fontSize: '24px', fontFamily: 'Montserrat, sans-serif' }}
+                      >
+                        {selectedAccommodation.acm_name}
+                      </Typography>
+                      
+                      {/* Rating */}
+                      <Typography sx={{ display: 'flex', alignItems: 'center' }}>
+                        {Array.from({ length: selectedAccommodation.rate }, (_, index) => (
+                          <StarIcon key={index} sx={{ color: '#ff8484' }} />
+                        ))}
+                        <span style={{ marginLeft: '8px' }}>{selectedAccommodation.rate} Stars</span>
+                      </Typography>
+
+                    </Box>
+
+                  {/* Location */}
+                  <Typography id="accommodation-modal-description" sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
+                  <LocationOnIcon sx={{ marginRight: '4px' }} />
+                  {selectedAccommodation.acm_location}
+                </Typography>
+
+                
+
+                
+
+                {/* Amenities */}
+                <Typography sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
+                  <EmojiFoodBeverageIcon sx={{ marginRight: '4px' }} />
+                  {selectedAccommodation.amenities}
+                </Typography>
+
+                {/* Description */}
+                <Typography sx={{ mt: 2 }}>
+                  Description: 
+                  {selectedAccommodation.overview}
+                </Typography>
+                <hr class="solid"/>
+                {/* Rooms Section */}
+                <Typography variant="h6" gutterBottom sx={{fontWeight: 700}}>
+                            Available Rooms
+                  </Typography>
+                  <List>
+                      {selectedAccommodation.rooms && selectedAccommodation.rooms.length > 0 ? (
+                        selectedAccommodation.rooms.map((room) => (
+                          <React.Fragment key={room.id}>
+                            <ListItem sx={{ display: 'flex', pl: 0, mb: 1, justifyContent: 'space-between', alignItems: 'center' }}>
+                              <img
+                                src={room.image ? room.image : 'https://via.placeholder.com/100'}
+                                alt={`Room ${room.name}`}
+                                style={{ width: '100px', height: '100px', marginRight: '16px' }}
+                              />
+                              <ListItemText
+                                sx={{ display: 'flex', justifyContent: 'space-between' }}
+                                primary={`Room ${room.name} - ${room.type}`}
+                                secondary={
+                                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                  <Typography variant="body2" sx={{ color: '#ff8484', fontWeight: 700 ,fontSize: 20}}>
+                                    {`$${room.price}/night`}
+                                  </Typography>
+                                  <Button
+                                    variant="contained"
+                                    size="small"
+                                    sx={{ 
+                                      fontWeight: 700,
+                                      backgroundColor: '#8dd3bb',
+                                      color: '#000000',
+                                      width: '80%',
+                                      border: '2px solid #4c987e',
+                                      fontFamily: 'Montserrat, sans-serif',
+                                      '&:hover': {
+                                        backgroundColor: '#4c987e',
+                                        color: '#ffffff',
+                                      }, }}
+                                  >
+                                    Book Now
+                                  </Button>
+                                </Box>
+                              }
+                              />
+                            </ListItem>
+                            <hr className={styles.solid} />
+                          </React.Fragment>
+                        ))
+                      ) : (
+                        <Typography variant="body2">No rooms available.</Typography>
+                      )}
+                    </List>
+                  <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        mt: 2, // Adjusts the top margin as needed
+                        gap: 2, // Adds space between Price and Close Button
+                      }}
+                    >
+                      {/* Price */}
+                      <Typography
+                        sx={{
+                          fontWeight: 700,
+                          fontSize: '20px',
+                          color: '#ff8484',
+                        }}
+                      >
+                        Price: ${selectedAccommodation.acm_price}/night
+                      </Typography>
+                      
+                      {/* buttonBox */}
+                      <Box
+                            sx={{
+                              display: 'flex',
+                              justifyContent: 'flex-end',
+                              '& button': { m: 1, opacity: 0.75 },
+                            }}
+                          >
+                            <Button
+                              variant="contained"
+                              size="medium"
+                              sx={{
+                                fontWeight: 700,
+                                backgroundColor: '#fff',
+                                color: '#000000',
+                                width: '10%',
+                                border: '2px solid #4c987e',
+                                '&:hover': {
+                                  backgroundColor: '#4c987e',
+                                },
+                              }}
+                            >
+                              <BookmarkBorderIcon />
+                            </Button>
+                            <Button
+                              variant="contained"
+                              size="medium"
+                              sx={{
+                                fontWeight: 700,
+                                backgroundColor: '#8dd3bb',
+                                color: '#000000',
+                                width: '100%',
+                                border: '2px solid #4c987e',
+                                fontFamily: 'Montserrat, sans-serif',
+                                '&:hover': {
+                                  backgroundColor: '#4c987e',
+                                  color: '#ffffff',
+                                },
+                              }}
+                              onClick={() => handleOpen(accommodation)}
+                            >
+                              Book Now
+                            </Button>
+                          </Box>
+                          
+                      {/* Close Button */}
+                      <Button
+                        variant="contained"
+                        sx={{
+                          backgroundColor: '#e01a1a',
+                          color: '#fff',
+                          fontWeight: 700,
+                          fontFamily: 'Montserrat, sans-serif',
+                          '&:hover': {
+                            backgroundColor: '#72b9a3',
+                            color: '#000000'
+                          },
+                        }}
+                        onClick={handleClose}
+                      >
+                        Close
+                      </Button>
+                    </Box>
+                    
+              </>
+            )}
+          </Box>
+        </Fade>
+      </Modal>
+      <Footer/>
     </div>
   );
 };

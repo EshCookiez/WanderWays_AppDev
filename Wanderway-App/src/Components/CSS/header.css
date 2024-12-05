@@ -49,11 +49,10 @@ button a{
     margin: 0px 40px 0px 0px;
 }
 
-.airplane-icon, .bed-icon, .user-icon , .favorites-icon{
-     margin: 0px 5px 0px 0px;
-     width: 20px;
-     height: 20px;
-     padding: 0px 0px 0px 10px
+.airplane-icon{
+    
+  transform: rotate(90deg);
+  text-align: center;
 }
 
 .find, .user, .favorites, .user{
@@ -71,13 +70,54 @@ button a{
     background-color: #8dd3bb;
     color: #000000;
     
+    
 }
 .findButton{
-    padding: 10px 10px 10px 0px;
+    padding: 10px 10px;
     font-weight: bold; 
 }
 
 .accButton{
-    padding: 10px 15px;
+    padding: 12px 0px;
     font-weight: bold; 
 }
+.accButton:hover{
+    
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.line{
+    
+  transform: rotate(90deg);
+}
+.userButton{
+    display: flex;
+    align-items: center;
+}
+.userButton:hover{
+    background-color: #8dd3bb;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    
+}
+.userSpan{
+    padding-left: 5px;
+}
+.userinButton{
+    display: flex;
+    align-items: center;
+}
+.userinButton:hover{
+    
+    background-color: #8dd3bb;
+    border-radius: 10px;
+}
+.rightIcon{
+    margin-left: auto;
+}
+.styledMenuItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Optional: Ensures space between text and icon */
+    padding: 10px 20px; /* Adjust padding as needed */
+  }
