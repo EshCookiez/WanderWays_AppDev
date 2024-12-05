@@ -50,6 +50,10 @@ const HotelListing = () => {
   const [checkInState, setCheckInState] = useState(checkIn || '');
   const [checkOutState, setCheckOutState] = useState(checkOut || '');
   const [roomsGuestsState, setRoomsGuestsState] = useState(roomsGuests || '');
+  const [destinationState, setDestinationState] = useState(destination || '');
+  const [checkInState, setCheckInState] = useState(checkIn || '');
+  const [checkOutState, setCheckOutState] = useState(checkOut || '');
+  const [roomsGuestsState, setRoomsGuestsState] = useState(roomsGuests || '');
   const [searchError, setSearchError] = useState('');
   const navigate = useNavigate();
 
@@ -65,6 +69,12 @@ const HotelListing = () => {
   useEffect(() => {
     fetchAccommodations();
   }, [selectedType]);
+
+  useEffect(() => {
+    if (destination || checkIn || checkOut || roomsGuests) {
+      handleSearch();
+    }
+  }, [destination, checkIn, checkOut, roomsGuests]);
 
   const fetchAccommodations = async () => {
     try {
