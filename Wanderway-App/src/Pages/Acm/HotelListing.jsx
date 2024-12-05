@@ -50,10 +50,6 @@ const HotelListing = () => {
   const [checkInState, setCheckInState] = useState(checkIn || '');
   const [checkOutState, setCheckOutState] = useState(checkOut || '');
   const [roomsGuestsState, setRoomsGuestsState] = useState(roomsGuests || '');
-  const [destinationState, setDestinationState] = useState(destination || '');
-  const [checkInState, setCheckInState] = useState(checkIn || '');
-  const [checkOutState, setCheckOutState] = useState(checkOut || '');
-  const [roomsGuestsState, setRoomsGuestsState] = useState(roomsGuests || '');
   const [searchError, setSearchError] = useState('');
   const navigate = useNavigate();
 
