@@ -22,6 +22,8 @@ import CreateFlight from './Pages/FlightBooking/CreateFlight';
 import CustomerProfile from './Pages/CustomerProfile/CustomerProfile';
 import HotelListing from './Pages/Acm/HotelListing';
 import FlightSearch from './Pages/FlightBooking/FlightSearch/FlightSearch';
+import FlightPayment from './Pages/FlightPayment/FlightPayment.jsx';
+
 function App() {
     return (
         <Router>
@@ -35,6 +37,7 @@ function App() {
                     <Route path="/create/flight" element={<CreateFlight/>} />
                     <Route path="/bookUpdate/:fbookId" element={<FlightBooking_Update />} />
                     <Route path="/flight-search" element={<FlightSearch/>}/>
+                    <Route path="/flight-payment/" element={<FlightPayment/>}/>
 
                     <Route path="/customerList" element={<CustomerList />} />
                     <Route path="/addCustomer" element={<CustomerForm />} />

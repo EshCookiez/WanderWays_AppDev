@@ -15,6 +15,13 @@ const FlightBooking = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+       
+        if (!fareclass) {
+            setMessage('Please select a seat class.');
+            return;
+        }
+        
         const BookingData = {
             fareClass: fareclass,
             passengerAmount: parseInt(travellerCtr, 10),

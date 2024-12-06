@@ -89,6 +89,38 @@
 .image-container{
     display: flex;
     width: 30%;
-    height: 20vh;
+    height: 30vh;
     justify-content: center;
+}
+
+
+.cardContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 17px;
   }
+  
+.cardContent a {
+    text-decoration: none;
+  }
+  
+.cardContent a + a {
+    margin-left: 16px;
+  }
+
+.customTypography a{
+    color: black;
+}
+
+#deleteLink:hover{
+    color: #ec5752;
+}
+#updateLink:hover{
+   color:rgba(68,105,61); 
+}
+.icon{
+    height: 30px;
+    width: 20px;
+}

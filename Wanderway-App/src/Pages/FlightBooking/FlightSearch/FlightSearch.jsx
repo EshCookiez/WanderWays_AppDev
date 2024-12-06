@@ -5,7 +5,7 @@ import logo from '././Assets/Docked-Airplane4.jpg';
 import TravelSection from './TravelSection';
 import Header from '../../../Components/Header.jsx'
 import FallIntoTravel from './FallIntoTravel';
-import Footer from '../../../Components/Footer/Footer.jsx';
+import Footer from './Components/Footer/Footer.jsx';
 
 const FlightSearch = () => {
   return (
@@ -15,7 +15,8 @@ const FlightSearch = () => {
         <section className={styles.heroSection}>
             <img src={logo} alt="Travel destination" className={styles.heroImage} />
             <div className={styles.heroContent}>
-                <h1 className={styles.heroTitle}>Fly with us Now!</h1>
+                <h1 className={styles.heroTitle}>Wander the World</h1>
+                <h1 className={styles.heroTitle}>Your way!</h1>
             </div>
         </section>
         <SearchForm /> 

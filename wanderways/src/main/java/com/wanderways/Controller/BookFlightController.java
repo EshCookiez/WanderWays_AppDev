@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -51,6 +52,13 @@ public class BookFlightController {
     @PutMapping("/update/{id}")
     public BookFlight updateBooking(@PathVariable Integer id, @RequestBody BookFlight updatedBooking) {
         return  bookFlightService.updateBookFlight(id, updatedBooking);
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<BookFlight> updateStatus(@PathVariable Integer id, @RequestBody Map<String, String> statusUpdate) {
+        String status = statusUpdate.get("status");
+        BookFlight updatedBooking = bookFlightService.updateBookingStatus(id, status);
+        return ResponseEntity.ok(updatedBooking);
     }
 
     @DeleteMapping("/delete/{id}")

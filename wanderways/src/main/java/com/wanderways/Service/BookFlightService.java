@@ -52,6 +52,18 @@ public class BookFlightService{
         }
     }
 
+    //Update Booking status
+    public BookFlight updateBookingStatus(Integer id, String status) {
+    Optional<BookFlight> existingBookingOpt = bookflightrepo.findById(id);
+    
+    if (existingBookingOpt.isPresent()) {
+        BookFlight existingBooking = existingBookingOpt.get();
+        existingBooking.setStatus(status);
+        return bookflightrepo.save(existingBooking);
+    } else {
+        throw new EntityNotFoundException("Booking not found with id: " + id);
+    }
+}
 
 
     // Delete a booking
