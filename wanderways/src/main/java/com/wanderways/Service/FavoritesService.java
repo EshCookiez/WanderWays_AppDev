@@ -30,7 +30,6 @@ public class FavoritesService {
         Favorites favorites = favoritesRepository.findById(id).orElse(null);
         if (favorites != null) {
             favorites.setAcmId(updatedFavorite.getAcmId());
-            favorites.setFlightId(updatedFavorite.getFlightId());
             return favoritesRepository.save(favorites);
         }
         return null;

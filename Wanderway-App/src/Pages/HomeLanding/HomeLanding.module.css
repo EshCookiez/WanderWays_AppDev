@@ -5,8 +5,7 @@
   align-items: center;
   padding: 0;
   padding-top: 0px;
-  width: 500vh; /* Set the width to 100% of the parent container */
-  max-width: 1500px; /* Set a maximum width for the column */
+  width: 100%; /* Set the width to 100% of the parent container */
   margin: 0 auto; /* Center the column horizontally */
 }
 .sweetbody{
@@ -38,7 +37,6 @@
 .rectangle{
   height: 800px;
   position: absolute;
-  padding-top: 500px;
   width: 100%;
   max-width: 1500px;
   left: 50%;
@@ -72,28 +70,71 @@
   align-items: center;
   z-index: 2; /* Ensure the nav link is in front of the background image */
   
-  transition: color 0.3s ease;
 }
-.navLink:hover {
-  color: #7fffd4;
+.icon,.navLink.hover {
+  color: #8dd3bb;
+  
 }
 .homeLinkTemporary{
   z-index: 2;
+  color: white;
+  display: flex; /* Enable Flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  padding-right: 100px;
+}
+.icon {
+  color: #ffffff; /* Default color */
+  transition: color 0.3s ease;
 }
 
+/* Change color to black on hover */
+.loginButton:hover .icon ,
+.signupButton:hover .icon {
+  color: #000000; /* Black color on hover */
+  transform: rotate(90deg);
+  
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.icon{
+  transform: rotate(90deg);
+}
 .navIcon {
   width: 24px;
   height: 24px;
   margin-right: 8px;
   z-index: 2; /* Ensure the nav icon is in front of the background image */
 }
-
+.logoDiv{
+  display: flex;
+  text-decoration: none;
+  color: white;
+  align-items: center;
+  justify-content: center;
+}
+.logoName{
+  text-transform: lowercase;
+  font: 700 20px 'Libre Franklin', sans-serif;
+}
 .logo {   
   z-index: 3; /* Ensure the logo is in front of the background image */
+  width: 50px;
+  height: 50px;
+  align-items: center;
 }
-
+a{
+  text-decoration: none !important;
+}
 .authButtons {
   display: flex;
+  
   z-index: 2; /* Ensure the auth buttons are in front of the background image */
 }
 
@@ -102,6 +143,10 @@
   border: none;
   cursor: pointer;
   z-index: 2;
+  text-decoration: none;
+  border-radius: 10px; 
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  
 }
 .signupButton {
   margin-left: 10px;
@@ -110,6 +155,9 @@
   border: none;
   cursor: pointer;
   z-index: 2; /* Ensure the buttons are in front of the background image */
+  border-radius: 10px;    
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  
 }
 .loginButton:hover,.signupButton:hover{
   background-color: #8dd3bb;
@@ -118,11 +166,13 @@
 .loginButton {
   color: #fff;
   background-color: transparent;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .signupButton {
   color: #000000;
   background-color: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .mainContent {
@@ -134,6 +184,7 @@
 }
 
 .mainTitle {
+  width: 100%;
   text-align: center;
   margin: 8px 0 -65px 10px;
   position: relative;
@@ -168,6 +219,8 @@
 }
 
 .searchSection {
+  
+  width: 95%;
   background-color: #fff;
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(141, 211, 187, 0.15);
@@ -271,6 +324,9 @@
   font: 500 14px Montserrat, sans-serif;
   padding: 16px;
 }
+.searchButton:hover{
+  background-color: #7ea195;
+}
 
 .searchIcon {
   width: 16px;
@@ -324,8 +380,12 @@
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(17, 34, 17, 0.05);
   overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
+.card:hover {
+  transform: scale(1.2); /* Scales the card to 105% on hover */
+  box-shadow: 0 6px 20px rgba(17, 34, 17, 0.1); /* Enhanced shadow on hover */
+}
 .image {
   width: 100%;
   height: 90px;
@@ -544,4 +604,21 @@
     max-width: 400px;
     margin-top: 24px;
   }
+}
+/* HomeLanding.module.css */
+.homepage {
+  width: 100%;
+  height: 100%;
+}
+.homeHeader{
+  width: 100%;
+  height: 100%;
+}
+.heroBackground {
+  position: absolute;
+  inset: 0;
+  height: 85%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
 }

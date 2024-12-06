@@ -1,16 +1,18 @@
 /* Footer Styles */
 .footer {
-  padding: 64px 104px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px 104px;
   background: #90d4bc;
-  height: auto; 
-  width: 206vh;
-  margin-top: auto;  
-  background-color: #90d4bc;
   text-align: center;
-
+  z-index: 1000; /* Ensure it stays above other content */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
+  height: auto; /* Ensure the footer height is only as much as needed */
 }
 
-.homeLandingFooter{
+.homeLandingFooter {
   width: 100%;
 }
 

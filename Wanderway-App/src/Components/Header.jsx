@@ -11,6 +11,18 @@ import { Menu as BaseMenu } from '@mui/base/Menu';
 import { MenuItem as BaseMenuItem, menuItemClasses } from '@mui/base/MenuItem';
 import { styled } from '@mui/system';
 import Logo from './Logo';
+import User from './images/vince.png'
+import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
+import KingBedIcon from '@mui/icons-material/KingBed';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import Avatar from '@mui/material/Avatar';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import PersonIcon from '@mui/icons-material/Person';
+import PaymentIcon from '@mui/icons-material/Payment';
+import SettingsIcon from '@mui/icons-material/Settings';
+import LogoutIcon from '@mui/icons-material/Logout';
 import './css/header.css';
 
 const Header = () => {
@@ -37,12 +49,12 @@ const Header = () => {
       <div className="features">
         <Link to="/flight-search">
             <button className='findButton'>
-            <IoAirplane className="airplane-icon" />Find Flight
+            <AirplanemodeActiveIcon className="airplane-icon" />Find Flight
             </button>
         </Link>
         <Link to="/hotelsearch">
           <button className='findButton'>
-            <IoIosBed className="bed-icon" /> Find Stays
+            <KingBedIcon className="bed-icon" /> Find Stays
             </button>
         </Link>
       </div>
@@ -51,18 +63,43 @@ const Header = () => {
       <div className="account-details">
         <Link to="/Favorites">
         <button className='findButton'>
-            <MdFavorite className="favorites-icon" />Favorites 
+            <FavoriteIcon className="favorites-icon" />Favorites 
           </button>
         </Link>
-        
+
+        <HorizontalRuleIcon className="line"/>
+
         <Dropdown>
-          <BaseMenuButton className='accButton' >My account</BaseMenuButton>
+          <button className='userButton'>
+        <Avatar className='userIcon' alt="Vince K." src={User} /> 
+        <span className='userSpan'>User</span>
+        </button>
+        
+          <BaseMenuButton className='accButton' >
+              <KeyboardArrowDownIcon />
+          </BaseMenuButton>
+
           <BaseMenu slots={{ listbox: Listbox }}>
-            <StyledMenuItem onClick={createHandleMenuClick('Profile')}>Profile</StyledMenuItem>
-            <StyledMenuItem onClick={createHandleMenuClick('Language settings')}>
-              Language settings
+          
+            <StyledMenuItem className='userinButton'onClick={createHandleMenuClick('User')}>
+              <Avatar  alt="Vince K." src={User} /> 
+              <span className='userSpan'>User</span>
             </StyledMenuItem>
-            <StyledMenuItem onClick={createHandleMenuClick('Log out')}>Log out</StyledMenuItem>
+                  
+        
+            <StyledMenuItem className='styledMenuItem' onClick={createHandleMenuClick('Profile')}>
+                  <PersonIcon/>
+                  Profile
+                  <ChevronRightIcon className='rightIcon'/>
+              </StyledMenuItem>
+
+            <StyledMenuItem className='styledMenuItem'onClick={createHandleMenuClick('Payments')}><PaymentIcon/>
+              Payments <ChevronRightIcon className='rightIcon'/>
+            </StyledMenuItem>
+            <StyledMenuItem className='styledMenuItem' onClick={createHandleMenuClick('Settings')}><SettingsIcon/>
+              Settings<ChevronRightIcon className='rightIcon'/></StyledMenuItem>
+            <StyledMenuItem className='styledMenuItem' onClick={createHandleMenuClick('Log out')}><LogoutIcon/>
+              Log out<ChevronRightIcon className='rightIcon'/></StyledMenuItem>
           </BaseMenu>
         </Dropdown>
       </div>

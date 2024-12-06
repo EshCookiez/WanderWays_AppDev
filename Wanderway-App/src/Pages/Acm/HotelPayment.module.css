@@ -1,0 +1,361 @@
+.bookingConfirmation {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    font-family: Montserrat, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  
+  .locationNav {
+    margin-bottom: 32px;
+  }
+  
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--Blackish-Green, #121212);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .separator {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .hotelName {
+    opacity: 0.4;
+  }
+  
+  .hotelInfoContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    gap: 40px;
+  }
+  
+  .details {
+    flex: 1;
+  }
+  
+  .title {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--Blackish-Green, #121212);
+    margin: 0 0 16px;
+  }
+  
+  .address {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.75;
+  }
+  
+  .locationIcon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .booking {
+    text-align: right;
+  }
+  
+  .price {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--Salmon, #ff8682);
+    margin-bottom: 16px;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .iconButton {
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--Mint-Green, #8dd3bb);
+    border-radius: 4px;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .iconButton:hover {
+    background-color: var(--Mint-Green, #8dd3bb);
+  }
+  
+  .iconButton:focus {
+    outline: 2px solid var(--Mint-Green, #8dd3bb);
+    outline-offset: 2px;
+  }
+  
+  .downloadButton {
+    background: var(--Mint-Green, #8dd3bb);
+    border: none;
+    border-radius: 4px;
+    padding: 16px;
+    min-width: 150px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  
+  .downloadButton:hover {
+    opacity: 0.9;
+  }
+  
+  .downloadButton:focus {
+    outline: 2px solid var(--Blackish-Green, #121212);
+    outline-offset: 2px;
+  }
+  
+  .bookingDetails {
+    border: 1px solid #eaeaea;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+  
+  .dateSection {
+    background-color: rgba(235, 246, 242, 1);
+    padding: 35px 24px;
+  }
+  
+  .checkInOut {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 300px;
+  }
+  
+  .date {
+    text-align: center;
+  }
+  
+  .dateValue {
+    font-size: 32px;
+    font-weight: 600;
+  }
+  
+  .dateLabel {
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.6;
+    margin-top: 4px;
+  }
+  
+  .dateSeparator {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .guestInfo {
+    padding: 24px;
+    background-color: white;
+  }
+  
+  .guestHeader {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    background: var(--Mint-Green, #8dd3bb);
+  }
+  
+  .guestAvatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+  
+  .guestName {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  
+  .roomType {
+    margin-left: auto;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  
+  .timings {
+    display: flex;
+    gap: 32px;
+    padding: 24px;
+  }
+  
+  .timeInfo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .timeIcon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .timeLabel {
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.6;
+  }
+  
+  .timeValue {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .bookingCode {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+  }
+  
+  .codeValue {
+    font-size: 32px;
+    font-weight: 600;
+  }
+  
+  .codeLabel {
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.6;
+    margin-top: 4px;
+  }
+  
+  .barcode {
+    display: flex;
+    gap: 4px;
+  }
+  
+  .barcodeSegment {
+    width: 24px;
+    height: 48px;
+  }
+  
+  .qrContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 74px 75px;
+    border-radius: 16px;
+    border: 1px solid #eaeaea;
+    background: white;
+    margin-bottom: 64px;
+  }
+  
+  .qrCode {
+    width: 161px;
+    height: 161px;
+  }
+  
+  .termsContainer {
+    color: var(--Blackish-Green, #121212);
+  }
+  
+  .mainTitle {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 34px;
+  }
+  
+  .section {
+    margin-bottom: 34px;
+  }
+  
+  .sectionTitle {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  
+  .sectionText {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 16px;
+  }
+  
+  .contactInfo {
+    font-size: 14px;
+    line-height: 20px;
+    font-style: normal;
+  }
+  
+  .helpLink {
+    color: var(--Blackish-Green, #121212);
+    text-decoration: underline;
+    margin-left: 4px;
+  }
+  
+  .helpLink:hover {
+    opacity: 0.8;
+  }
+  
+  .helpLink:focus {
+    outline: 2px solid var(--Blackish-Green, #121212);
+    outline-offset: 2px;
+  }
+  
+  @media (max-width: 991px) {
+    .hotelInfoContainer {
+      flex-direction: column;
+    }
+  
+    .booking {
+      width: 100%;
+      text-align: left;
+    }
+  
+    .timings {
+      flex-direction: column;
+    }
+  
+    .qrContainer {
+      padding: 40px 20px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .bookingConfirmation {
+      padding: 16px;
+    }
+  
+    .guestHeader {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .roomType {
+      margin: 0;
+    }
+  
+    .bookingCode {
+      flex-direction: column;
+      gap: 24px;
+      text-align: center;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .iconButton,
+    .downloadButton {
+      transition: none;
+    }
+  }

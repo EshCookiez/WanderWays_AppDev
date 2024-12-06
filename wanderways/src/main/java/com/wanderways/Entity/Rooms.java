@@ -1,9 +1,16 @@
+//ROOMS ENTITY
+
 package com.wanderways.Entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -12,45 +19,67 @@ public class Rooms {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer room_id;
+    private Integer roomId;
 
-    private String room_name;
-    private String room_type;
-    private Float room_price;
+    private String roomName;
+    private String roomType;
+    private Float roomPrice;
+    @Lob
+        private byte[] image;
+
+    @JsonBackReference  // This will prevent infinite recursion
+    @ManyToOne
+    @JoinColumn(name = "acm_id", nullable = false)
+    private Accommodation accommodation;
+
 
 
     // Getters and Setters
-    public Integer getRoom_id() {
-        return this.room_id;
+    public Integer getRoomId() {
+        return roomId;
     }
 
-    public void setRoom_id(Integer room_id) {
-        this.room_id = room_id;
+    public void setRoomId(Integer roomId) {
+        this.roomId = roomId;
     }
 
-    public String getRoom_name() {
-        return this.room_name;
+    public String getRoomName() {
+        return roomName;
     }
 
-    public void setRoom_name(String room_name) {
-        this.room_name = room_name;
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
     }
 
-    public String getRoom_type() {
-        return this.room_type;
+    public String getRoomType() {
+        return roomType;
     }
 
-    public void setRoom_type(String room_type) {
-        this.room_type = room_type;
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
     }
 
-    public Float getRoom_price() {
-        return this.room_price;
+    public Float getRoomPrice() {
+        return roomPrice;
     }
 
-    public void setRoom_price(Float room_price) {
-        this.room_price = room_price;
+    public void setRoomPrice(Float roomPrice) {
+        this.roomPrice = roomPrice;
     }
-
     
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public Accommodation getAccommodation() {
+        return accommodation;
+    }
+
+    public void setAccommodation(Accommodation accommodation) {
+        this.accommodation = accommodation;
+    }
 }
