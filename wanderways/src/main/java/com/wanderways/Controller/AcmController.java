@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/acc")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173", "https://plr89hsz-5173.asse.devtunnels.ms"})
 public class AcmController {
 
     private static final Logger logger = Logger.getLogger(AcmController.class.getName());

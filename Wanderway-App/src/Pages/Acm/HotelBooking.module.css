@@ -1,0 +1,312 @@
+.bookingContainer {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  
+  .contentWrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 50px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    border-radius: 20px;
+
+  }
+  
+  .bookingDetails {
+    flex: 1;
+    min-width: 320px;
+    max-width: 790px;
+    background: var(--Neutrals, #fff);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(17, 34, 17, 0.05);
+    padding: 32px 24px;
+    
+    box-shadow: 2px 2px 13px 7px rgba(0,0,0,0.81);
+-webkit-box-shadow: 2px 2px 13px 7px rgba(0,0,0,0.81);
+-moz-box-shadow: 2px 2px 13px 7px rgba(0,0,0,0.81);
+  }
+  
+  .roomHeader {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 40px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  
+  .roomTitle {
+    color: var(--Blackish-Green, #121);
+    font: 700 24px/1.4 'Libre Franklin', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    flex: 1;
+  }
+  
+  .pricePerNight {
+    color: var(--Slamon, #ff8682);
+    font: 600 32px/1.2 'Montserrat', sans-serif;
+    white-space: nowrap;
+  }
+  
+  .nightRate {
+    font-size: 14px;
+    line-height: 17px;
+  }
+  
+  .hotelInfo {
+    display: flex;
+    gap: 24px;
+    padding: 16px 32px;
+    border-radius: 8px;
+    border: 0.5px solid var(--Mint-Green, #8dd3bb);
+    margin-bottom: 24px;
+  }
+  
+  .hotelImage {
+    width: 63px;
+    height: 63px;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+  
+  .hotelDetails {
+    flex: 1;
+  }
+  
+  .hotelName {
+    font: 600 24px/1.2 'Montserrat', sans-serif;
+    color: var(--Blackish-Green, #121);
+    margin: 0 0 8px;
+  }
+  
+  .addressContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .locationIcon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .address {
+    font: 500 14px/1.4 'Montserrat', sans-serif;
+    color: var(--Blackish-Green, #121);
+    opacity: 0.75;
+    font-style: normal;
+  }
+  
+  .dateSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 40px;
+  }
+  
+  .dateDisplay {
+    flex: 1;
+  }
+  
+  .dateText {
+    font: 600 20px/1.2 'Montserrat', sans-serif;
+    color: var(--Blackish-Green, #121);
+    margin: 0 0 8px;
+  }
+  
+  .dateType {
+    font: 500 14px/1.4 'Montserrat', sans-serif;
+    color: var(--Blackish-Green, #121);
+    opacity: 0.6;
+  }
+  
+  .dateConnector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    transform: rotate(-90deg);
+  }
+  .heroBackground {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -1000;
+  }
+  .summaryCard {
+    flex: 1;
+    min-width: 320px;
+    max-width: 400px;
+    background: var(--Neutrals, #fff);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(17, 34, 17, 0.05);
+    padding: 24px;
+    
+    box-shadow: 2px 2px 13px 7px rgba(0,0,0,0.81);
+-webkit-box-shadow: 2px 2px 13px 7px rgba(0,0,0,0.81);
+-moz-box-shadow: 2px 2px 13px 7px rgba(0,0,0,0.81);
+  }
+  
+  .hotelSummary {
+    display: flex;
+    gap: 24px;
+  }
+  
+  .roomImage {
+    width: 121px;
+    height: 120px;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+  
+  .summaryDetails {
+    flex: 1;
+  }
+  
+  .summaryHotelName {
+    font: 500 16px/1.4 'Montserrat', sans-serif;
+    color: var(--Blackish-Green, #121);
+    opacity: 0.75;
+    margin: 0 0 4px;
+  }
+  
+  .roomType {
+    font: 600 20px/1.2 'Montserrat', sans-serif;
+    color: var(--Blackish-Green, #121);
+    margin: 0 0 16px;
+  }
+  
+  .ratingContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .ratingButton {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--Mint-Green, #8dd3bb);
+    background: transparent;
+    font: 500 12px/1.4 'Montserrat', sans-serif;
+    color: var(--Blackish-Green, #121);
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .ratingButton:hover,
+  .ratingButton:focus {
+    background-color: var(--Mint-Green, #8dd3bb);
+    outline: none;
+  }
+  
+  .ratingButton:focus-visible {
+    outline: 2px solid var(--Blackish-Green, #121);
+    outline-offset: 2px;
+  }
+  
+  .reviewText {
+    font: 500 12px/1.4 'Montserrat', sans-serif;
+    color: var(--Blackish-Green, #121);
+  }
+  
+  .divider {
+    height: 1px;
+    background: var(--Blackish-Green, #121);
+    opacity: 0.25;
+    margin: 16px 0;
+    border: none;
+  }
+  
+  .protection {
+    font: 500 16px/1.4 'Montserrat', sans-serif;
+    color: var(--Blackish-Green, #121);
+    margin: 16px 0;
+  }
+  
+  .priceDetails {
+    margin-top: 16px;
+  }
+  
+  .priceTitle {
+    font: 700 16px/1.4 'Libre Franklin', system-ui, -apple-system, sans-serif;
+    color: var(--Blackish-Green, #121);
+    margin: 0 0 16px;
+  }
+  
+  .priceRow {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+  
+  .priceLabel {
+    font: 500 16px/1.4 'Montserrat', sans-serif;
+    color: var(--Blackish-Green, #121);
+  }
+  
+  .priceAmount {
+    font: 600 16px/1.4 'Montserrat', sans-serif;
+    color: var(--Blackish-Green, #121);
+  }
+  
+  @media (max-width: 991px) {
+    .bookingContainer {
+      padding: 16px;
+    }
+    
+    .bookingDetails,
+    .summaryCard {
+      padding: 20px;
+    }
+    
+    .hotelInfo {
+      padding: 16px;
+    }
+    
+    .dateSection {
+      flex-direction: column;
+      gap: 24px;
+    }
+    
+    .dateConnector {
+      transform: none;
+      flex-direction: row;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .roomHeader {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    
+    .hotelInfo,
+    .hotelSummary {
+      flex-direction: column;
+    }
+    
+    .roomImage {
+      width: 100%;
+      height: auto;
+    }
+  }
+  
+  @media (forced-colors: active) {
+    .ratingButton {
+      border: 2px solid ButtonText;
+    }
+    
+    .divider {
+      background: ButtonText;
+    }
+  }

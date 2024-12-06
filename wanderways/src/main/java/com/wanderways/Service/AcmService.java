@@ -8,20 +8,29 @@ import org.springframework.stereotype.Service;
 
 import java.util.List; 
 import java.util.Optional;
+import java.util.logging.Logger;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AcmService {
 
     @Autowired
     private AcmRepo acmRepo;
+    private static final Logger logger = Logger.getLogger(AcmService.class.getName());
 
+    public List<Accommodation> getAllAccommodations() {
+        List<Accommodation> accommodations = acmRepo.findAll();
+        logger.info("Fetched accommodations: " + accommodations.size());
+        accommodations.forEach(accommodation -> logger.info(accommodation.toString()));
+        return accommodations;
+    }
     public Accommodation addAccommodation(Accommodation accommodation) {
         return acmRepo.save(accommodation);
     }
 
-    public List<Accommodation> getAllAccommodations() {
-        return acmRepo.findAll();
-    }
+    // public List<Accommodation> getAllAccommodations() {
+    //     return acmRepo.findAll();
+    // }
 
     public Accommodation updateAccommodation(int id, Accommodation accommodation) {
         Optional<Accommodation> existingAccommodation = acmRepo.findById(id);

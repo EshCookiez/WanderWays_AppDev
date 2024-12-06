@@ -42,6 +42,9 @@ public class SecurityConfig {
                 .requestMatchers("/auth/welcome", "/auth/addNewUser", "/auth/generateToken").permitAll()
                 .requestMatchers("/auth/user/**").hasAuthority("ROLE_USER")
                 .requestMatchers("/auth/admin/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/api/acc/*").permitAll() 
+                .requestMatchers("/api/rooms/*").permitAll() 
+                .requestMatchers("/api/**").authenticated()
                 .anyRequest().authenticated() // Protect all other endpoints
             )
             .sessionManagement(sess -> sess
@@ -49,7 +52,7 @@ public class SecurityConfig {
             )
             .authenticationProvider(authenticationProvider()) // Custom authentication provider
             .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter
-
+            
         return http.build();
     }
 

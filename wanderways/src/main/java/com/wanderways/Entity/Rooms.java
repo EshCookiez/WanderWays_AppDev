@@ -4,7 +4,6 @@ package com.wanderways.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,15 +24,15 @@ public class Rooms {
     private String roomName;
     private String roomType;
     private Float roomPrice;
-
     @Lob
-    @Column(name = "image", columnDefinition = "LONGBLOB")
-    private byte[] image;
+        private byte[] image;
 
     @JsonBackReference  // This will prevent infinite recursion
     @ManyToOne
     @JoinColumn(name = "acm_id", nullable = false)
     private Accommodation accommodation;
+
+
 
     // Getters and Setters
     public Integer getRoomId() {
@@ -67,7 +66,7 @@ public class Rooms {
     public void setRoomPrice(Float roomPrice) {
         this.roomPrice = roomPrice;
     }
-
+    
     public byte[] getImage() {
         return image;
     }

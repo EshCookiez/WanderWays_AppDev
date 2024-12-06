@@ -75,32 +75,45 @@ const HotelListing = () => {
   const fetchAccommodations = async () => {
     try {
       const response = await AcmService.getAllAccommodations();
-      const accommodationsWithImages = response.data.map((accommodation) => ({
-        acm_id: accommodation.acm_id, // Mapped from acm_id
-        acm_name: accommodation.acm_name, // Mapped from acm_name
-        acm_type: accommodation.acm_type, // Mapped from acm_type
-        acm_location: accommodation.acm_location, // Mapped from acm_location
-        acm_price: accommodation.acm_price, // Mapped from acm_price
-        amenities: accommodation.amenities,
-        rate: accommodation.rate,
-        overview: accommodation.overview,
-        imageSrc: accommodation.image
-          ? `data:image/jpeg;base64,${accommodation.image}`
-          : 'https://via.placeholder.com/150',
-        rooms: accommodation.rooms.map((room) => ({
-          id: room.roomId, // Mapped from roomId
-          name: room.roomName, // Mapped from roomName
-          type: room.roomType, // Mapped from roomType
-          price: room.roomPrice, // Mapped from roomPrice
-          image: room.image ? `data:image/jpeg;base64,${room.image}`: null
-        })),
-      }));
-      setAccommodations(accommodationsWithImages);
-      setFilteredAccommodations(
-        accommodationsWithImages.filter(
-          (accommodation) => accommodation.acm_type === selectedType
-        )
-      );
+  
+      // Check if response.data is an array
+      if (Array.isArray(response.data)) {
+        const accommodationsWithImages = response.data.map((accommodation) => ({
+          acm_id: accommodation.acm_id,
+          acm_name: accommodation.acm_name,
+          acm_type: accommodation.acm_type,
+          acm_location: accommodation.acm_location,
+          acm_price: accommodation.acm_price,
+          amenities: accommodation.amenities,
+          rate: accommodation.rate,
+          overview: accommodation.overview,
+          imageSrc: accommodation.image
+            ? `data:image/jpeg;base64,${accommodation.image}`
+            : 'https://via.placeholder.com/150',
+          rooms: Array.isArray(accommodation.rooms)
+            ? accommodation.rooms.map((room) => ({
+                id: room.roomId,
+                name: room.roomName,
+                type: room.roomType,
+                price: room.roomPrice,
+                image: room.image
+                  ? `data:image/jpeg;base64,${room.image}`
+                  : 'https://via.placeholder.com/150',
+              }))
+            : [], // Default to empty array if rooms is undefined
+        }));
+  
+        setAccommodations(accommodationsWithImages);
+        setFilteredAccommodations(
+          accommodationsWithImages.filter(
+            (accommodation) => accommodation.acm_type === selectedType
+          )
+        );
+      } else {
+        // Handle unexpected response structure
+        console.error('Unexpected response format:', response.data);
+        setSearchError('Failed to load accommodations. Please try again later.');
+      }
     } catch (error) {
       console.error('Error fetching accommodations:', error);
       setSearchError('Failed to load accommodations.');
@@ -561,6 +574,7 @@ const HotelListing = () => {
                             >
                               <BookmarkBorderIcon />
                             </Button>
+                            <Link to="/hotelBook">
                             <Button
                               variant="contained"
                               size="medium"
@@ -580,6 +594,7 @@ const HotelListing = () => {
                             >
                               Book Now
                             </Button>
+                            </Link>
                           </Box>
                           
                       {/* Close Button */}

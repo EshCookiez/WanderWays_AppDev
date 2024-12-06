@@ -33,7 +33,6 @@ public class RoomService {
             updatedRoom.setRoomName(room.getRoomName());
             updatedRoom.setRoomType(room.getRoomType());
             updatedRoom.setRoomPrice(room.getRoomPrice());
-            updatedRoom.setImage(room.getImage());
             return roomRepo.save(updatedRoom);
         } else {
             throw new NoSuchElementException("Room not found with id: " + id);

@@ -17,6 +17,8 @@ import CustomerProfile from './Pages/CustomerProfile/CustomerProfile';
 import HotelListing from './Pages/Acm/HotelListing';
 import FlightSearch from './Pages/FlightBooking/FlightSearch/FlightSearch';
 import HomePage from './Pages/NewHome/LandingPage';
+import HotelBooking from './Pages/Acm/HotelBooking';
+import HotelPayment from './Pages/Acm/HotelPayment';
 function App() {
     return (
         <Router>
@@ -36,7 +38,8 @@ function App() {
                     <Route path="/updateCustomer/:id" element={<CustomerForm />} />
 
                     <Route path="/hotel" element={<HotelListing/>}/>
-
+                    <Route path='/hotelBook' element={<HotelBooking/>}/>
+                    <Route path='/hotelPay' element={<HotelPayment/>}/>
                     
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignUpForm />} />
