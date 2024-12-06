@@ -4,6 +4,7 @@ import { IoAirplane } from 'react-icons/io5';
 import TextField from '../../Components/TextField/TextField'
 import './List.css'
 import sampleimg from './samplelogo.png'
+
 const AvailableFlights = ({ flights, originSearch, destinationSearch, setOriginSearch, setDestinationSearch }) => {
   const filteredFlights = flights.filter(flight =>
     flight.location_origin.toLowerCase().includes(originSearch.toLowerCase()) &&

@@ -24,16 +24,21 @@ public class BookFlight {
     @JsonProperty("fareClass")
     private String fare_class;
 
+    @JsonProperty("Status")
+    private String status = "Pending Payment";
+
+
     @ManyToOne
     @JoinColumn(name = "flightId", nullable = false)
     private Flight flight;
 
     public BookFlight() {}
 
-    public BookFlight(Integer fbook_id,Integer passenger_amount, String fare_class){
+    public BookFlight(Integer fbook_id,Integer passenger_amount, String fare_class, String status){
         this.fbook_id = fbook_id;
         this.passenger_amount = passenger_amount;
         this.fare_class = fare_class;
+        this.status = (status == null || status.isEmpty()) ? "Pending Payment" : status;
     }
 
 
@@ -53,6 +58,10 @@ public class BookFlight {
      public Flight getFlight() {
         return flight;
     }
+
+    public String getStatus(){
+        return status;
+    }
     
      // Setters
     public void setFbookId(Integer fbook_id) {
@@ -71,5 +80,8 @@ public class BookFlight {
         this.flight = flight;
     }
     
+    public void setStatus(String status){
+        this.status = status;
+    }
 
 }

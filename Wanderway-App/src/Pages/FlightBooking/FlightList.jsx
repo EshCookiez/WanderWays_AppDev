@@ -7,6 +7,7 @@ import { styled } from '@mui/system';
 import Header from '../../Components/Header.jsx';
 import Footer from '../../Components/Footer/Footer.jsx';
 import styles from './flights.module.css';
+import logo from '././FlightSearch/Assets/Docked-Airplane4.jpg';
 
 const FlightList = () => {
   const [flights, setFlights] = useState([]);
@@ -61,13 +62,16 @@ const FlightList = () => {
   };
 
   const StyledTabs = styled(Tabs)({
-    backgroundColor: '#f5f5f5', 
+    backgroundColor: '#fff', 
     '& .MuiTabs-indicator': {
       backgroundColor: '#8dd3bb', 
     },
   });
   
   const StyledTab = styled(Tab)(({ theme }) => ({
+    flexGrow: 1, // Ensures equal space distribution
+    maxWidth: '50%', // Caps the width at 50%
+    textAlign: 'center',
     fontWeight: 'bold',
     color: '#5f9784', 
     '&.Mui-selected': {
@@ -83,8 +87,16 @@ const FlightList = () => {
   <body className={styles.body}> 
     <div className={styles.mainBox}>
       <Header/>
+      <section className={styles.heroSection}>
+            <img src={logo} alt="Travel destination" className={styles.heroImage} />
+            <div className={styles.heroContent}>
+                <h1 className={styles.heroTitle}>Wander the World</h1>
+                <h1 className={styles.heroTitle}>Your way!</h1>
+            </div>
+      </section>
       <main className={styles.contentBox}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'white',overflow: 'hidden',
+        borderTopLeftRadius: '4px', borderTopRightRadius: '4px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}>
           <StyledTabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
           <StyledTab label="Available Flights" {...a11yProps(0)} />
           <StyledTab label="Booked Flights" {...a11yProps(1)} />
