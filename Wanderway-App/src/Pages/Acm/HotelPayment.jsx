@@ -1,73 +1,78 @@
-import React from 'react';
-import styles from './HotelPayment.module.css';
+// FILE: src/components/HotelPayment.jsx
 
-export const HotelPayment = () => {
-  const hotelData = {
-    location: {
-      country: 'Turkey',
-      city: 'Istanbul'
-    },
-    hotel: {
-      name: 'CVK Park Bosphorus Hotel Istanbul',
-      address: 'Gümüssuyu Mah. Inönü Cad. No:8, Istanbul 34437'
-    },
-    price: 265,
-    booking: {
-      checkIn: {
-        date: 'Thur, Dec 8',
-        time: '12:00pm'
-      },
-      checkOut: {
-        date: 'Fri, Dec 9',
-        time: '11:30pm'
-      },
-      guest: {
-        name: 'Vince Kimlo'
-      },
-      room: {
-        type: 'Superior room - 1 double bed or 2 twin beds'
-      }
-    }
-  };
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import styles from './HotelPayment.module.css';
+import Header from '../../Components/Header';
+import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar';
+import userIcon from './acmAssets/user.png';
+import barcode from './acmAssets/barcode.png';
+import logo from './acmAssets/hotelBook.png';
+
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+
+const HotelPayment = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { payment } = location.state || {};
+
+  if (!payment) {
+    return <p>No payment details available.</p>;
+  }
+
+  const accommodation = payment.room.accommodation;
+  const room = payment.room;
 
   return (
     <main className={styles.bookingConfirmation} role="main">
+      <Header />
+      <img src={logo} alt="background" className={styles.heroBackground} />
       <nav className={styles.locationNav} aria-label="Hotel location">
         <div className={styles.breadcrumb}>
-          <span>{hotelData.location.country}</span>
-          <img src="/icons/separator.svg" alt="" className={styles.separator} />
-          <span>{hotelData.location.city}</span>
-          <img src="/icons/separator.svg" alt="" className={styles.separator} />
-          <span className={styles.hotelName}>{hotelData.hotel.name}</span>
+          <span>Find Stays</span>
+          <ChevronRightIcon />
+          <span>{accommodation.location}</span>
+          <ChevronRightIcon />
+          <span className={styles.hotelName}>{accommodation.name}</span>
         </div>
       </nav>
 
       <section className={styles.hotelInfoContainer} aria-labelledby="hotelName">
         <div className={styles.details}>
-          <h1 id="hotelName" className={styles.title}>{hotelData.hotel.name}</h1>
+          <h1 id="hotelName" className={styles.title}>{accommodation.name}</h1>
           <div className={styles.address}>
-            <img src="/icons/location.svg" alt="" className={styles.locationIcon} />
-            <span>{hotelData.hotel.address}</span>
+            <LocationOnIcon sx={{ fontSize: 15 }} />
+            <span>{accommodation.address}</span>
           </div>
         </div>
         <div className={styles.booking}>
-          <div className={styles.price} aria-label={`Price: ${hotelData.price} dollars`}>
-            ${hotelData.price}
+          <div className={styles.price} aria-label={`Price: ${payment.totalPrice} dollars`}>
+            ${payment.totalPrice}
           </div>
           <div className={styles.actions}>
-            <button 
-              className={styles.iconButton} 
-              aria-label="Share booking details"
-              onClick={() => {}}
-            >
-              <img src="/icons/share.svg" alt="" className={styles.actionIcon} />
-            </button>
-            <button 
-              className={styles.downloadButton}
-              onClick={() => {}}
+            <Button
+              variant="contained"
+              size="medium"
+              sx={{
+                fontWeight: 900,
+                backgroundColor: '#8dd3bb',
+                color: '#000000',
+                width: '100%',
+                border: '2px solid #4c987e',
+                fontFamily: 'Montserrat, sans-serif',
+                '&:hover': {
+                  backgroundColor: '#4c987e',
+                  color: '#ffffff',
+                },
+              }}
+              onClick={() => handleDownloadPaymentDetails(payment)}
             >
               Download
-            </button>
+            </Button>
           </div>
         </div>
       </section>
@@ -76,16 +81,11 @@ export const HotelPayment = () => {
         <div className={styles.dateSection}>
           <div className={styles.checkInOut}>
             <div className={styles.date}>
-              <div className={styles.dateValue}>{hotelData.booking.checkIn.date}</div>
+              <div className={styles.dateValue}>{payment.checkInDate}</div>
               <div className={styles.dateLabel}>Check-In</div>
             </div>
-            <div className={styles.dateSeparator} aria-hidden="true">
-              <img src="/icons/arrow-top.svg" alt="" />
-              <img src="/icons/arrow-middle.svg" alt="" />
-              <img src="/icons/arrow-bottom.svg" alt="" />
-            </div>
-            <div className={styles.date}>
-              <div className={styles.dateValue}>{hotelData.booking.checkOut.date}</div>
+            <div className={styles.dateOut}>
+              <div className={styles.dateValue}>{payment.checkOutDate}</div>
               <div className={styles.dateLabel}>Check-Out</div>
             </div>
           </div>
@@ -93,32 +93,28 @@ export const HotelPayment = () => {
 
         <div className={styles.guestInfo}>
           <div className={styles.guestHeader}>
-            <img 
-              src={`/avatars/${hotelData.booking.guest.name.toLowerCase()}.jpg`} 
-              alt={hotelData.booking.guest.name}
-              className={styles.guestAvatar} 
-            />
-            <span className={styles.guestName}>{hotelData.booking.guest.name}</span>
-            <span className={styles.roomType}>{hotelData.booking.room.type}</span>
+            <Avatar alt={payment.userFullName} src={userIcon} /> 
+            <span className={styles.guestName}>{payment.userFullName}</span>
+            <span className={styles.roomType}>{room.type}</span>
           </div>
 
           <div className={styles.timings}>
             <div className={styles.timeInfo}>
-              <img src="/icons/clock.svg" alt="" className={styles.timeIcon} />
+              <AccessTimeFilledIcon sx={{ color: '#ff8484' }} />
               <div className={styles.timeDetails}>
                 <div className={styles.timeLabel}>Check-In time</div>
-                <div className={styles.timeValue}>{hotelData.booking.checkIn.time}</div>
+                <div className={styles.timeValue}>{payment.checkInTime}</div>
               </div>
             </div>
             <div className={styles.timeInfo}>
-              <img src="/icons/clock.svg" alt="" className={styles.timeIcon} />
+              <AccessTimeFilledIcon sx={{ color: '#ff8484' }} />
               <div className={styles.timeDetails}>
                 <div className={styles.timeLabel}>Check-Out time</div>
-                <div className={styles.timeValue}>{hotelData.booking.checkOut.time}</div>
+                <div className={styles.timeValue}>{payment.checkOutTime}</div>
               </div>
             </div>
             <div className={styles.timeInfo}>
-              <img src="/icons/room.svg" alt="" className={styles.timeIcon} />
+              <MeetingRoomIcon sx={{ color: '#ff8484' }} />
               <div className={styles.timeDetails}>
                 <div className={styles.timeLabel}>Room no.</div>
                 <div className={styles.timeValue}>On arrival</div>
@@ -135,7 +131,7 @@ export const HotelPayment = () => {
               {[...Array(9)].map((_, index) => (
                 <img 
                   key={index}
-                  src="/icons/barcode-segment.svg"
+                  src={barcode}
                   alt=""
                   className={styles.barcodeSegment}
                 />
@@ -143,11 +139,10 @@ export const HotelPayment = () => {
             </div>
           </div>
         </div>
+        <div className={styles.qrContainer} aria-label="Booking QR code">
+          <img src="/qr/booking-code.svg" alt="QR Code" className={styles.qrCode} />
+        </div>
       </section>
-
-      <div className={styles.qrContainer} aria-label="Booking QR code">
-        <img src="/qr/booking-code.svg" alt="" className={styles.qrCode} />
-      </div>
 
       <section className={styles.termsContainer} aria-labelledby="termsTitle">
         <h2 id="termsTitle" className={styles.mainTitle}>Terms and Conditions</h2>
@@ -193,6 +188,18 @@ export const HotelPayment = () => {
       </section>
     </main>
   );
+};
+
+// Handler for Download button
+const handleDownloadPaymentDetails = (payment) => {
+  // Example: Create a JSON blob and download it
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payment, null, 2));
+  const downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute("href", dataStr);
+  downloadAnchorNode.setAttribute("download", "payment_details.json");
+  document.body.appendChild(downloadAnchorNode); // Required for Firefox
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
 };
 
 export default HotelPayment;

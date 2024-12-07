@@ -16,14 +16,10 @@ import CreateFlight from './Pages/FlightBooking/CreateFlight';
 import CustomerProfile from './Pages/CustomerProfile/CustomerProfile';
 import HotelListing from './Pages/Acm/HotelListing';
 import FlightSearch from './Pages/FlightBooking/FlightSearch/FlightSearch';
-<<<<<<< HEAD
 import FlightPayment from './Pages/FlightPayment/FlightPayment.jsx';
-
-=======
 import HomePage from './Pages/NewHome/LandingPage';
 import HotelBooking from './Pages/Acm/HotelBooking';
 import HotelPayment from './Pages/Acm/HotelPayment';
->>>>>>> 926c66bf3436c13a9ad393aa605491e27fe57e69
 function App() {
     return (
         <Router>

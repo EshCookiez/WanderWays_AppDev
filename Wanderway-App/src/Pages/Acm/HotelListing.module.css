@@ -29,6 +29,13 @@
     object-position: center;
     z-index: -1000;
   }
+  .filter{
+    padding: 20px;
+    margin: 20px;
+  }
+  .hotelSection{
+    display: flex;
+  }
   .headerAccent1,
   .headerAccent2 {
     background: #8dd3bb;
