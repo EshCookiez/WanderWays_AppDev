@@ -1,0 +1,259 @@
+.profileContainer {
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.headerImage {
+  aspect-ratio: 3.52;
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  border-radius: 12px;
+  height: 300px;
+}
+
+.profileContent {
+  z-index: 0;
+  display: flex;
+  margin-top: -70px;
+  width: 100%;
+  flex-direction: column;
+  background-color: var(--Neutrals, #fff);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0px 4px 16px rgba(17, 34, 17, 0.05);
+}
+
+.userInfoSection {
+  display: flex;
+  text-align: left;
+  width: 100%;
+  flex-direction: column;
+  font-family: Montserrat, sans-serif;
+  color: var(--Blackish-Green, #121);
+}
+
+.userHeader {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.profileImageWrapper {
+  flex-shrink: 0;
+  width: 154px;
+}
+
+.profileImage {
+  width: 154px;
+  height: 154px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.profileImageWrapper {
+    position: relative;
+    display: inline-block;
+    width: 154px; /* Match the Avatar size */
+    height: 154px; /* Match the Avatar size */
+  }
+  
+  .profileImageWrapper .MuiAvatar-root {
+    z-index: 1;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 154px;
+    height: 154px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+    z-index: 2;
+  }
+  
+  .profileImageWrapper:hover .overlay {
+    opacity: 1;
+  }
+  
+  .overlay:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+.userInfo {
+  flex-grow: 1;
+}
+
+.userName {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--Blackish-Green, #121);
+}
+
+.userEmail {
+  font-size: 16px;
+  color: var(--Gray-600, #4B5563);
+  margin: 0;
+}
+
+.navigationTabs {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32px;
+  border-bottom: 1px solid var(--Gray-200, #E5E7EB);
+  position: relative;
+}
+
+.tabItem {
+  padding: 16px 24px;
+  width: 100%;
+  border-top-left-radius: 20px;
+  border-top-right-radius:20px ;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--Gray-700, #374151);
+  cursor: pointer;
+  border: none;
+  background: none;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.tabItem:hover {
+  color: var(--Primary, #8DD3BB);
+}
+
+.tabItem:focus {
+  outline: 2px solid var(--Primary, #8DD3BB);
+  border-top-left-radius: 20px;
+  border-top-right-radius:20px ;
+  outline-offset: -2px;
+}
+
+.tabItem[aria-selected="true"] {
+  color: var(--Primary, #8DD3BB);
+}
+
+.tabItem[aria-selected="true"]::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: var(--Primary, #8DD3BB);
+  border-radius: 4px 4px 0 0;
+}
+
+.accountSection {
+  margin-top: 32px;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 24px;
+  color: var(--Blackish-Green, #121);
+}
+
+.fieldGrid {
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.fieldContainer {
+  background: var(--White, #FFF);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+}
+.fieldDisplay{
+    display: flex;
+    justify-content: space-between;
+}
+.fieldLabel {
+  font-size: 14px;
+  color: var(--Gray-600, #4B5563);
+}
+
+.fieldValue {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--Blackish-Green, #121);
+}
+
+.changeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid var(--Primary, #8DD3BB);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--Blackish-Green, #121);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.changeButton:hover {
+  background: var(--Primary, #8DD3BB);
+  color: white;
+}
+
+.changeButton:focus {
+  outline: 2px solid var(--Primary, #8DD3BB);
+  outline-offset: 2px;
+}
+
+.buttonIcon {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 768px) {
+  .userHeader {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profileImageWrapper {
+    margin-bottom: 16px;
+  }
+
+  .navigationTabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tabItem {
+    padding: 12px 16px;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .tabItem,
+  .changeButton {
+    transition: none;
+  }
+}

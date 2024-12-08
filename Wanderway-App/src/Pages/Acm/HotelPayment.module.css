@@ -277,6 +277,7 @@
   }
   .qrContainer {
     display: flex;
+    width: 45%;
     justify-content: center;
     align-items: center;
     padding: 74px 75px;

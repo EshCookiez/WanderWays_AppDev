@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// HotelBooking.jsx
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './HotelBooking.module.css';
 import Header from '../../Components/Header';
@@ -7,28 +8,73 @@ import Button from '@mui/material/Button';
 import logo from './acmAssets/hotelBook.png';
 import TextField from '@mui/material/TextField';
 import PaymentService from '../../services/PaymentService';
-
 import StarIcon from '@mui/icons-material/Star';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import AcmService from '../../services/AcmService'; // Ensure this import exists
 
 const HotelBooking = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { accommodation, defaultRoom } = location.state || {};
+  const { accommodationId, roomId } = location.state || {};
+
+  const [accommodation, setAccommodation] = useState(null);
+  const [selectedRoom, setSelectedRoom] = useState(null);
   const [checkInState, setCheckInState] = useState('');
   const [checkInTime, setCheckInTime] = useState('');
   const [checkOutState, setCheckOutState] = useState('');
   const [checkOutTime, setCheckOutTime] = useState(''); 
   const [loading, setLoading] = useState(false);
-  const [selectedRoomId, setSelectedRoomId] = useState(defaultRoom ? defaultRoom.id : null);
-  
-  if (!accommodation || !defaultRoom) {
-    return <p>No accommodation or room data available.</p>;
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (!accommodationId || !roomId) {
+      setError('No accommodation or room data available.');
+      return;
+    }
+
+    const fetchAccommodation = async () => {
+      try {
+        const response = await AcmService.getAccommodationById(accommodationId);
+        if (response.data) {
+          setAccommodation(response.data);
+          console.log('Accommodation:', response.data); // Debugging
+          const room = response.data.rooms.find(r => r.roomId === Number(roomId));
+          if (room) {
+            setSelectedRoom(room);
+            console.log('Selected Room:', room); // Debugging
+          } else {
+            setError('Selected room not found.');
+          }
+        } else {
+          setError('Accommodation not found.');
+        }
+      } catch (err) {
+        console.error('Error fetching accommodation:', err);
+        setError('Failed to load accommodation details.');
+      }
+    };
+
+    fetchAccommodation();
+  }, [accommodationId, roomId]);
+
+  if (error) {
+    return (
+      <div className={styles.errorContainer}>
+        <p className={styles.errorMessage}>{error}</p>
+        <button onClick={() => navigate('/hotel')} className={styles.backButton}>
+          Back to Listings
+        </button>
+      </div>
+    );
+  }
+
+  if (!accommodation || !selectedRoom) {
+    return <p>Loading accommodation details...</p>;
   }
 
   const priceItems = [
-    { label: 'Base Fare', amount: Number(defaultRoom.price) }, // Ensuring it's a number
+    { label: 'Base Fare', amount: Number(selectedRoom.roomPrice) }, // Updated
     { label: 'Discount', amount: 0 },
     { label: 'Taxes', amount: 20 },
     { label: 'Service Fee', amount: 5 },
@@ -78,15 +124,14 @@ const HotelBooking = () => {
     }
     return today;
   };
-  // Add this function above your handleProceedToPayment function
 
-const calculateTotalAmount = () => {
-  return totalAmount;
-};
+  const calculateTotalAmount = () => {
+    return totalAmount;
+  };
 
   const handleProceedToPayment = async () => {
     // Validate required fields
-    if (!selectedRoomId) {
+    if (!selectedRoom.roomId) { // Updated here
       console.error('No room selected');
       // Optionally, set an error state to display a message to the user
       return;
@@ -103,7 +148,7 @@ const calculateTotalAmount = () => {
       checkOutDate: checkOutState,
       checkInTime,
       checkOutTime,
-      roomsSelected: { roomId: selectedRoomId }, // Nested object
+      roomsSelected: { roomId: selectedRoom.roomId }, // Updated here
       accommodation: { id: accommodation.id },     // Nested object
       totalAmount: calculateTotalAmount(),
     };
@@ -113,7 +158,9 @@ const calculateTotalAmount = () => {
     try {
       const response = await PaymentService.createPayment(paymentData);
       console.log('Payment Successful:', response);
-      navigate('/payment-success'); // Navigate to a confirmation page
+            
+      const paymentId = response.paymentId; 
+      navigate('/hotelPay', { state: { paymentId } }); // Navigate to a confirmation page
     } catch (error) {
       console.error('Payment Error:', error);
       // Optionally, set an error state to display a message to the user
@@ -139,22 +186,22 @@ const calculateTotalAmount = () => {
 
           <div className={styles.roomHeader}>
             <img 
-              src={defaultRoom.image || 'https://via.placeholder.com/150'} 
-              alt={`${defaultRoom.name} Image`}
+              src={selectedRoom.image ? `data:image/jpeg;base64,${selectedRoom.image}` : 'https://via.placeholder.com/150'} 
+              alt={`${selectedRoom.roomName} Image`}
               className={styles.hotelImage}
             />
             <h1 className={styles.roomTitle}>
-              {defaultRoom.name} - {defaultRoom.type}
+              {selectedRoom.roomName} - {selectedRoom.roomType}
             </h1>
             <div className={styles.pricePerNight} aria-label="Price per night">
-              <span className={styles.amount}>${defaultRoom.price}</span>
+              <span className={styles.amount}>${selectedRoom.roomPrice}</span>
               <span className={styles.nightRate}>/night</span>
             </div>
           </div>
           
           <article className={styles.hotelInfo} aria-label="Hotel Information">
             <img 
-              src={accommodation.acmLogoSrc || 'https://via.placeholder.com/150'} 
+              src={accommodation.acmLogo ? `data:image/jpeg;base64,${accommodation.acmLogo}` : 'https://via.placeholder.com/150'} 
               alt={`${accommodation.acm_name} Logo`}
               className={styles.hotelImage}
             />
@@ -205,7 +252,7 @@ const calculateTotalAmount = () => {
             <div className={styles.dateConnector} aria-hidden="true">
               <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/cf5d76583c8aa9d03d09967e1e75f9c4a4540d561968ffc279c72e30d8cb34b3?placeholderIfAbsent=true&apiKey=a15e519098c240a2b028acfbd9132f63" alt="" 
                 className={styles.hotelImage}
-                style={{ transform: 'rotate(90deg)', height: '50px',width: '50px' }} />
+                style={{ transform: 'rotate(90deg)', height: '50px', width: '50px' }} />
             </div>
             
             <div className={styles.dateDisplay}>
@@ -247,18 +294,18 @@ const calculateTotalAmount = () => {
         <aside className={styles.summaryCard} aria-label="Booking Summary">
           <div className={styles.hotelSummary}>
             <img 
-              src={accommodation.imageSrc || 'https://via.placeholder.com/150'} 
+              src={accommodation.image ? `data:image/jpeg;base64,${accommodation.image}` : 'https://via.placeholder.com/150'} 
               alt={accommodation.acm_name}
               className={styles.roomImage}
             />
             <div className={styles.summaryDetails}>
               <h3 className={styles.summaryHotelName}>{accommodation.acm_name}</h3>
               <p className={styles.roomType}>
-                {defaultRoom.name} - {defaultRoom.type}
+                {selectedRoom.roomName} - {selectedRoom.roomType}
               </p>
               <div className={styles.ratingContainer}>
                 <span className={styles.reviewText}>
-                  {Array.from({ length: accommodation.rate }, (_, index) => (
+                  {Array.from({ length: Math.floor(accommodation.rate) }, (_, index) => (
                     <StarIcon key={index} sx={{ fontSize: 15, color: '#ff8484' }} />
                   ))} {accommodation.rate}
                 </span>

@@ -54,4 +54,16 @@ public class AcmService {
         acmRepo.deleteById(id);
         return "Accommodation deleted with id: " + id;
     }
+    // **Added Method: Fetch accommodation by ID**
+    public Accommodation getAccommodationById(int id) {
+        logger.info("Fetching accommodation with id: " + id);
+        Optional<Accommodation> accommodation = acmRepo.findById(id);
+        if (accommodation.isPresent()) {
+            logger.info("Accommodation found: " + accommodation.get().toString());
+            return accommodation.get();
+        } else {
+            logger.warning("Accommodation not found with id: " + id);
+            throw new NoSuchElementException("Accommodation not found with id: " + id);
+        }
+    }
 }
