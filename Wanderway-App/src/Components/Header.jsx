@@ -47,7 +47,7 @@ const Header = () => {
   return (
     <div className="header-box">
       <div className="features">
-        <Link to="/flight-search">
+        <Link to="/list-flight">
             <button className='findButton'>
             <AirplanemodeActiveIcon className="airplane-icon" />Find Flight
             </button>

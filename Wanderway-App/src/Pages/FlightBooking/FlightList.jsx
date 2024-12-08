@@ -7,7 +7,8 @@ import { styled } from '@mui/system';
 import Header from '../../Components/Header.jsx';
 import Footer from '../../Components/Footer/Footer.jsx';
 import styles from './flights.module.css';
-import logo from '././FlightSearch/Assets/Docked-Airplane4.jpg';
+import logo from '././Assets/AIRPORT.jpg';
+import Loader from '../../Components/Loader/AirplaneSpinner.jsx'
 
 const FlightList = () => {
   const [flights, setFlights] = useState([]);
@@ -15,6 +16,8 @@ const FlightList = () => {
   const [originSearch, setOriginSearch] = useState('');
   const [destinationSearch, setDestinationSearch] = useState('');
   const [value, setValue] = useState(0);
+
+  const [loading, setLoading] = useState(true);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -42,6 +45,9 @@ const FlightList = () => {
   };
   
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)  
+    }, 2000);
     fetch('http://localhost:8080/api/flights/all')
       .then((response) => response.json())
       .then((data) => setFlights(data))
@@ -90,8 +96,12 @@ const FlightList = () => {
 
   return (
   <div className={styles.body}> 
-    <div className={styles.mainBox}>
-      <Header/>
+   <Header/>
+  {loading ? (
+    <Loader />
+  ): (
+    <>
+        <div className={styles.mainBox}>
       <section className={styles.heroSection}>
             <img src={logo} alt="Travel destination" className={styles.heroImage} />
             <div className={styles.heroContent}>
@@ -120,8 +130,11 @@ const FlightList = () => {
         <BookedFlights booked={booked} handleDeleteBooking={handleDeleteBooking} />
         </CustomTabPanel>
       </main>
+      <Footer/>
     </div>
-    <Footer/>
+    </>
+  )}
+   
     </div>
   );
 };

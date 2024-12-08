@@ -1,0 +1,22 @@
+.spinner_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+  }
+  
+  .airplane_icon {
+    font-size: 80px;
+    color: #56b896;
+    animation: airplaneProgress 4s linear infinite; 
+  }
+  
+  /* Keyframes for bar like movement*/
+  @keyframes airplaneProgress {
+    0% {
+        transform: translateX(0) translateY(-50%);
+    }
+    100% {
+        transform: translateX(100%) translateY(-50%);
+    }
+  }

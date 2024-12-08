@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef} from 'react';
 import styles from './FlightPayment.module.css'
 import Header from '../../Components/Header.jsx';
+import html2canvas from 'html2canvas';
 import { useParams, useNavigate , useLocation} from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
-
 import userIcon from './Assets/user.png';
 import barcode from './Assets/barcode.png';
 import logo from './Assets/lobby2.jpg';
@@ -36,6 +36,8 @@ function FlightPayment(){
     const taxFee = price * 0.05;
     const insuranceFee = price * 0.05;
     
+    const bookingDetailsRef = useRef(null);
+
     const [message, setMessage] = useState('');
 
     const handlePayment = async () => {
@@ -46,15 +48,34 @@ function FlightPayment(){
             body: JSON.stringify({ status: 'Fully Paid' }),
           });
           
-          if (response.ok) {
+
+        if (!bookingDetailsRef.current) {
+          alert('No booking details available to download.');
+          return;
+        }
+
+        html2canvas(bookingDetailsRef.current).then((canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+          const link = document.createElement('a');
+          link.href = imgData;
+          link.download = 'flight_booking_details.png';
+          link.click();
+        }).catch((err) => {
+          console.error('Error generating image:', err);
+          alert('Failed to generate image.');
+        });
+
+        if (response.ok) {
+          setTimeout(() => {
             navigate('/list-flight');
-            setMessage("Booking Fully Paid")
-          } else {
-            setMessage("Booking unsuccessfully Paid")
-          }
+          }, 5000);
+        } else {
+          setMessage("Booking unsuccessfully Paid")
+        }
         } catch (error) {
           console.error('Error updating booking status:', error);
         }
+
       };
 
 
@@ -68,7 +89,7 @@ function FlightPayment(){
           <ChevronRightIcon />
           <span>{destination}</span>
           <ChevronRightIcon />
-          <span className={styles.hotelName}>{origin}</span>
+          <span className={styles.hotelName}>{flightclass}</span>
         </div>
       </nav>
 
@@ -108,7 +129,7 @@ function FlightPayment(){
         </div>
       </section>
 
-      <section className={styles.bookingDetails} aria-label="Booking details">
+      <section className={styles.bookingDetails} aria-label="Booking details" ref={bookingDetailsRef}>
         <div className={styles.dateSection}>
           <div className={styles.checkInOut}>
             <div className={styles.date}>
@@ -125,8 +146,8 @@ function FlightPayment(){
         <div className={styles.guestInfo}>
           <div className={styles.guestHeader}>
             <Avatar alt='user name' src={userIcon} /> 
-            <span className={styles.guestName}>Vince Kimlo </span>
-            <span className={styles.roomType}>{fareclass } </span>
+            <span className={styles.guestName}>WORK IN PROGRESS NAME </span>
+            <span className={styles.roomType}>{fareclass } Class </span>
           </div>
 
           <div className={styles.timings}>
@@ -170,9 +191,31 @@ function FlightPayment(){
             </div>
           </div>
         </div>
-        <div className={styles.qrContainer} aria-label="Booking QR code">
-          <img src="/qr/booking-code.svg" alt="QR Code" className={styles.qrCode} />
-        </div>
+        
+          <div className={styles.paymentDetails} aria-label="Payment Details">
+            <span className={styles.title}>PAYMENT DETAILS</span>
+            <ul className={styles.paymentBreakdown}>
+              <li>
+                <strong>Service Fee:</strong> ${serviceFee.toFixed(2)}
+              </li>
+              <li>
+                <strong>Flight Fee:</strong> ${flightFee.toFixed(2)}
+              </li>
+              <li>
+                <strong>Baggage Fee:</strong> ${baggageFee.toFixed(2)}
+              </li>
+              <li>
+                <strong>Tax Fee:</strong> ${taxFee.toFixed(2)}
+              </li>
+              <li>
+                <strong>Insurance Fee:</strong> ${insuranceFee.toFixed(2)}
+              </li>
+              <li className={styles.total}>
+                <strong>Total:</strong> ${(serviceFee + flightFee + baggageFee + taxFee + insuranceFee).toFixed(2)}
+              </li>
+            </ul>
+          </div>
+        
       </section>
 
       <section className={styles.termsContainer} aria-labelledby="termsTitle">

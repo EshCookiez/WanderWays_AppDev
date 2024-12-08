@@ -283,7 +283,7 @@
   border-radius: 16px;
   border: 1px solid #eaeaea;
   background: white;
-  margin-bottom: 64px;
+  margin-bottom: 70px;
 }
 
 .qrCode {
@@ -377,6 +377,36 @@
     gap: 24px;
     text-align: center;
   }
+}
+
+.paymentDetails {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  width: 100%;
+  max-width: 400px;
+  margin: 16px auto;
+}
+
+.paymentBreakdown {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.paymentBreakdown li {
+  margin: 8px 0;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.paymentBreakdown .total {
+  font-weight: bold;
+  border-top: 2px solid #ddd;
+  margin-top: 12px;
+  padding-top: 8px;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -6,13 +6,14 @@ import TextField from '../../Components/TextField/TextField';
 import OptionsField from '../../Components/OptionsField/OptionsField';
 import Button from '../../Components/Button/Button';
 import AirplaneImage from './assets/FormsImage5.jpg';
-
+import { useNavigate } from 'react-router-dom';
 
 function FlightBooking_Update() {
     const { flightId, fbookId } = useParams();
     const [travellerCtr, setTravellersCtr] = useState(1);
     const [fareclass, setFareclass] = useState("");
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -42,6 +43,9 @@ function FlightBooking_Update() {
     
             if (response.ok) {
                 setMessage('Flight booking updated successfully!');
+                setTimeout(() => {
+                    navigate('/list-flight');
+                }, 2000);
             } else {
                 setMessage("Failed to update booking");
             }

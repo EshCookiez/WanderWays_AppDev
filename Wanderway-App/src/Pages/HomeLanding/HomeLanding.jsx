@@ -59,7 +59,7 @@ function HomeLanding() {
         <nav className={styles.nav}>
           <ul className={styles.navList}>
             <li className={styles.navItem}>
-              <Link to="/flight-search" className={styles.navLink}>
+              <Link to="/list-flight" className={styles.navLink}>
               <button className={styles.loginButton}>
                 
               <AirplanemodeActiveIcon className={styles.icon} />

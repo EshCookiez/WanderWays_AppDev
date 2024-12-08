@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from './Forms.module.css'
 import TextField from '../../Components/TextField/TextField';
@@ -12,6 +12,7 @@ const FlightBooking = () => {
     const [travellerCtr, setTravellersCtr] = useState(1);
     const [fareclass, setFareclass] = useState("");
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,6 +36,9 @@ const FlightBooking = () => {
     
             if (response.status === 201) {
                 setMessage('Flight booked successfully!');
+                setTimeout(() => {
+                    navigate('/list-flight');
+                }, 2000);
             } else {
                 setMessage("Failed to book Flight");
             }
