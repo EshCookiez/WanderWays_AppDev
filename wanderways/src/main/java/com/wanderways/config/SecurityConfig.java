@@ -41,6 +41,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless APIs
             .cors(cors -> cors
                 .configurationSource(corsConfig()) // Apply the CORS configuration directly here
@@ -63,8 +64,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/api/bookings/delete/**").permitAll()
                 .requestMatchers("/api/acc/**").permitAll() 
                 .requestMatchers("/api/rooms/**").permitAll() 
-                .requestMatchers("/api/acmpayments/**").permitAll()
+                .requestMatchers("/api/acmpayment/**").permitAll()
 
+                .requestMatchers("/error").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().authenticated() // Protect all other endpoints
             )
