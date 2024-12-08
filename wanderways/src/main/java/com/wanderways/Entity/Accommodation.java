@@ -47,13 +47,6 @@ public class Accommodation {
     @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Rooms> rooms = new ArrayList<>();
 
-    public Integer getAcm_id() {
-        return this.acm_id;
-    }
-
-    public void setAcm_id(Integer acm_id) {
-        this.acm_id = acm_id;
-    }
 
     
 

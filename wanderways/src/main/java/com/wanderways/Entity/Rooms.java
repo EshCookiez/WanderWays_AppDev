@@ -36,10 +36,6 @@ public class Rooms {
     private Accommodation accommodation;
 
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "room")
-    private List<AcmPayment> payments;
-
     // Getters and Setters
     public Integer getRoomId() {
         return roomId;

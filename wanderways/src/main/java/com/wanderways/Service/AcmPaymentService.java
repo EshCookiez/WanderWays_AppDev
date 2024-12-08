@@ -1,11 +1,13 @@
 package com.wanderways.Service;
 
 import com.wanderways.Entity.AcmPayment;
+import com.wanderways.Entity.Accommodation;
+import com.wanderways.Entity.Rooms;
 import com.wanderways.Repository.AcmPaymentRepo;
+import com.wanderways.Repository.AcmRepo;
+import com.wanderways.Repository.RoomsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class AcmPaymentService {
@@ -13,38 +15,21 @@ public class AcmPaymentService {
     @Autowired
     private AcmPaymentRepo acmPaymentRepo;
 
-    // Create a new payment
+    @Autowired
+    private AcmRepo accommodationRepo;
+
+    @Autowired
+    private RoomsRepo roomsRepo;
+
     public AcmPayment createPayment(AcmPayment payment) {
+        Accommodation accommodation = accommodationRepo.findById(payment.getAccommodation().getId())
+            .orElseThrow(() -> new RuntimeException("Accommodation not found"));
+        Rooms rooms = roomsRepo.findById(payment.getRoomsSelected().getRoomId())
+            .orElseThrow(() -> new RuntimeException("Room not found"));
+
+        payment.setAccommodation(accommodation);
+        payment.setRoomsSelected(rooms);
+
         return acmPaymentRepo.save(payment);
-    }
-
-    // Get all payments
-    public List<AcmPayment> getAllPayments() {
-        return acmPaymentRepo.findAll();
-    }
-
-    // Get payment by ID
-    public AcmPayment getPaymentById(Long id) {
-        return acmPaymentRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Payment not found for id :: " + id));
-    }
-
-    // Update payment
-    public AcmPayment updatePayment(Long id, AcmPayment paymentDetails) {
-        AcmPayment payment = getPaymentById(id);
-        payment.setRoom(paymentDetails.getRoom());
-        payment.setTotalPrice(paymentDetails.getTotalPrice());
-        payment.setCheckInDate(paymentDetails.getCheckInDate());
-        payment.setCheckInTime(paymentDetails.getCheckInTime());
-        payment.setCheckOutDate(paymentDetails.getCheckOutDate());
-        payment.setCheckOutTime(paymentDetails.getCheckOutTime());
-        payment.setUserFullName(paymentDetails.getUserFullName());
-        return acmPaymentRepo.save(payment);
-    }
-
-    // Delete payment
-    public void deletePayment(Long id) {
-        AcmPayment payment = getPaymentById(id);
-        acmPaymentRepo.delete(payment);
     }
 }

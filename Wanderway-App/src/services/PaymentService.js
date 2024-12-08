@@ -1,63 +1,33 @@
-// FILE: PaymentService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/acmpayments'; // Ensure this URL matches your backend routing
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
-// Get JWT token from local storage or other storage mechanism
-const getToken = () => {
-  return localStorage.getItem('token'); // Adjust based on how you store the token
-};
+// PaymentService.js
 
-const createPayment = (paymentData) => {
-  return axios.post(`${API_URL}/add`, paymentData, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${getToken()}` // Include the JWT token
-    },
-    withCredentials: true
-  });
-};
-
-const getAllPayments = () => {
-  return axios.get(API_URL, {
-    headers: {
-      'Authorization': `Bearer ${getToken()}`
-    },
-    withCredentials: true
-  });
-};
-
-const getPaymentById = (id) => {
-  return axios.get(`${API_URL}/${id}`, {
-    headers: {
-      'Authorization': `Bearer ${getToken()}`
-    },
-    withCredentials: true
-  });
-};
-
-const updatePayment = (id, paymentData) => {
-  return axios.put(`${API_URL}/update/${id}`, paymentData, {
-    headers: {
-      'Authorization': `Bearer ${getToken()}`
-    },
-    withCredentials: true
-  });
-};
-
-const deletePayment = (id) => {
-  return axios.delete(`${API_URL}/delete/${id}`, {
-    headers: {
-      'Authorization': `Bearer ${getToken()}`
-    },
-    withCredentials: true
-  });
+const createPayment = async (paymentData, authToken) => {
+    try {
+        const response = await axios.post(`${API_BASE_URL}/api/acmpayment/create`, paymentData, {
+            headers: {
+                'Content-Type': 'application/json', // Include auth token if required
+            },
+            withCredentials: true
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            // Server responded with a status other than 2xx
+            console.error('Error creating payment:', error.response.data);
+        } else if (error.request) {
+            // Request was made but no response received
+            console.error('No response received:', error.request);
+        } else {
+            // Something else happened
+            console.error('Error:', error.message);
+        }
+        throw error;
+    }
 };
 
 export default {
-  createPayment,
-  getAllPayments,
-  getPaymentById,
-  updatePayment,
-  deletePayment,
+    createPayment,
 };
