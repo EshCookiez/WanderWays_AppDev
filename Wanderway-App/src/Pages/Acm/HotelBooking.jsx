@@ -1,54 +1,158 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './HotelBooking.module.css';
 import Header from '../../Components/Header';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import logo from './acmAssets/hotelBook.png'
+import logo from './acmAssets/hotelBook.png';
+import TextField from '@mui/material/TextField';
+import PaymentService from '../../services/PaymentService';
+
+import StarIcon from '@mui/icons-material/Star';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+
+
 const HotelBooking = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { accommodation, defaultRoom } = location.state || {};
+  const [checkInState, setCheckInState] = useState('');
+  const [checkInTime, setCheckInTime] = useState('');
+  const [checkOutState, setCheckOutState] = useState('');
+  const [checkOutTime, setCheckOutTime] = useState(''); 
+
+  if (!accommodation || !defaultRoom) {
+    return <p>No accommodation or room data available.</p>;
+  }
+
   const priceItems = [
-    { label: 'Base Fare', amount: '240' },
-    { label: 'Discount', amount: '0' },
-    { label: 'Taxes', amount: '20' },
-    { label: 'Service Fee', amount: '5' },
-    { label: 'Total', amount: '265' }
+    { label: 'Base Fare', amount: Number(defaultRoom.price) }, // Ensuring it's a number
+    { label: 'Discount', amount: 0 },
+    { label: 'Taxes', amount: 20 },
+    { label: 'Service Fee', amount: 5 },
   ];
+  // Calculate the total amount
+  const totalAmount = priceItems.reduce((accumulator, item) => {
+    return accumulator + item.amount;
+  }, 0);
+  // Append the Total to the priceItems array
+  const priceItemsWithTotal = [
+    ...priceItems,
+    { label: 'Total', amount: totalAmount },
+  ];
+
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split('T')[0];
+
+  // Handle Check-In date change
+  const handleCheckInChange = (e) => {
+    const newCheckIn = e.target.value;
+    setCheckInState(newCheckIn);
+
+    // If Check-Out is before new Check-In, reset Check-Out
+    if (checkOutState && newCheckIn >= checkOutState) {
+      setCheckOutState('');
+    }
+  };
+  const handleCancel = () => {
+    navigate('/hotel');
+  };
+  const handleCheckInTimeChange = (e) => {
+    setCheckInTime(e.target.value);
+  };
+  const handleCheckOutTimeChange = (e) => {
+    setCheckOutTime(e.target.value);
+  };
+  // Handle Check-Out date change
+  const handleCheckOutChange = (e) => {
+    setCheckOutState(e.target.value);
+  };
+
+  // Calculate minimum Check-Out date (one day after Check-In)
+  const getMinCheckOutDate = () => {
+    if (checkInState) {
+      const checkInDate = new Date(checkInState);
+      checkInDate.setDate(checkInDate.getDate() + 1);
+      return checkInDate.toISOString().split('T')[0];
+    }
+    return today;
+  };
+  const userFullName = "John Doe"; // Replace this with actual user data
+
+  const handleProceedToPayment = async () => {
+    if (!checkInState || !checkOutState || !checkInTime || !checkOutTime) {
+      alert("Please fill in all check-in and check-out fields.");
+      return;
+    }
+
+    const paymentData = {
+      room: { roomId: defaultRoom.roomId }, // Ensure `roomId` exists in `defaultRoom`
+      totalPrice: totalAmount,
+      checkInDate: checkInState,
+      checkInTime: checkInTime,
+      checkOutDate: checkOutState,
+      checkOutTime: checkOutTime,
+      userFullName: "John Doe", // Replace with actual user data
+    };
+
+    try {
+      const response = await PaymentService.createPayment(paymentData);
+      console.log("Payment created:", response.data);
+      navigate('/payment', { state: { payment: response.data } }); // Redirect to Payment page with payment details
+    } catch (error) {
+      console.error("Error creating payment:", error);
+      alert("Failed to proceed with payment. Please try again.");
+    }
+  };
+
+
 
   return (
     <main className={styles.bookingContainer} role="main">
-        <Header/>
-        <img src={logo} alt="background" className={styles.heroBackground} />
+      <Header />
+      <img src={logo} alt="background" className={styles.heroBackground} />
+      
       <div className={styles.contentWrapper}>
+      {/* ROOMS details */}
         <section className={styles.bookingDetails} aria-label="Booking Details">
+      <nav className={styles.locationNav} aria-label="Hotel location">
+        <div className={styles.breadcrumb}>
+          <span>Find Stays</span>
+          <ChevronRightIcon/>
+          <span>{accommodation.acm_location}</span>
+          <ChevronRightIcon/>
+          <span className={styles.hotelNameNav}>{accommodation.acm_name}</span>
+        </div>
+      </nav>
+
           <div className={styles.roomHeader}>
+            <img 
+              src={defaultRoom.image || 'https://via.placeholder.com/150'} 
+              alt={`${defaultRoom.name} Image`}
+              className={styles.hotelImage}
+            />
             <h1 className={styles.roomTitle}>
-              Superior room - 1 double bed or 2 twin beds
+            {defaultRoom.name} - {defaultRoom.type}
             </h1>
             <div className={styles.pricePerNight} aria-label="Price per night">
-              <span className={styles.amount}>$240</span>
+            <span className={styles.amount}>${defaultRoom.price}</span>
               <span className={styles.nightRate}>/night</span>
             </div>
           </div>
           
           <article className={styles.hotelInfo} aria-label="Hotel Information">
-            <img 
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ff30aa1cfebbeb73cacb5ce4295e9001c72d3afeb064790e2cedf60be399f32?placeholderIfAbsent=true&apiKey=a15e519098c240a2b028acfbd9132f63" 
-              alt="CVK Park Bosphorus Hotel exterior view"
+          <img 
+              src={accommodation.acmLogoSrc || 'https://via.placeholder.com/150'} 
+              alt={`${accommodation.acm_name} Logo`}
               className={styles.hotelImage}
             />
             <div className={styles.hotelDetails}>
-              <h2 className={styles.hotelName}>CVK Park Bosphorus Hotel Istanbul</h2>
+              <h2 className={styles.hotelName}>{accommodation.acm_name}</h2>
               <div className={styles.addressContainer}>
-                <img 
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/a6b633bd9b1c06d5f6f44dc9542ef204568ce0601632069b272baa89c86300ac?placeholderIfAbsent=true&apiKey=a15e519098c240a2b028acfbd9132f63" 
-                  alt=""
-                  role="presentation" 
-                  className={styles.locationIcon}
-                />
                 <address className={styles.address}>
-                  Gümüssuyu Mah. Inönü Cad. No:8, Istanbul 34437
+                  <LocationOnIcon sx={{fontSize: 15}}/>
+                  {accommodation.acm_location}
                 </address>
               </div>
             </div>
@@ -56,45 +160,113 @@ const HotelBooking = () => {
 
           <div className={styles.dateSection} role="group" aria-label="Check-in and Check-out dates">
             <div className={styles.dateDisplay}>
-              <h3 className={styles.dateText}>Thursday, Dec 8</h3>
-              <div className={styles.dateType}>Check-In</div>
+              {/* Check-In Date */}
+              <div className={styles.inputGroup}>
+                <TextField
+                  id="checkIn"
+                  label="Check In Date"
+                  type="date"
+                  variant="outlined"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={checkInState}
+                  inputProps={{ min: today }}
+                  onChange={handleCheckInChange}
+                  className={styles.customTextField}
+                />
+              </div>
+              
+              {/* Check-In Time */}
+              <div className={styles.inputGroup}>
+                <TextField
+                  id="checkInTime"
+                  label="Check In Time"
+                  type="time"
+                  variant="outlined"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={checkInTime}
+                  onChange={handleCheckInTimeChange}
+                  className={styles.customTextField}
+                  inputProps={{
+                    step: 300, // 5 minutes
+                  }}
+                />
+              </div>
+              
             </div>
             
             <div className={styles.dateConnector} aria-hidden="true">
-              <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/03e1b1d35ce28cd4983e5f07f68bd71fd34d900a22a952339716a7020cff8ce2?placeholderIfAbsent=true&apiKey=a15e519098c240a2b028acfbd9132f63" alt="" />
-              <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/cf5d76583c8aa9d03d09967e1e75f9c4a4540d561968ffc279c72e30d8cb34b3?placeholderIfAbsent=true&apiKey=a15e519098c240a2b028acfbd9132f63" alt="" />
-              <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c120cfc7b28f263b6f66bd2781b416756dfa775662de23282d36afc3169d0e9d?placeholderIfAbsent=true&apiKey=a15e519098c240a2b028acfbd9132f63" alt="" />
+              <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/cf5d76583c8aa9d03d09967e1e75f9c4a4540d561968ffc279c72e30d8cb34b3?placeholderIfAbsent=true&apiKey=a15e519098c240a2b028acfbd9132f63" alt="" 
+                className={styles.hotelImage}
+                style={{ transform: 'rotate(90deg)', height: '50px',width: '50px'}} />
             </div>
             
             <div className={styles.dateDisplay}>
-              <h3 className={styles.dateText}>Friday, Dec 9</h3>
-              <div className={styles.dateType}>Check-Out</div>
+                {/* Check-Out Date */}
+                <div className={styles.inputGroup}>
+                  <TextField
+                    id="checkOut"
+                    label="Check Out Date"
+                    type="date"
+                    variant="outlined"
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={checkOutState}
+                    inputProps={{ min: getMinCheckOutDate() }}
+                    onChange={handleCheckOutChange}
+                    className={styles.customTextField}
+                    disabled={!checkInState}
+                  />
+                </div>
+                
+                {/* Check-Out Time */}
+                <div className={styles.inputGroup}>
+                  <TextField
+                    id="checkOutTime"
+                    label="Check Out Time"
+                    type="time"
+                    variant="outlined"
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={checkOutTime}
+                    onChange={handleCheckOutTimeChange}
+                    className={styles.customTextField}
+                    inputProps={{
+                      step: 300, // 5 minutes
+                    }}
+                    disabled={!checkOutState}
+                  />
+                </div>
             </div>
           </div>
         </section>
         
-        {/* <Divider orientation="vertical" variant="middle" flexItem sx={{borderWidth:3, borderColor:"rgba(0, 0, 0, 0.316)"}}/> */}
         <aside className={styles.summaryCard} aria-label="Booking Summary">
           <div className={styles.hotelSummary}>
             <img 
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/cee1996aa81a6665340c2cf530aacbb552412b0d94d3d3e820bd87d5745c185c?placeholderIfAbsent=true&apiKey=a15e519098c240a2b028acfbd9132f63" 
-              alt="Room preview"
+              src={accommodation.imageSrc || 'https://via.placeholder.com/150'} 
+              alt={accommodation.acm_name}
               className={styles.roomImage}
             />
             <div className={styles.summaryDetails}>
-              <h3 className={styles.summaryHotelName}>CVK Park Bosphorus...</h3>
+              <h3 className={styles.summaryHotelName}>{accommodation.acm_name}</h3>
               <p className={styles.roomType}>
-                Superior room - 1 double bed or 2 twin beds
+              {defaultRoom.name} - {defaultRoom.type}
               </p>
               <div className={styles.ratingContainer}>
-                <button 
-                  className={styles.ratingButton}
-                  aria-label="Hotel rating: 4.2 out of 5"
-                >
-                  4.2
-                </button>
                 <span className={styles.reviewText}>
-                  <strong>Very Good</strong> 54 reviews
+                {Array.from({ length: accommodation.rate }, (_, index) => (
+                    <StarIcon key={index} sx={{ fontSize: 15, color: '#ff8484' }} />
+                  ))} {accommodation.rate}
                 </span>
               </div>
             </div>
@@ -103,7 +275,7 @@ const HotelBooking = () => {
           <hr className={styles.divider} aria-hidden="true" />
           
           <p className={styles.protection}>
-            Your booking is protected by <strong>golobe</strong>
+            Your booking is protected by <strong>WanderWays</strong>
           </p>
           
           <hr className={styles.divider} aria-hidden="true" />
@@ -112,7 +284,7 @@ const HotelBooking = () => {
             <h2 id="priceDetailsTitle" className={styles.priceTitle}>
               Price Details
             </h2>
-            {priceItems.map((item, index) => (
+            {priceItemsWithTotal.map((item, index) => (
               <div 
                 key={`price-${index}`} 
                 className={styles.priceRow}
@@ -121,56 +293,55 @@ const HotelBooking = () => {
               >
                 <div className={styles.priceLabel}>{item.label}</div>
                 <div className={styles.priceAmount}>${item.amount}</div>
-                
               </div>
             ))}
           </section>
+
           <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    '& button': { m: 1, opacity: 0.75 },
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    size="medium"
-                    sx={{
-                      fontWeight: 900,
-                      backgroundColor: '#f73f3f',
-                      color: '#000000',
-                      width: '100%',
-                      border: '2px solid #f71717',
-                      '&:hover': {
-                        backgroundColor: '#e01a1a',
-                        color: '#fff',
-                      },
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                  <Link to='/hotelPay'>
-                  <Button
-                    variant="contained"
-                    size="medium"
-                    sx={{
-                      fontWeight: 900,
-                      backgroundColor: '#8dd3bb',
-                      color: '#000000',
-                      width: '100%',
-                      border: '2px solid #4c987e',
-                      fontFamily: 'Montserrat, sans-serif',
-                      '&:hover': {
-                        backgroundColor: '#4c987e',
-                        color: '#ffffff',
-                      },
-                    }}
-                    onClick={() => handleOpen(accommodation)}
-                  >
-                    BOOK NOW
-                  </Button>
-                  </Link>
-                </Box>
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              '& button': { m: 1, opacity: 0.75 },
+            }}
+          >
+            <Button
+              variant="contained"
+              size="medium"
+              sx={{
+                fontWeight: 900,
+                backgroundColor: '#f73f3f',
+                color: '#000000',
+                width: '100%',
+                border: '2px solid #f71717',
+                '&:hover': {
+                  backgroundColor: '#e01a1a',
+                  color: '#fff',
+                },
+              }}
+              onClick={handleCancel}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              size="medium"
+              sx={{
+                fontWeight: 900,
+                backgroundColor: '#8dd3bb',
+                color: '#000000',
+                width: '100%',
+                border: '2px solid #4c987e',
+                fontFamily: 'Montserrat, sans-serif',
+                '&:hover': {
+                  backgroundColor: '#4c987e',
+                  color: '#ffffff',
+                },
+              }}
+              onClick={handleProceedToPayment}
+            >
+              BOOK NOW
+            </Button>
+          </Box>
         </aside>
       </div>
     </main>

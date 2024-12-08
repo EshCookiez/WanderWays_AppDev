@@ -19,6 +19,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import StarIcon from '@mui/icons-material/Star';
 import EmojiFoodBeverageIcon from '@mui/icons-material/EmojiFoodBeverage';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import Slider from '@mui/material/Slider';
 
 import Header from '../../Components/Header';
 import AcmService from '../../services/AcmService';
@@ -52,25 +53,34 @@ const HotelListing = () => {
   const [roomsGuestsState, setRoomsGuestsState] = useState(roomsGuests || '');
   const [searchError, setSearchError] = useState('');
   const navigate = useNavigate();
+  
+  const handleBookNow = (room) => {
+    if (selectedAccommodation) {
+      const defaultRoom = room || (selectedAccommodation.rooms && selectedAccommodation.rooms.length > 0 ? selectedAccommodation.rooms[0] : null);
+      navigate('/hotelBook', { state: { accommodation: selectedAccommodation, defaultRoom } });
+    }
+  };
+  
+  const handleOpen = (accommodation) => {
+    setSelectedAccommodation(accommodation);
+    setOpen(true);
+  };
 
   const [open, setOpen] = useState(false);
   const [selectedAccommodation, setSelectedAccommodation] = useState(null);
 
-  const [openAddRoom, setOpenAddRoom] = useState(false);
-  const [newRoom, setNewRoom] = useState({
-    name: '',
-    type: '',
-    price: '',
-  });
+
+
   useEffect(() => {
     fetchAccommodations();
   }, [selectedType]);
-
+  
   useEffect(() => {
-    if (destination || checkIn || checkOut || roomsGuests) {
-      handleSearch();
+    // Trigger initial search only when accommodations are loaded
+    if (accommodations.length > 0 && (destination || checkIn || checkOut || roomsGuests)) {
+      performInitialSearch();
     }
-  }, [destination, checkIn, checkOut, roomsGuests]);
+  }, [accommodations, destination, checkIn, checkOut, roomsGuests]);
 
   const fetchAccommodations = async () => {
     try {
@@ -89,6 +99,10 @@ const HotelListing = () => {
           overview: accommodation.overview,
           imageSrc: accommodation.image
             ? `data:image/jpeg;base64,${accommodation.image}`
+            : 'https://via.placeholder.com/150',
+          // **Use acmLogo from backend**
+          acmLogoSrc: accommodation.acmLogo
+            ? `data:image/jpeg;base64,${accommodation.acmLogo}`
             : 'https://via.placeholder.com/150',
           rooms: Array.isArray(accommodation.rooms)
             ? accommodation.rooms.map((room) => ({
@@ -120,19 +134,41 @@ const HotelListing = () => {
     }
   };
 
-  const handleSearch = e => {
+  
+  const handleSearch = (e) => {
     e.preventDefault();
+  
+    console.log('handleSearch triggered');
+    console.log('Selected Type:', selectedType);
+    console.log('Destination State:', destinationState);
+    console.log('Check-In State:', checkInState);
+    console.log('Check-Out State:', checkOutState);
+  
     if (new Date(checkInState) >= new Date(checkOutState)) {
       setSearchError('Check-out date must be after check-in date.');
       return;
     }
+  
     setSearchError('');
-    const filtered = accommodations.filter(
-      accommodation =>
-        accommodation.acm_type === selectedType &&
-        accommodation.acm_location.toLowerCase().includes(destinationState.toLowerCase())
-    );
+  
+    const trimmedDestination = destinationState.trim().toLowerCase();
+    const trimmedSelectedType = selectedType.trim().toLowerCase();
+  
+    const filtered = accommodations.filter((accommodation) => {
+      const accommodationType = accommodation.acm_type.trim().toLowerCase();
+      const accommodationLocation = accommodation.acm_location.trim().toLowerCase();
+      console.log('Accommodation Type:', accommodationType);
+      console.log('Accommodation Location:', accommodationLocation);
+      return (
+        accommodationType === trimmedSelectedType &&
+        accommodationLocation.includes(trimmedDestination)
+      );
+    });
+  
+    console.log('Filtered Accommodations:', filtered);
+  
     setFilteredAccommodations(filtered);
+  
     if (filtered.length === 0) {
       setSearchError('Sorry, nothing is here.');
     } else {
@@ -140,18 +176,44 @@ const HotelListing = () => {
     }
   };
 
-  const handleDelete = async id => {
-    try {
-      await AcmService.deleteAccommodation(id);
-      fetchAccommodations();
-    } catch (error) {
-      console.error('Error deleting accommodation:', error);
+  const performInitialSearch = () => {
+    console.log('performInitialSearch triggered');
+    if (new Date(checkInState) >= new Date(checkOutState)) {
+      setSearchError('Check-out date must be after check-in date.');
+      return;
+    }
+    setSearchError('');
+    
+    const trimmedDestination = destinationState.trim().toLowerCase();
+    const trimmedSelectedType = selectedType.trim().toLowerCase();
+  
+    const filtered = accommodations.filter((accommodation) => {
+      const accommodationType = accommodation.acm_type.trim().toLowerCase();
+      const accommodationLocation = accommodation.acm_location.trim().toLowerCase();
+      console.log('Accommodation Type:', accommodationType);
+      console.log('Accommodation Location:', accommodationLocation);
+      return (
+        accommodationType === trimmedSelectedType &&
+        accommodationLocation.includes(trimmedDestination)
+      );
+    });
+  
+    console.log('performInitialSearch - Filtered Accommodations:', filtered);
+    setFilteredAccommodations(filtered);
+    
+    if (filtered.length === 0) {
+      setSearchError('Sorry, nothing is here.');
+    } else {
+      setSearchError('');
     }
   };
 
-  const handleOpen = accommodation => {
-    setSelectedAccommodation(accommodation);
-    setOpen(true);
+
+
+  const [value, setValue] = useState([20, 37]);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
   };
 
   const handleClose = () => {
@@ -240,11 +302,7 @@ const HotelListing = () => {
                 <MenuItem value="3 rooms, 6 guests">3 rooms, 6 guests</MenuItem>
               </TextField>
             </div>
-            {searchError && (
-              <Typography variant="h6" color="error">
-                {searchError}
-              </Typography>
-            )}
+            
             <button type="submit" className={styles.searchButton}>
               <img
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/39e7d1fb343ed6c3f97bbaa288ebef6317c359d89415ed0d9cfa599f2a10f75b?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
@@ -255,6 +313,8 @@ const HotelListing = () => {
           </form>
         </section>
       </div>
+      <section className={styles.hotelSection}>
+        
       <section className={styles.hotelType}>
         <div className={styles.hotelList}>
           {['Hotels', 'Motels', 'Resorts'].map(type => (
@@ -393,7 +453,7 @@ const HotelListing = () => {
           ))}
         </div>
       </section>
-
+      </section>
       {/* Modal Component */}
       <Modal
         aria-labelledby="accommodation-modal-title"
@@ -516,6 +576,7 @@ const HotelListing = () => {
                                         backgroundColor: '#4c987e',
                                         color: '#ffffff',
                                       }, }}
+                                      onClick={() => handleBookNow(room)}
                                   >
                                     Book Now
                                   </Button>
@@ -574,7 +635,6 @@ const HotelListing = () => {
                             >
                               <BookmarkBorderIcon />
                             </Button>
-                            <Link to="/hotelBook">
                             <Button
                               variant="contained"
                               size="medium"
@@ -590,11 +650,10 @@ const HotelListing = () => {
                                   color: '#ffffff',
                                 },
                               }}
-                              onClick={() => handleOpen(accommodation)}
+                              onClick={() => handleBookNow()}
                             >
                               Book Now
                             </Button>
-                            </Link>
                           </Box>
                           
                       {/* Close Button */}
@@ -610,7 +669,7 @@ const HotelListing = () => {
                             color: '#000000'
                           },
                         }}
-                        onClick={handleClose}
+                        onClick={(handleClose)}
                       >
                         Close
                       </Button>
@@ -621,6 +680,7 @@ const HotelListing = () => {
           </Box>
         </Fade>
       </Modal>
+      
       <Footer/>
     </div>
   );

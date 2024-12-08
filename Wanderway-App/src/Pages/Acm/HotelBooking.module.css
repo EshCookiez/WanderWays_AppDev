@@ -16,11 +16,35 @@
     border-radius: 20px;
 
   }
+  .locationNav {
+    margin-bottom: 32px;
+  }
+  
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--Blackish-Green, #121212);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .separator {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .hotelNameNav {
+    font-size: 14px;
+    color: #ff8682;
+  }
   
   .bookingDetails {
+    margin-top: 50px;
     flex: 1;
+    width:800px;
     min-width: 320px;
-    max-width: 790px;
+    max-width: 850px;
     background: var(--Neutrals, #fff);
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(17, 34, 17, 0.05);
@@ -35,7 +59,8 @@
     display: flex;
     width: 100%;
     align-items: center;
-    gap: 40px;
+    text-align: left;
+    gap: 20px;
     justify-content: space-between;
     flex-wrap: wrap;
     margin-bottom: 24px;
@@ -62,15 +87,15 @@
   .hotelInfo {
     display: flex;
     gap: 24px;
-    padding: 16px 32px;
+    padding: 16px 10px;
     border-radius: 8px;
     border: 0.5px solid var(--Mint-Green, #8dd3bb);
     margin-bottom: 24px;
   }
   
   .hotelImage {
-    width: 63px;
-    height: 63px;
+    width: 100px;
+    height: 100px;
     border-radius: 12px;
     object-fit: cover;
   }
@@ -80,6 +105,7 @@
   }
   
   .hotelName {
+    text-align: left;
     font: 600 24px/1.2 'Montserrat', sans-serif;
     color: var(--Blackish-Green, #121);
     margin: 0 0 8px;
@@ -143,6 +169,7 @@
     z-index: -1000;
   }
   .summaryCard {
+    margin-top: 50px;
     flex: 1;
     min-width: 320px;
     max-width: 400px;
@@ -169,6 +196,7 @@
   }
   
   .summaryDetails {
+    text-align: left;
     flex: 1;
   }
   
@@ -214,6 +242,7 @@
   }
   
   .reviewText {
+    align-items: center;
     font: 500 12px/1.4 'Montserrat', sans-serif;
     color: var(--Blackish-Green, #121);
   }

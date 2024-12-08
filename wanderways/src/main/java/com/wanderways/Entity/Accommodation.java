@@ -5,8 +5,11 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,7 +34,14 @@ public class Accommodation {
     private String overview;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "image", nullable = false)
     private byte[] image;
+    
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "acmLogo", nullable = false)
+    private byte[] acmLogo;
 
     @JsonManagedReference  // This will prevent infinite recursion
     @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -110,6 +120,13 @@ public class Accommodation {
         this.image = image;
     }
     
+    public byte[] getAcmLogo() {
+        return acmLogo;
+    }
+
+    public void setAcmLogo(byte[] acmLogo) {
+        this.acmLogo = acmLogo;
+    }
     public String getOverview() {
         return overview;
     }
