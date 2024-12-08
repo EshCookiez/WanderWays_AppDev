@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import styles from './FlightPayment.module.css'
-import Header from '../../Components/Header';
+import Header from '../../Components/Header.jsx';
 import { useParams, useNavigate , useLocation} from 'react-router-dom';
+import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar';
+
+import userIcon from './Assets/user.png';
+import barcode from './Assets/barcode.png';
+import logo from './Assets/lobby2.jpg';
+
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 
 function FlightPayment(){
     const location = useLocation();
@@ -10,11 +21,15 @@ function FlightPayment(){
     // Get query parameters from the URL
     const queryParams = new URLSearchParams(location.search);
     const bookingId = queryParams.get('bookingid');
+    const origin = queryParams.get('origin');
     const destination = queryParams.get('destination');
     const price = queryParams.get('price');
     const departure = queryParams.get('departure');
     const arrival = queryParams.get('arrival');
-    
+    const flightclass = queryParams.get('flightclass')
+    const fareclass = queryParams.get('fareclass')
+    const passengers = queryParams.get('passengers')
+
     const serviceFee = price * 0.30;
     const flightFee = price * 0.50;
     const baggageFee = price * 0.10;
@@ -42,53 +57,166 @@ function FlightPayment(){
         }
       };
 
-    const hotelData = {
-          location: {
-            country: 'Turkey',
-            city: 'Istanbul'
-          },
-          hotel: {
-            name: 'CVK Park Bosphorus Hotel Istanbul',
-            address: 'Gümüssuyu Mah. Inönü Cad. No:8, Istanbul 34437'
-          },
-          price: 265,
-          booking: {
-            checkIn: {
-              date: 'Thur, Dec 8',
-              time: '12:00pm'
-            },
-            checkOut: {
-              date: 'Fri, Dec 9',
-              time: '11:30pm'
-            },
-            guest: {
-              name: 'Vince Kimlo'
-            },
-            room: {
-              type: 'Superior room - 1 double bed or 2 twin beds'
-            }
-          }
-        };
 
     return(
-      <main className={styles.bookingConfirmation} role="main">
-        <Header/>
-        <Header/>
-            <div className={styles.mainContent}>
-                <h1>Flight Payment</h1>
-                <p>Booking Id: {bookingId}</p>
-                <p>Destination: {destination}</p>
-                <p>Departure: {departure}</p>
-                <p>Arrival: {arrival}</p>
-                <p>Service Fee: ${serviceFee}</p>
-                <p>Flight Fee: ${flightFee}</p>
-                <p>Baggage Fee: ${baggageFee}</p>
-                <p>Tax Fee: ${taxFee}</p>
-                <p>Insurance Fee: ${insuranceFee}</p>
-                <p> Total Price: ${price}</p>
-                <button onClick={handlePayment}>Pay Now</button>
-                <p>{message}</p>
-                </div>
+<main className={styles.bookingConfirmation} role="main">
+      <Header />
+      <img src={logo} alt="background" className={styles.heroBackground} />
+      <nav className={styles.locationNav} aria-label="Hotel location">
+        <div className={styles.breadcrumb}>
+          <span>Find Flights</span>
+          <ChevronRightIcon />
+          <span>{destination}</span>
+          <ChevronRightIcon />
+          <span className={styles.hotelName}>{origin}</span>
+        </div>
+      </nav>
+
+      <section className={styles.hotelInfoContainer} aria-labelledby="hotelName">
+        <div className={styles.details}>
+          <h1 id="hotelName" className={styles.title}>{destination}</h1>
+          <div className={styles.address}>
+            <LocationOnIcon sx={{ fontSize: 15 }} />
+            <span>{origin}</span>
+          </div>
+        </div>
+        <div className={styles.booking}>
+          <div className={styles.price} aria-label={`Price: $ {price} dollars`}>
+            ${price}
+          </div>
+          <div className={styles.actions}>
+          <Button
+            variant="contained"
+            size="medium"
+            sx={{
+              fontWeight: 900,
+              backgroundColor: '#8dd3bb',
+              color: '#000000',
+              width: '100%',
+              border: '2px solid #4c987e',
+              fontFamily: 'Montserrat, sans-serif',
+              '&:hover': {
+                backgroundColor: '#4c987e',
+                color: '#ffffff',
+              },
+            }}
+            onClick={handlePayment}
+          >
+            Pay Now
+          </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.bookingDetails} aria-label="Booking details">
+        <div className={styles.dateSection}>
+          <div className={styles.checkInOut}>
+            <div className={styles.date}>
+              <div className={styles.dateValue}>{departure}</div>
+              <div className={styles.dateLabel}>Departs </div>
+            </div>
+            <div className={styles.dateOut}>
+              <div className={styles.dateValue}>{arrival}</div>
+              <div className={styles.dateLabel}>Arrives</div>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.guestInfo}>
+          <div className={styles.guestHeader}>
+            <Avatar alt='user name' src={userIcon} /> 
+            <span className={styles.guestName}>Vince Kimlo </span>
+            <span className={styles.roomType}>{fareclass } </span>
+          </div>
+
+          <div className={styles.timings}>
+            <div className={styles.timeInfo}>
+              <AccessTimeFilledIcon sx={{ color: '#ff8484' }} />
+              <div className={styles.timeDetails}>
+                <div className={styles.timeLabel}>DESTINATION</div>
+                <div className={styles.timeValue}>{destination}</div>
+              </div>
+            </div>
+            <div className={styles.timeInfo}>
+              <AccessTimeFilledIcon sx={{ color: '#ff8484' }} />
+              <div className={styles.timeDetails}>
+                <div className={styles.timeLabel}>ORIGIN</div>
+                <div className={styles.timeValue}>{origin}</div>
+              </div>
+            </div>
+            <div className={styles.timeInfo}>
+              <MeetingRoomIcon sx={{ color: '#ff8484' }} />
+              <div className={styles.timeDetails}>
+                <div className={styles.timeLabel}>Passengers</div>
+                <div className={styles.timeValue}>{passengers}</div>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.bookingCode}>
+            <div>
+              <div className={styles.codeValue}>EK</div>
+              <div className={styles.codeLabel}>ABC12345</div>
+            </div>
+            <div className={styles.barcode} aria-label="Booking barcode">
+              {[...Array(9)].map((_, index) => (
+                <img 
+                  key={index}
+                  src={barcode}
+                  alt=""
+                  className={styles.barcodeSegment}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className={styles.qrContainer} aria-label="Booking QR code">
+          <img src="/qr/booking-code.svg" alt="QR Code" className={styles.qrCode} />
+        </div>
+      </section>
+
+      <section className={styles.termsContainer} aria-labelledby="termsTitle">
+        <h2 id="termsTitle" className={styles.mainTitle}>Terms and Conditions</h2>
+        
+        <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>Payments</h3>
+          <p className={styles.sectionText}>
+            If you are purchasing your ticket using a debit or credit card via the Website, 
+            we will process these payments via the automated secure common payment gateway 
+            which will be subject to fraud screening purposes.
+          </p>
+          <p className={styles.sectionText}>
+            If you do not supply the correct card billing address and/or cardholder information, 
+            your booking will not be confirmed and the overall cost may increase. We reserve the 
+            right to cancel your booking if payment is declined for any reason or if you have 
+            supplied incorrect card information. If we become aware of, or is notified of, any 
+            fraud or illegal activity associated with the payment for the booking, the booking 
+            will be cancelled and you will be liable for all costs and expenses arising from such 
+            cancellation, without prejudice to any action that may be taken against us.
+          </p>
+        </div>
+
+        <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>Contact Us</h3>
+          <address className={styles.contactInfo}>
+            If you have any questions about our Website or our Terms of Use, please contact:
+            <br />
+            WanderWays
+            <br />
+            Cebu, Philippines
+            <br />
+            Further contact details can be found at 
+            <a 
+              href="https://wanderways.com/help" 
+              className={styles.helpLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WanderWays.com/help
+            </a>
+          </address>
+        </div>
+      </section>
     </main>
     );
 }

@@ -100,7 +100,12 @@ const BookedFlights = ({ booked, handleDeleteBooking }) => {
                       <Link 
                         to={{
                           pathname: `/flight-payment`,
-                          search: `?bookingid=${booking.fbookId}&destination=${booking.flight.location_destination}&price=${booking.flight.price}&departure=${booking.flight.dateDepart}&arrival=${booking.flight.dateArrival}`
+                          search: `?bookingid=${booking.fbookId}&origin=${booking.flight.location_origin}
+                          &destination=${booking.flight.location_destination}&price=${booking.flight.price}
+                          &departure=${booking.flight.dateDepart}&arrival=${booking.flight.dateArrival}
+                          &flightclass=${booking.flight.flight_class}&fareclass=${booking.fareClass}
+                          &passengers=${booking.passengerAmount}
+                          `
                         }}
                       >
                         <button  style={{ margin: '0px 0px 5px 5px', width: '100%' }}>
