@@ -3,7 +3,8 @@ package com.wanderways.Controller;
 import com.wanderways.Entity.BookFlight;
 import com.wanderways.Service.BookFlightService;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +16,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/bookings")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173", "https://plr89hsz-5173.asse.devtunnels.ms"})
 public class BookFlightController {
     
     private final BookFlightService bookFlightService;
 
-    @Autowired
     public BookFlightController(BookFlightService bookFlightService) {
         this.bookFlightService = bookFlightService;
     }
@@ -54,11 +54,21 @@ public class BookFlightController {
         return  bookFlightService.updateBookFlight(id, updatedBooking);
     }
 
-    @PatchMapping("/{id}/status")
+    @PatchMapping("/status/{id}")
     public ResponseEntity<BookFlight> updateStatus(@PathVariable Integer id, @RequestBody Map<String, String> statusUpdate) {
-        String status = statusUpdate.get("status");
-        BookFlight updatedBooking = bookFlightService.updateBookingStatus(id, status);
-        return ResponseEntity.ok(updatedBooking);
+        try {
+            String status = statusUpdate.get("status");
+            BookFlight updatedBooking = bookFlightService.updateBookingStatus(id, status);
+            return ResponseEntity.ok(updatedBooking);
+        } catch (EntityNotFoundException e) {
+            
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                 .body(null);
+        } catch (Exception e) {
+            
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body(null);
+        }
     }
 
     @DeleteMapping("/delete/{id}")

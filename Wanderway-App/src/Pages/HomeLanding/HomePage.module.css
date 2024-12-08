@@ -1,0 +1,342 @@
+.navigationContainer {
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.heroSection {
+    display: flex;
+    flex-direction: column;
+    border-radius: 0;
+    position: relative;
+    min-height: 599px;
+    width: 100%;
+    padding-bottom: 324px;
+}
+
+.heroBackground {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.navWrapper {
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 40px 100px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 24px 32px;
+    font: 600 14px Montserrat, sans-serif;
+}
+
+.navLinks {
+    align-self: stretch;
+    display: flex;
+    min-width: 240px;
+    align-items: center;
+    gap: 40px 273px;
+    color: var(--Neutrals, #fff);
+    justify-content: start;
+    width: 758px;
+    margin: auto 0;
+}
+
+.navItems {
+    align-self: stretch;
+    display: flex;
+    min-width: 240px;
+    align-items: start;
+    gap: 32px;
+    justify-content: start;
+    margin: auto 0;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.navIcon {
+    aspect-ratio: 1;
+    object-fit: contain;
+    object-position: center;
+    width: 24px;
+    align-self: stretch;
+    margin: auto 0;
+}
+
+.logo {
+    aspect-ratio: 2.88;
+    object-fit: contain;
+    object-position: center;
+    width: 271px;
+    align-self: stretch;
+    min-width: 240px;
+    margin: auto 0;
+}
+
+.authButtons {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    justify-content: start;
+    margin: auto 0;
+}
+
+.signupBtn {
+    justify-content: center;
+    border-radius: 8px;
+    background: var(--Neutrals, #fff);
+    align-self: stretch;
+    display: flex;
+    min-height: 48px;
+    flex-direction: column;
+    overflow: hidden;
+    color: var(--Blackish-Green, #121);
+    text-align: center;
+    width: 104px;
+    margin: auto 0;
+    padding: 10px 24px;
+}
+
+.heroContent {
+    position: relative;
+    align-self: center;
+    display: flex;
+    width: 773px;
+    max-width: 100%;
+    flex-direction: column;
+    align-items: center;
+    color: var(--Neutrals, #fff);
+    text-align: center;
+    justify-content: start;
+    margin: 8px 0 -65px 10px;
+}
+
+.heroText {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+
+.heroSubtitle {
+    font: 600 20px Montserrat, sans-serif;
+}
+
+.heroTitle {
+    text-transform: uppercase;
+    margin-top: 4px;
+    font: 700 80px Libre Franklin, sans-serif;
+}
+
+.searchContainer {
+    border-radius: 16px;
+    background: var(--Neutrals, #fff);
+    box-shadow: 0px 4px 16px 0px rgba(141, 211, 187, 0.15);
+    align-self: center;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    margin-top: -97px;
+    width: 100%;
+    max-width: 1232px;
+    flex-direction: column;
+    padding: 16px 32px 32px;
+}
+
+.searchIndicator {
+    background-color: #8dd3bb;
+    position: absolute;
+    z-index: 0;
+    min-height: 4px;
+    width: 100px;
+    max-width: 100%;
+    left: 33px;
+    top: 75px;
+    border: 4px solid rgba(141, 211, 187, 1);
+}
+
+.searchContent {
+    z-index: 0;
+    display: flex;
+    width: 100%;
+    max-width: 1158px;
+    flex-direction: column;
+}
+
+.searchTabs {
+    align-self: start;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    color: var(--Blackish-Green, #121);
+    font: 600 16px Montserrat, sans-serif;
+}
+
+.tabItem {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: auto 0;
+}
+
+.tabDivider {
+    align-self: stretch;
+    width: 0;
+    height: 48px;
+    margin: auto 0;
+    border: 1px solid rgba(215, 226, 238, 1);
+}
+
+.searchFields {
+    display: flex;
+    margin-top: 48px;
+    width: 100%;
+    align-items: center;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.searchField {
+    border-radius: 4px;
+    align-self: stretch;
+    display: flex;
+    min-width: 240px;
+    min-height: 56px;
+    flex-direction: column;
+    width: 500px;
+    margin: auto 0;
+    border: 1px solid rgba(121, 116, 126, 1);
+}
+
+.fieldContent {
+    border-radius: 4px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 4px 0 4px 16px;
+}
+
+.inputWrapper {
+    align-self: stretch;
+    position: relative;
+    display: flex;
+    min-width: 240px;
+    min-height: 40px;
+    flex-direction: column;
+    align-items: start;
+    font-family: Montserrat, sans-serif;
+    font-weight: 400;
+    justify-content: center;
+    flex: 1;
+}
+
+.inputText {
+    align-self: stretch;
+    font-size: 16px;
+    color: #1c1b1f;
+}
+
+.inputLabel {
+    align-self: stretch;
+    background: var(--Neutrals-White, #fff);
+    position: absolute;
+    font-size: 14px;
+    color: var(--Blackish-Green, #121);
+    left: -4px;
+    top: -16px;
+    padding: 0 4px;
+}
+
+.fieldIcon {
+    align-self: stretch;
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    margin: auto 0;
+    padding: 12px;
+}
+
+.searchActions {
+    z-index: 0;
+    display: flex;
+    margin-top: 32px;
+    width: 100%;
+    align-items: center;
+    gap: 24px;
+    color: var(--Blackish-Green, #121);
+    justify-content: end;
+    flex-wrap: wrap;
+    font: 500 14px Montserrat, sans-serif;
+}
+
+.searchButton {
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background: var(--Mint-Green, #8dd3bb);
+    display: flex;
+    min-height: 48px;
+    gap: 4px;
+    padding: 16px;
+}
+
+@media (max-width: 991px) {
+    .heroSection {
+        max-width: 100%;
+        padding-bottom: 100px;
+    }
+
+    .navWrapper {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+
+    .navLinks {
+        max-width: 100%;
+    }
+
+    .heroContent {
+        margin-bottom: 10px;
+    }
+
+    .heroTitle {
+        max-width: 100%;
+        font-size: 40px;
+    }
+
+    .searchContainer {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+
+    .searchContent {
+        max-width: 100%;
+    }
+
+    .searchField {
+        max-width: 100%;
+    }
+
+    .fieldContent {
+        max-width: 100%;
+    }
+
+    .inputWrapper {
+        max-width: 100%;
+    }
+}

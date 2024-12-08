@@ -85,7 +85,7 @@ const BookedFlights = ({ booked, handleDeleteBooking }) => {
                       Passengers: {booking.passengerAmount}
                   </div>
                   <div className="col-4 text-center">
-                      Status: {booking.Status}
+                      Status: {booking.status}
                   </div>
                   <div className="col-4 text-end">
                       Fare Class: {booking.fareClass}
@@ -96,7 +96,7 @@ const BookedFlights = ({ booked, handleDeleteBooking }) => {
 
                 <div className="row py-3">
                   <div className="col">
-                  {booking.Status !== "Fully Paid" ? (
+                  {booking.status !== "Fully Paid" ? (
                       <Link 
                         to={{
                           pathname: `/flight-payment`,

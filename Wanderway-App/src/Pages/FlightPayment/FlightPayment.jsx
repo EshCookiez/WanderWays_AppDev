@@ -25,12 +25,12 @@ function FlightPayment(){
 
     const handlePayment = async () => {
         try {
-          const response = await fetch(`http://localhost:8080/api/bookings/${bookingId}/status`, {
+          const response = await fetch(`http://localhost:8080/api/bookings/status/${bookingId}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ status: 'Fully Paid' }),
           });
-    
+          
           if (response.ok) {
             navigate('/list-flight');
             setMessage("Booking Fully Paid")
@@ -41,9 +41,39 @@ function FlightPayment(){
           console.error('Error updating booking status:', error);
         }
       };
+
+    const hotelData = {
+          location: {
+            country: 'Turkey',
+            city: 'Istanbul'
+          },
+          hotel: {
+            name: 'CVK Park Bosphorus Hotel Istanbul',
+            address: 'Gümüssuyu Mah. Inönü Cad. No:8, Istanbul 34437'
+          },
+          price: 265,
+          booking: {
+            checkIn: {
+              date: 'Thur, Dec 8',
+              time: '12:00pm'
+            },
+            checkOut: {
+              date: 'Fri, Dec 9',
+              time: '11:30pm'
+            },
+            guest: {
+              name: 'Vince Kimlo'
+            },
+            room: {
+              type: 'Superior room - 1 double bed or 2 twin beds'
+            }
+          }
+        };
+
     return(
-        <body className={styles.body}>
-            <Header/>
+      <main className={styles.bookingConfirmation} role="main">
+        <Header/>
+        <Header/>
             <div className={styles.mainContent}>
                 <h1>Flight Payment</h1>
                 <p>Booking Id: {bookingId}</p>
@@ -59,8 +89,7 @@ function FlightPayment(){
                 <button onClick={handlePayment}>Pay Now</button>
                 <p>{message}</p>
                 </div>
-            
-        </body>
+    </main>
     );
 }
 

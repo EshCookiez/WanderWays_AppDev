@@ -46,6 +46,7 @@ const FlightList = () => {
       .then((response) => response.json())
       .then((data) => setFlights(data))
       .catch((error) => console.error('Error fetching flights:', error));
+      console.log(flights)
 
     fetch('http://localhost:8080/api/bookings/all')
       .then((response) => response.json())
@@ -54,12 +55,16 @@ const FlightList = () => {
   }, []);
 
   const handleDeleteBooking = (fbookId) => {
-    fetch(`http://localhost:8080/api/bookings/delete/${fbookId}`, { method: 'DELETE' })
-      .then(() => {
-        setBooked((prevBooked) => prevBooked.filter((booking) => booking.fbookId !== fbookId));
-      })
-      .catch((error) => console.error('Error deleting booking:', error));
-  };
+    fetch(`http://localhost:8080/api/bookings/delete/${fbookId}`, { method: 'DELETE', credentials: 'include', })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete booking');
+            }
+            // If successful, remove the booking from the state
+            setBooked((prevBooked) => prevBooked.filter((booking) => booking.fbookId !== fbookId));
+        })
+        .catch(error => console.error('Error deleting booking:', error));
+};
 
   const StyledTabs = styled(Tabs)({
     backgroundColor: '#fff', 
@@ -84,7 +89,7 @@ const FlightList = () => {
   }));
 
   return (
-  <body className={styles.body}> 
+  <div className={styles.body}> 
     <div className={styles.mainBox}>
       <Header/>
       <section className={styles.heroSection}>
@@ -117,7 +122,7 @@ const FlightList = () => {
       </main>
     </div>
     <Footer/>
-    </body>
+    </div>
   );
 };
 

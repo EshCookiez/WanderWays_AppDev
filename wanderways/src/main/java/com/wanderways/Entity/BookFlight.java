@@ -24,7 +24,7 @@ public class BookFlight {
     @JsonProperty("fareClass")
     private String fare_class;
 
-    @JsonProperty("Status")
+    @JsonProperty("status")
     private String status = "Pending Payment";
 
 

@@ -1,20 +1,17 @@
 package com.wanderways.Controller;
 import com.wanderways.Entity.Flight;
 import com.wanderways.Service.FlightService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = {"http://localhost:5173", "https://plr89hsz-5173.asse.devtunnels.ms"})
 @RestController
 @RequestMapping("/api/flights")
-@CrossOrigin(origins = "http://localhost:5173")
 public class FlightController {
     
     private final FlightService flightService;
 
-    @Autowired
     public FlightController(FlightService flightService) {
         this.flightService = flightService;
     }

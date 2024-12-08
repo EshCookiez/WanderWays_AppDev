@@ -15,6 +15,8 @@ public class CustomerService {
     
     @Autowired
     private CustomerRepo crepo;
+
+    
     
     public Customer addCustomer (Customer customer){
             return crepo.save(customer);
@@ -51,6 +53,12 @@ public class CustomerService {
 
     public Optional<Customer> login(String email, String password) {
         return crepo.findByEmailAndPassword(email, password);
+    } 
+
+    
+    public Optional<Customer> getCustomerDetails(int id) {
+        return crepo.findById(id);
     }
+    
 
 }

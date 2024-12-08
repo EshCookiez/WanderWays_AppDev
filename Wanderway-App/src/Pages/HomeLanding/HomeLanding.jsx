@@ -3,11 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import styles from './HomeLanding.module.css';
-import logo from '../../assets/LogoMain.png';
+import logo from '../../assets/wander-nobg.png';
 import pic from '../../assets/Picture.png';
 import './HomeLanding.css';
 import Footer from './Footer/Footer';
-
+import HomePage from './HomePage';
+import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
+import KingBedIcon from '@mui/icons-material/KingBed';
 function HomeLanding() {
   const [selectedTab, setSelectedTab] = useState("Flights");
   const [destination, setDestination] = useState('');
@@ -29,7 +31,7 @@ function HomeLanding() {
       return;
     }
     setDateError('');
-    navigate('/hotelsearch', { 
+    navigate('/hotel', { 
       state: { 
         selectedTab: "Stays",
         destination,
@@ -46,36 +48,41 @@ function HomeLanding() {
   };
 
   return (
-    <body>
     <div className={styles.landingPage}>
+      
+      <div className={styles.homeHeader}>
+        
+     <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/a4e09e7844fd116f3107c234e89a7d00f11671aa40ee74cc658ac5d2d759609d?placeholderIfAbsent=true&apiKey=a15e519098c240a2b028acfbd9132f63" alt="" className={styles.heroBackground} />
+         
       <header className={styles.header}>
         <img src={pic} alt="" className={styles.rectangle} />
         <nav className={styles.nav}>
           <ul className={styles.navList}>
             <li className={styles.navItem}>
               <Link to="/flight-search" className={styles.navLink}>
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/acb46477b92a1f8acae7e0a99465929b356bd9f589f08663921d25fe23505374?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
-                  alt=""
-                  className={styles.navIcon}
-                />
-                Find Flight
+              <button className={styles.loginButton}>
+                
+              <AirplanemodeActiveIcon className={styles.icon} />
+                Find Flight</button>
               </Link>
             </li>
             <li className={styles.navItem}>
-              <Link to="/hotelsearch" className={styles.navLink}>
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/5f89685dfe33ac9dae4aed888369ae4284d69c8a9dacf22bf885758f978f709a?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
-                  alt=""
-                  className={styles.navIcon}
-                />
+              
+              <Link to="/hotel" className={styles.navLink}>
+              <button className={styles.loginButton}>
+                
+              <KingBedIcon className={styles.bedicon} />
                 Find Stays
+                </button>
               </Link>
             </li>
           </ul>
         </nav>
         <Link to="/home" className={styles.homeLinkTemporary}>
+        <div className='logoDiv'>
         <img src={logo} alt="WanderWays Logo" className={styles.logo} />
+        <span className={styles.logoName}>WanderWays</span>
+        </div>
         </Link>
         <div className={styles.authButtons}>
           <Link to="/login">
@@ -86,11 +93,9 @@ function HomeLanding() {
           </Link>
         </div>
       </header>
-
-      <main className={styles.mainContent}>
-        <h1 className={styles.mainTitle}>
+      <h1 className={styles.mainTitle}>
           <span className={styles.mainTitlePrefix}>Wander Far, Wander Free with</span>
-          <span className={styles.mainTitleHighlight}>WanderWays.</span>
+          <span className={styles.mainTitleHighlight}>WanderWays</span>
         </h1>
 
         <section className={styles.searchSection}>
@@ -257,6 +262,10 @@ function HomeLanding() {
       </div>
     </section>
 
+    </div>
+      <main className={styles.mainContent}>
+        
+
         <section className={styles.destinationSection}>
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>Plan your perfect trip</h2>
@@ -332,9 +341,8 @@ function HomeLanding() {
         </section>
       </main>
             
-      <Footer className={styles.homeLandingFooter} />
+    <Footer/>
     </div>
-    </body>
     
   );
 }

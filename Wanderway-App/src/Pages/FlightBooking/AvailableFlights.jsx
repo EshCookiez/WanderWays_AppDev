@@ -7,8 +7,8 @@ import sampleimg from './samplelogo.png'
 
 const AvailableFlights = ({ flights, originSearch, destinationSearch, setOriginSearch, setDestinationSearch }) => {
   const filteredFlights = flights.filter(flight =>
-    flight.location_origin.toLowerCase().includes(originSearch.toLowerCase()) &&
-    flight.location_destination.toLowerCase().includes(destinationSearch.toLowerCase())
+    (flight.location_origin?.toLowerCase() || '').includes(originSearch.toLowerCase()) &&
+    (flight.location_destination?.toLowerCase() || '').includes(destinationSearch.toLowerCase())
   );
 
   return (
