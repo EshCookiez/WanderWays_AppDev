@@ -55,12 +55,12 @@ const LoginPage = () => {
       }
   
       // Store the token in localStorage
-      localStorage.setItem('token', token);
+      localStorage.setItem('jwtToken', token);
   
       console.log("Login Successful, Token saved:", token);
   
       // Redirect to the next page after login
-      navigate('/customerProfile'); // Update with the correct path
+      navigate('/user'); // Update with the correct path
     } catch (error) {
       console.error("Login failed:", error);
       setErrorMessage("Login failed. Please check your credentials and try again.");

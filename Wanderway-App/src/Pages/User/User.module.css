@@ -28,6 +28,58 @@
   box-shadow: 0px 4px 16px rgba(17, 34, 17, 0.05);
 }
 
+.error {
+  color: red;
+  /* Additional styles */
+}
+
+.uploadSection {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.previewImage {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 10px;
+}
+
+.uploadButton,
+.cancelButton {
+  padding: 8px 16px;
+  margin: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.uploadButton {
+  background-color: #4caf50;
+  color: white;
+}
+
+.cancelButton {
+  background-color: #f44336;
+  color: white;
+}
+
+.uploadButton:hover {
+  background-color: #45a049;
+}
+
+.cancelButton:hover {
+  background-color: #da190b;
+}
 .userInfoSection {
   display: flex;
   text-align: left;

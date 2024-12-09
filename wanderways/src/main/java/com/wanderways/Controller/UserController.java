@@ -2,7 +2,9 @@ package com.wanderways.Controller;
 
 
 import java.util.HashMap;
+import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,11 +15,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.wanderways.DTO.UserProfileUpdateRequest;
 import com.wanderways.Entity.AuthRequest;
 import com.wanderways.Entity.UserInfo;
 import com.wanderways.Service.JwtService;
 import com.wanderways.Service.UserInfoService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
@@ -89,6 +95,60 @@ public class UserController {
             return jwtService.generateToken(authRequest.getEmail());
         } else {
             throw new UsernameNotFoundException("Invalid user request!");
+        }
+    }
+
+    @GetMapping("/userProfile")
+    public ResponseEntity<UserInfo> getUserProfile(Authentication authentication) {
+        String email = authentication.getName();
+        Optional<UserInfo> userOpt = service.findByEmail(email);
+        return userOpt.map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @PostMapping("/uploadUserIcon")
+    public ResponseEntity<String> uploadUserIcon(@RequestParam("file") MultipartFile file, Authentication authentication) {
+        String email = authentication.getName();
+        try {
+            byte[] iconBytes = file.getBytes();
+            service.updateUserIcon(email, iconBytes);
+            return ResponseEntity.ok("User icon uploaded successfully.");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload user icon.");
+        }
+    }
+    @GetMapping("/userIcon")
+    public ResponseEntity<byte[]> getUserIcon(Authentication authentication) {
+        String email = authentication.getName();
+        Optional<UserInfo> userOpt = service.findByEmail(email);
+
+        if (userOpt.isPresent() && userOpt.get().getUserIcon() != null) {
+            byte[] imageBytes = userOpt.get().getUserIcon();
+            return ResponseEntity.ok()
+                    .header("Content-Type", "image/png") // Adjust the content type based on your image format
+                    .body(imageBytes);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PutMapping("/updateUserProfile")
+    public ResponseEntity<?> updateUserProfile(
+            @Valid @RequestBody UserProfileUpdateRequest updateRequest,
+            Authentication authentication) {
+        String email = authentication.getName();
+        try {
+            UserInfo updatedUser = service.updateUserProfile(email, updateRequest);
+            return ResponseEntity.ok(updatedUser);
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("User not found.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Invalid update data: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while updating the profile.");
         }
     }
 }
