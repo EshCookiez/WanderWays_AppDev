@@ -29,6 +29,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        // Skip processing for /auth/login (or any other public endpoint)
+        if (request.getRequestURI().equals("/auth/login") || request.getRequestURI().equals("/auth/register"))
+         {
+            filterChain.doFilter(request, response); // Continue the filter chain without doing anything
+            return;
+        }
+
         // Retrieve the Authorization header
         String authHeader = request.getHeader("Authorization");
         String token = null;
