@@ -38,7 +38,9 @@
     color: var(--Blackish-Green, #121212);
     flex: 1;
   }
-  
+  .calendarDetails{
+    display: flex;
+  }
   .routeInfo {
     display: flex;
     align-items: center;
@@ -55,10 +57,14 @@
   
   .detailsContainer {
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
     gap: 24px;
   }
-  
+  .calendar{
+    display: flex;
+    flex-direction: column;
+  }
   .actionButtons {
     display: flex;
     align-items: flex-start;

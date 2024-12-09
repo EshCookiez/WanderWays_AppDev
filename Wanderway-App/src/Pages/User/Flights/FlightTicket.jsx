@@ -1,6 +1,9 @@
 import React from 'react';
 import { FlightTicketDetail } from './FlightTicketDetail';
 import styles from './FlightTicket.module.css';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import AccessibleIcon from '@mui/icons-material/Accessible';
 
 export const FlightTicket = () => {
   const ticketDetails = [
@@ -40,15 +43,29 @@ export const FlightTicket = () => {
         <div className={styles.divider} role="presentation" />
         
         <div className={styles.detailsContainer}>
-          <div role="group" aria-label="Primary flight details">
-            {ticketDetails.slice(0, 2).map((detail, index) => (
-              <FlightTicketDetail key={`detail-1-${index}`} {...detail} />
-            ))}
+          <div role="group" aria-label="Primary flight details" className={styles.calendarDetails}>
+            <CalendarMonthIcon sx={{alignContent: 'center', justifyContent: 'space-around'}}/> 
+            <div className={styles.calendar}>
+              <span>Start Date </span>
+              <span>12-11-22</span>
+            </div>
+            <CalendarMonthIcon/>
+            <div className={styles.calendar}>
+              <span>End Date </span>
+              <span>12-18-22</span>
+            </div>
           </div>
-          <div role="group" aria-label="Secondary flight details">
-            {ticketDetails.slice(2).map((detail, index) => (
-              <FlightTicketDetail key={`detail-2-${index}`} {...detail} />
-            ))}
+          <div role="group" aria-label="Primary flight details" className={styles.calendarDetails}>
+            <ConfirmationNumberIcon sx={{alignContent: 'center', justifyContent: 'space-around'}}/> 
+            <div className={styles.calendar}>
+              <span>Ticket ID </span>
+              <span>798789</span>
+            </div>
+            <AccessibleIcon/>
+            <div className={styles.calendar}>
+              <span>Passengers </span>
+              <span>12 </span>
+            </div>
           </div>
         </div>
       </div>
