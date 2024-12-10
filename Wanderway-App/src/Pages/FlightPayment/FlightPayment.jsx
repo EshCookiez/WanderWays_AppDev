@@ -3,6 +3,7 @@ import styles from './FlightPayment.module.css'
 import Header from '../../Components/Header.jsx';
 import html2canvas from 'html2canvas';
 import { useParams, useNavigate , useLocation} from 'react-router-dom';
+import axios from 'axios';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import userIcon from './Assets/user.png';
@@ -17,7 +18,7 @@ import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 function FlightPayment(){
     const location = useLocation();
     const navigate = useNavigate();
-
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     // Get query parameters from the URL
     const queryParams = new URLSearchParams(location.search);
     const bookingId = queryParams.get('bookingid');
@@ -39,6 +40,42 @@ function FlightPayment(){
     const bookingDetailsRef = useRef(null);
 
     const [message, setMessage] = useState('');
+    const [userName, setUserName] = useState('');
+    const [userIcon, setUserIcon] = useState(null);
+
+    const fetchUserIcon = async (token) => {
+      try {
+        const response = await axios.get('http://localhost:8080/auth/userIcon', {
+          headers: { Authorization: `Bearer ${token}` },
+          responseType: 'blob',
+        });
+        const iconUrl = URL.createObjectURL(response.data);
+        setUserIcon(iconUrl);
+      } catch (err) {
+        console.error('Failed to fetch user icon:', err);
+      }
+    };
+
+    const fetchUserName = async (token) => {
+      try {
+        const response = await axios.get('http://localhost:8080/auth/userProfile', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const { firstName, lastName } = response.data;
+        setUserName(`${firstName} ${lastName}`);
+      } catch (err) {
+        console.error('Failed to fetch user name:', err);
+      }
+    };
+    
+    useEffect(() => {
+      const token = localStorage.getItem('jwtToken');
+      setIsLoggedIn(!!token);
+      if (token) {
+        fetchUserName(token);
+        fetchUserIcon(token);
+      }
+    }, []);
 
     const handlePayment = async () => {
         try {
@@ -77,7 +114,6 @@ function FlightPayment(){
         }
 
       };
-
 
     return(
 <main className={styles.bookingConfirmation} role="main">
@@ -145,8 +181,8 @@ function FlightPayment(){
 
         <div className={styles.guestInfo}>
           <div className={styles.guestHeader}>
-            <Avatar alt='user name' src={userIcon} /> 
-            <span className={styles.guestName}>WORK IN PROGRESS NAME </span>
+          <Avatar className='userIcon' alt="User" src={userIcon || '/path/to/default.png'} />
+            <span className={styles.guestName}>{userName} </span>
             <span className={styles.roomType}>{fareclass } Class </span>
           </div>
 

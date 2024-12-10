@@ -33,7 +33,7 @@ function HomeLanding() {
 
   const handleShowFlights = (e) => {
     e.preventDefault();
-    navigate('/flight-search', { state: { selectedTab: "Flights" } });
+    navigate('/list-flight', { state: { selectedTab: "Flights" } });
   };
 
   const handleShowPlaces = (e) => {
@@ -156,10 +156,10 @@ function HomeLanding() {
               <div className={styles.inputGroup}>
                 <TextField
                   id="fromTo"
-                  label="From - To"
+                  label="From"
                   variant="outlined"
                   fullWidth
-                  placeholder="Cebu - Philippines"
+                  placeholder="Cebu"
                   className={styles.customTextField}
                   InputLabelProps={{
                     style: { textAlign: 'center', marginTop: '0px' } // Center the label text
@@ -174,15 +174,20 @@ function HomeLanding() {
               <div className={styles.inputGroup}>
                 <TextField
                   id="trip"
-                  label="Trip"
-                  select
+                  label="To"
                   variant="outlined"
                   fullWidth
+                  placeholder="Philippines"
                   className={styles.customTextField}
                   InputLabelProps={{
                     style: { textAlign: 'center', marginTop: '0px' } // Center the label text
                   }}
                 >
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/864668711294bfe60d913d9764b84c0e655a855677a954c4740a9a88f205f46d?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
+                  alt=""
+                  className={styles.inputIcon}
+                />
                   <MenuItem value="return">Return</MenuItem>
                   <MenuItem value="one-way">One-way</MenuItem>
                 </TextField>

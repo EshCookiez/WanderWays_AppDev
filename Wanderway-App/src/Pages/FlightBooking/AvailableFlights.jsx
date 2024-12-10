@@ -1,11 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IoAirplane } from 'react-icons/io5';
 import TextField from '../../Components/TextField/TextField'
 import './List.css'
 import sampleimg from './samplelogo.png'
+import { useState, useEffect } from 'react';
 
-const AvailableFlights = ({ flights, originSearch, destinationSearch, setOriginSearch, setDestinationSearch }) => {
+const AvailableFlights = ({ flights, originSearch, destinationSearch, setOriginSearch, setDestinationSearch}) => {
+  const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+
   const filteredFlights = flights.filter(flight =>
     (flight.location_origin?.toLowerCase() || '').includes(originSearch.toLowerCase()) &&
     (flight.location_destination?.toLowerCase() || '').includes(destinationSearch.toLowerCase())
@@ -69,9 +74,9 @@ const AvailableFlights = ({ flights, originSearch, destinationSearch, setOriginS
                 <div class="row py-3">
                     <div class="col text-start">
                         <div class="row-button">
-                            <Link to={`/book/${flight.flightId}/${flight.price}`} style={{width: '100%'}}>
-                              <button style={{ width: '100%'}}>BOOK THIS FLIGHT</button>
-                            </Link>
+                          <Link to={`/book/${flight.flightId}/${flight.price}`} style={{ width: '100%' }}>
+                            <button style={{ width: '100%' }}>BOOK THIS FLIGHT</button>
+                          </Link>
                         </div>
                       </div>
                     </div>
