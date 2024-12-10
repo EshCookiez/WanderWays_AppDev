@@ -123,6 +123,34 @@ const handleError = (error) => {
     }
     throw error;
 };
+const getPaymentsByUser = async (customerId, authToken) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/api/acmpayment/user/${customerId}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                ...(authToken && { 'Authorization': `Bearer ${authToken}` }),
+            },
+            withCredentials: true
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) { // Unauthorized, possibly token expired
+            const newToken = await refreshToken();
+            // Retry the original request with the new token
+            const retryResponse = await axios.get(`${API_BASE_URL}/api/acmpayment/user/${customerId}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(newToken && { 'Authorization': `Bearer ${newToken}` }),
+                },
+                withCredentials: true
+            });
+            return retryResponse.data;
+        } else {
+            handleError(error);
+        }
+    }
+};
+
 
 export default {
     createPayment,
@@ -130,4 +158,5 @@ export default {
     getPaymentById,
     updatePayment,
     deletePayment,
+    getPaymentsByUser,
 };

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/acmpayment")
@@ -95,4 +96,12 @@ public class AcmPaymentController {
         String message = acmPaymentService.deletePayment(id);
         return ResponseEntity.ok(message);
     }
-}
+    @GetMapping("/user/{customerId}")
+    public ResponseEntity<List<AcmPaymentResponseDTO>> getPaymentsByUser(@PathVariable Long customerId) {
+        List<AcmPayment> payments = acmPaymentService.getPaymentsByUser(customerId);
+        List<AcmPaymentResponseDTO> responseDTOs = payments.stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(responseDTOs);
+    }
+    }

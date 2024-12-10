@@ -41,7 +41,7 @@ function App() {
 
                     <Route path="/hotel" element={<HotelListing/>}/>
                     <Route path='/hotelBook' element={<HotelBooking/>}/>
-                    <Route path='/hotelPay' element={<HotelPayment/>}/>
+                    <Route path='/hotelPay/:paymentId' element={<HotelPayment/>}/>
                     
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/user" element={<PrivateRoute><User/></PrivateRoute>}/>

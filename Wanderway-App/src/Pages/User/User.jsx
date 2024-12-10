@@ -1,5 +1,5 @@
-// User.jsx
 import React, { useState, useEffect } from 'react';
+import {useNavigate} from 'react-router-dom';
 import styles from './User.module.css';
 import Avatar from '@mui/material/Avatar';
 import CreateIcon from '@mui/icons-material/Create';
@@ -7,10 +7,14 @@ import Header from '../../Components/Header';
 import { FlightTicket } from './Flights/FlightTicket';
 import axios from 'axios';
 import sample from './userAssets/sample.png';
-
+import PaymentService from '../../services/PaymentService';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import AccessibleIcon from '@mui/icons-material/Accessible';
+import { formatTime,formatDate } from '../../Components/utils';
 const TABS = [
   { id: 'account', label: 'Account' },
-  { id: 'history', label: 'Booked Flights' },
+  // { id: 'history', label: 'Booked Flights' },
   { id: 'stays', label: 'Booked Stays' }
 ];
 
@@ -23,6 +27,32 @@ export function User() {
   const [previewUrl, setPreviewUrl] = useState('');
   const [editingField, setEditingField] = useState(null);
   const [fieldValues, setFieldValues] = useState({});
+  const [payments, setPayments] = useState([]);
+  const [accommodationLogo, setAccommodationLogo] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  
+  const handleShare = (paymentId) => {
+    navigate(`/hotelPay/${paymentId}`);
+  };
+  useEffect(() => {
+    const fetchPayments = async () => {
+      try {
+        const token = localStorage.getItem('jwtToken');
+        const paymentData = await PaymentService.getPaymentsByUser(userData.customerId, token);
+        setPayments(paymentData);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching payments:', err);
+        setError('Failed to load payments.');
+        setLoading(false);
+      }
+    };
+
+    if (userData) {
+      fetchPayments();
+    }
+  }, [userData]);
 
   const handleChangePicture = () => {
     document.getElementById('userIconInput').click();
@@ -57,35 +87,35 @@ export function User() {
   };
 
   const fetchUserData = async () => {
-  const token = localStorage.getItem('jwtToken');
-  if (!token) {
-    setError('No token found. Please log in.');
-    return;
-  }
-
-  try {
-    const response = await axios.get('http://localhost:8080/auth/userProfile', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    setUserData(response.data);
-    fetchUserIcon(token);
-  } catch (err) {
-    if (err.response) {
-      // Server responded with a status other than 2xx
-      setError(`Error: ${err.response.data.message || 'Failed to fetch user data.'}`);
-    } else if (err.request) {
-      // Request was made but no response received
-      setError('Error: No response from server.');
-    } else {
-      // Something else caused the error
-      setError(`Error: ${err.message}`);
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      setError('No token found. Please log in.');
+      return;
     }
-    console.error(err);
-  }
-};
-  
+
+    try {
+      const response = await axios.get('http://localhost:8080/auth/userProfile', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setUserData(response.data);
+      fetchUserIcon(token);
+    } catch (err) {
+      if (err.response) {
+        // Server responded with a status other than 2xx
+        setError(`Error: ${err.response.data.message || 'Failed to fetch user data.'}`);
+      } else if (err.request) {
+        // Request was made but no response received
+        setError('Error: No response from server.');
+      } else {
+        // Something else caused the error
+        setError(`Error: ${err.message}`);
+      }
+      console.error(err);
+    }
+  };
+
   const handleUpload = async () => {
     if (!selectedFile) {
       alert('No file selected.');
@@ -119,10 +149,12 @@ export function User() {
       alert('Failed to upload user icon.');
     }
   };
+
   const handleCancel = () => {
     setSelectedFile(null);
     setPreviewUrl('');
   };
+
   const handleTabChange = (tabId) => {
     setActiveTab(tabId);
     setEditingField(null); 
@@ -154,7 +186,7 @@ export function User() {
         return '';
     }
   };
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFieldValues({
@@ -216,7 +248,7 @@ export function User() {
     setEditingField(null);
     setFieldValues({});
   };
-  
+
   useEffect(() => {
     fetchUserData();
   }, []);
@@ -267,7 +299,6 @@ export function User() {
       icon: '/icons/calendar.svg'
     }
   ];
-
 
   const renderField = ({ id, label, value, icon }) => (
     <div key={id} className={styles.fieldContainer} role="group" aria-labelledby={`${id}-label`}>
@@ -326,15 +357,15 @@ export function User() {
         <section className={styles.userInfoSection}>
           <div className={styles.userHeader}>
             <div className={styles.profileImageWrapper}>
-            <Avatar
-              alt={`${userData.firstName}`}
-              src={previewUrl || userIcon || '/path/to/sampleUser.png'}
-              sx={{
-                width: '154px',
-                height: '154px',
-                borderRadius: '50%'
-              }}
-            />
+              <Avatar
+                alt={`${userData.firstName}`}
+                src={previewUrl || userIcon || '/path/to/sampleUser.png'}
+                sx={{
+                  width: '154px',
+                  height: '154px',
+                  borderRadius: '50%'
+                }}
+              />
               <div
                 className={styles.overlay}
                 onClick={handleChangePicture}
@@ -360,21 +391,21 @@ export function User() {
               <p className={styles.userEmail}>{userData.email}</p>
             </div>
           </div>
-            {/* File Upload Preview and Upload Button */}
-            {selectedFile && (
-                        <div className={styles.uploadSection}>
-                          <h3>Preview:</h3>
-                          <img src={previewUrl} alt="Preview" className={styles.previewImage} />
-                          <div className={styles.buttonGroup}>
-                            <button className={styles.uploadButton} onClick={handleUpload}>
-                              Upload
-                            </button>
-                            <button className={styles.cancelButton} onClick={handleCancel}>
-                              Cancel
-                            </button>
-                          </div>
-                        </div>
-                      )}
+          {/* File Upload Preview and Upload Button */}
+          {selectedFile && (
+            <div className={styles.uploadSection}>
+              <h3>Preview:</h3>
+              <img src={previewUrl} alt="Preview" className={styles.previewImage} />
+              <div className={styles.buttonGroup}>
+                <button className={styles.uploadButton} onClick={handleUpload}>
+                  Upload
+                </button>
+                <button className={styles.cancelButton} onClick={handleCancel}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
           <nav className={styles.navigationTabs} role="tablist" aria-label="Profile sections">
             {TABS.map((tab) => (
               <button
@@ -410,17 +441,107 @@ export function User() {
                 </section>
               )}
 
-              {tab.id === 'history' && (
+              {/* {tab.id === 'history' && (
                 <section className={styles.flightHistorySection}>
                   <h2 className={styles.sectionTitle}>Booked Flights</h2>
                   <FlightTicket />
                 </section>
-              )}
+              )} */}
 
               {tab.id === 'stays' && (
                 <section className={styles.staysSection}>
                   <h2 className={styles.sectionTitle}>Booked Stays</h2>
-                  <p>No booked stays available.</p>
+                  {loading ? (
+                    <p>Loading payments...</p>
+                  ) : error ? (
+                    <p>{error}</p>
+                  ) : payments.length === 0 ? (
+                    <p>No stays found.</p>
+                  ) : (
+                    <ul>
+                      {payments.map(payment => (
+                        <div>
+
+                        <div className={styles.ticketContainer}>
+                            {/* Airline Logo */}
+                            <div className={styles.airlineLogoWrapper} role="img" aria-label="Airline logo">
+                              <img
+                                src={payment.accommodationLogo ? `data:image/jpeg;base64,${payment.accommodationLogo}` : 'https://via.placeholder.com/150'} 
+                                alt=""
+                                className={styles.airlineLogo}
+                                loading="lazy"
+                              />
+                            </div>
+                            
+                            {/* Flight Information */}
+                            <div className={styles.flightInfoContainer}>
+                              <div className={styles.routeInfo} role="text">
+                                <span>{payment.accommodationName}</span>
+                              </div>
+                              
+                              <div className={styles.divider} role="presentation" />
+                              
+                              <div className={styles.detailsContainer}>
+                                <div role="group" aria-label="Primary flight details" className={styles.calendarDetails}>
+                                  <CalendarMonthIcon sx={{alignContent: 'center', justifyContent: 'space-around'}}/> 
+                                  <div className={styles.calendar}>
+                                    <span>Start Date </span>
+                                    <span>{formatDate(payment.checkInDate)}</span>
+                                  </div>
+                                  <CalendarMonthIcon/>
+                                  <div className={styles.calendar}>
+                                    <span>End Date </span>
+                                    <span>{formatDate(payment.checkOutDate)}</span>
+                                  </div>
+                                </div>
+                                
+                              <div className={styles.detailsContainer}>
+                                <div role="group" aria-label="Primary flight details" className={styles.calendarDetails}>
+                                  <CalendarMonthIcon sx={{alignContent: 'center', justifyContent: 'space-around'}}/> 
+                                  <div className={styles.calendar}>
+                                    <span>Check-in Time </span>
+                                    <span>{formatTime(payment.checkInTime)}</span>
+                                  </div>
+                                  <CalendarMonthIcon/>
+                                  <div className={styles.calendar}>
+                                    <span>Check-out Time </span>
+                                    <span>{formatTime(payment.checkOutTime)}</span>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              <div className={styles.divider} role="presentation" />
+
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className={styles.actionButtons}>
+                              <button 
+                                className={styles.downloadButton}
+                                // onClick={handleDownload}
+                                aria-label="Download ticket"
+                              >
+                                Download Ticket
+                              </button>
+                              <button 
+                                className={styles.shareButton}
+                                onClick={() => handleShare(payment.paymentId)}
+                                aria-label="Share ticket"
+                              >
+                                <img
+                                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/f4a5befd5dc2e4173499b8fe0bfb167dcc3d48069c784c7b55207010208b8554?placeholderIfAbsent=true&apiKey=a15e519098c240a2b028acfbd9132f63"
+                                  alt=""
+                                  className={styles.shareIcon}
+                                  loading="lazy"
+                                  role="presentation"
+                                />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </ul>
+                  )}
                 </section>
               )}
             </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate,useParams } from 'react-router-dom';
 import styles from './HotelPayment.module.css'; // Ensure this path is correct
 import Header from '../../Components/Header'; // Adjust the import path as needed
 import Button from '@mui/material/Button';
@@ -18,7 +18,7 @@ import PaymentService from '../../services/PaymentService'; // Adjust the import
 const HotelPayment = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { paymentId } = location.state || {};
+  const { paymentId } = useParams();
   const bookingDetailsRef = useRef(null);
 
   const [accommodation, setAccommodation] = useState(null);
@@ -75,17 +75,19 @@ const HotelPayment = () => {
       alert('No booking details available to download.');
       return;
     }
-
-    html2canvas(bookingDetailsRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      const link = document.createElement('a');
-      link.href = imgData;
-      link.download = 'booking_details.png';
-      link.click();
-    }).catch((err) => {
-      console.error('Error generating image:', err);
-      alert('Failed to generate image.');
-    });
+  
+    html2canvas(bookingDetailsRef.current, { scale: 2 }) // Increased scale for better quality
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = imgData;
+        link.download = `booking_details_${paymentId}.png`; // Dynamic file name based on paymentId
+        link.click();
+      })
+      .catch((err) => {
+        console.error('Error generating image:', err);
+        alert('Failed to generate image.');
+      });
   };
 
   if (error) {
@@ -133,8 +135,7 @@ const HotelPayment = () => {
     </div>
     <button onClick={handleDownloadPaymentDetails}>Download Payment Details</button>
   </div> */}
-
-  <section className={styles.hotelInfoContainer} aria-labelledby="hotelName">
+  <section className={styles.hotelInfoContainer} aria-labelledby="hotelName" >
     <div className={styles.details}>
       <h1 id="hotelName" className={styles.title}>{accommodation?.name}</h1>
       <div className={styles.address}>
@@ -170,7 +171,7 @@ const HotelPayment = () => {
     </div>
   </section>
 
-  <section className={styles.bookingDetails} aria-label="Booking details">
+  <section className={styles.bookingDetails} aria-label="Booking details" ref={bookingDetailsRef}>
     <div className={styles.dateSection}>
       <div className={styles.checkInOut}>
         <div className={styles.date}>

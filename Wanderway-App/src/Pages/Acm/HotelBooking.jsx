@@ -168,7 +168,7 @@ const HotelBooking = () => {
         console.log('Payment Successful:', response);
         
         const paymentId = response.paymentId; 
-        navigate('/hotelPay', { state: { paymentId } }); // Navigate to confirmation page
+        navigate(`/hotelPay/${paymentId}`); // Navigate to confirmation page
     } catch (error) {
         console.error('Payment Error:', error);
         if (error.response && error.response.status === 401) {
