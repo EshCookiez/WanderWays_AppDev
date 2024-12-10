@@ -47,8 +47,8 @@ public class SecurityConfig {
                 .configurationSource(corsConfig()) // Apply the CORS configuration directly here
             )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/welcome", "/auth/addNewUser", "/auth/generateToken").permitAll()
-                .requestMatchers("/auth/user/**").hasAuthority("ROLE_USER")
+                .requestMatchers("/auth/welcome", "/auth/addNewUser", "/auth/generateToken","/auth/login","/auth/signup").permitAll()
+                .requestMatchers("/auth/user/**").permitAll()
                 .requestMatchers("/auth/admin/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers("/api/acc/*").permitAll()
                 .requestMatchers("/api/rooms/*").permitAll()
