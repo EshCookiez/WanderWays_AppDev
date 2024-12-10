@@ -130,42 +130,55 @@ const HotelBooking = () => {
   };
 
   const handleProceedToPayment = async () => {
+    let token = localStorage.getItem('jwtToken'); // Retrieve the JWT token
+
+    if (!token) {
+        alert('Please log in to proceed with the payment.');
+        navigate('/login');
+        return;
+    }
+
     // Validate required fields
-    if (!selectedRoom.roomId) { // Updated here
-      console.error('No room selected');
-      // Optionally, set an error state to display a message to the user
-      return;
+    if (!selectedRoom.roomId) {
+        console.error('No room selected');
+        alert('Please select a room.');
+        return;
     }
-  
+
     if (!checkInState || !checkOutState || !checkInTime || !checkOutTime) {
-      console.error('Missing booking details');
-      // Optionally, set an error state to display a message to the user
-      return;
+        console.error('Missing booking details');
+        alert('Please fill in all booking details.');
+        return;
     }
-  
+
     const paymentData = {
-      checkInDate: checkInState,
-      checkOutDate: checkOutState,
-      checkInTime,
-      checkOutTime,
-      roomsSelected: { roomId: selectedRoom.roomId }, // Updated here
-      accommodation: { id: accommodation.id },     // Nested object
-      totalAmount: calculateTotalAmount(),
+        checkInDate: checkInState,
+        checkOutDate: checkOutState,
+        checkInTime,
+        checkOutTime,
+        roomId: selectedRoom.roomId,          // Primitive ID
+        accommodationId: accommodation.id,    // Primitive ID
+        totalAmount: calculateTotalAmount(),
     };
-  
+
     console.log('Payment Data:', paymentData); // Verify the payload
-  
+
     try {
-      const response = await PaymentService.createPayment(paymentData);
-      console.log('Payment Successful:', response);
-            
-      const paymentId = response.paymentId; 
-      navigate('/hotelPay', { state: { paymentId } }); // Navigate to a confirmation page
+        const response = await PaymentService.createPayment(paymentData, token); // Pass the token
+        console.log('Payment Successful:', response);
+        
+        const paymentId = response.paymentId; 
+        navigate('/hotelPay', { state: { paymentId } }); // Navigate to confirmation page
     } catch (error) {
-      console.error('Payment Error:', error);
-      // Optionally, set an error state to display a message to the user
+        console.error('Payment Error:', error);
+        if (error.response && error.response.status === 401) {
+            alert('Session expired. Please log in again.');
+            navigate('/login');
+        } else {
+            alert('Payment failed. Please try again.');
+        }
     }
-  };
+};
 
   return (
     <main className={styles.bookingContainer} role="main">

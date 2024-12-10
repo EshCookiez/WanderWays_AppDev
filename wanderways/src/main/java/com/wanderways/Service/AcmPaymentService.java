@@ -1,6 +1,7 @@
 package com.wanderways.Service;
 
 import com.wanderways.Entity.AcmPayment;
+import com.wanderways.DTO.AcmPaymentDTO;
 import com.wanderways.Entity.Accommodation;
 import com.wanderways.Entity.Rooms;
 import com.wanderways.Repository.AcmPaymentRepo;
@@ -25,17 +26,17 @@ public class AcmPaymentService {
     @Autowired
     private RoomsRepo roomsRepo;
 
-    public AcmPayment createPayment(AcmPayment payment) {
-        Accommodation accommodation = accommodationRepo.findById(payment.getAccommodation().getId())
+    public AcmPayment createPayment(AcmPaymentDTO paymentDTO, AcmPayment payment) {
+        Accommodation accommodation = accommodationRepo.findById(paymentDTO.getAccommodationId().intValue())
             .orElseThrow(() -> new RuntimeException("Accommodation not found"));
-        Rooms rooms = roomsRepo.findById(payment.getRoomsSelected().getRoomId())
+        Rooms rooms = roomsRepo.findById(paymentDTO.getRoomId().intValue())
             .orElseThrow(() -> new RuntimeException("Room not found"));
 
         payment.setAccommodation(accommodation);
         payment.setRoomsSelected(rooms);
 
         return acmPaymentRepo.save(payment);
-    }
+}
     
     public List<AcmPayment> getAllPayments() {
         return acmPaymentRepo.findAll();
@@ -69,5 +70,8 @@ public class AcmPaymentService {
     public String deletePayment(Long id) {
         acmPaymentRepo.deleteById(id);
         return "Payment deleted with id: " + id;
+    }
+    public AcmPayment savePayment(AcmPayment payment) {
+        return acmPaymentRepo.save(payment);
     }
 }
