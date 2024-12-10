@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { AiOutlineUser } from 'react-icons/ai';
 import { IoAirplane } from 'react-icons/io5';
 import { IoIosBed } from 'react-icons/io';
@@ -26,9 +27,48 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import './css/header.css';
 
 const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userIcon, setUserIcon] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [userName, setUserName] = useState('');
   const open = Boolean(anchorEl);
 
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken');
+    setIsLoggedIn(!!token);
+    if (token) {
+      fetchUserIcon(token);
+      fetchUserName(token);
+    }
+  }, []);
+  const fetchUserIcon = async (token) => {
+    try {
+      const response = await axios.get('http://localhost:8080/auth/userIcon', {
+        headers: { Authorization: `Bearer ${token}` },
+        responseType: 'blob',
+      });
+      const iconUrl = URL.createObjectURL(response.data);
+      setUserIcon(iconUrl);
+    } catch (err) {
+      console.error('Failed to fetch user icon:', err);
+    }
+  };
+  const fetchUserName = async (token) => {
+    try {
+      const response = await axios.get('http://localhost:8080/auth/userProfile', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const { firstName, lastName } = response.data;
+      setUserName(`${firstName} ${lastName}`);
+    } catch (err) {
+      console.error('Failed to fetch user name:', err);
+    }
+  };
+  const handleLogout = () => {
+    localStorage.removeItem('jwtToken');
+    setIsLoggedIn(false);
+    navigate('/');
+  };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -52,7 +92,7 @@ const Header = () => {
             <AirplanemodeActiveIcon className="airplane-icon" />Find Flight
             </button>
         </Link>
-        <Link to="/hotelsearch">
+        <Link to="/hotel">
           <button className='findButton'>
             <KingBedIcon className="bed-icon" /> Find Stays
             </button>
@@ -61,49 +101,51 @@ const Header = () => {
       
       <Logo />
       <div className="account-details">
-        <Link to="/Favorites">
-        <button className='findButton'>
-            <FavoriteIcon className="favorites-icon" />Favorites 
-          </button>
-        </Link>
 
-        <HorizontalRuleIcon className="line"/>
 
         <Dropdown>
-          
-        <Link to="/user">
-          <button className='userButton'>
-        <Avatar className='userIcon' alt="Vince K." src={User} /> 
-        <span className='userSpan'>User</span>
-        </button>
-        
-        </Link>
-        
-          <BaseMenuButton className='accButton' >
-              <KeyboardArrowDownIcon />
-          </BaseMenuButton>
-
-          <BaseMenu slots={{ listbox: Listbox }}>
-            <StyledMenuItem className='userinButton'onClick={createHandleMenuClick('User')}>
-              
-              <Avatar  alt="Vince K." src={User} /> 
-              <span className='userSpan'>User</span>
-            </StyledMenuItem>
-        
-            <StyledMenuItem className='styledMenuItem' onClick={createHandleMenuClick('Profile')}>
-                  <PersonIcon/>
-                  Profile
-                  <ChevronRightIcon className='rightIcon'/>
-              </StyledMenuItem>
-
-            <StyledMenuItem className='styledMenuItem'onClick={createHandleMenuClick('Payments')}><PaymentIcon/>
-              Payments <ChevronRightIcon className='rightIcon'/>
-            </StyledMenuItem>
-            <StyledMenuItem className='styledMenuItem' onClick={createHandleMenuClick('Settings')}><SettingsIcon/>
-              Settings<ChevronRightIcon className='rightIcon'/></StyledMenuItem>
-            <StyledMenuItem className='styledMenuItem' onClick={createHandleMenuClick('Log out')}><LogoutIcon/>
-              Log out<ChevronRightIcon className='rightIcon'/></StyledMenuItem>
-          </BaseMenu>
+          {isLoggedIn ? (
+            <>
+            <Link to="/Favorites">
+            <button className='findButton'>
+                <FavoriteIcon className="favorites-icon" />Favorites 
+              </button>
+            </Link>
+            <HorizontalRuleIcon className="line"/>
+              <Link to="/user">
+                <button className='userButton'>
+                <Avatar className='userIcon' alt="User" src={userIcon || '/path/to/default.png'} />
+                  <span className='userSpan'>{userName}</span>
+                </button>
+              </Link>
+              <BaseMenuButton className='accButton'>
+                <KeyboardArrowDownIcon />
+              </BaseMenuButton>
+              <BaseMenu slots={{ listbox: Listbox }}>
+                <StyledMenuItem onClick={createHandleMenuClick('Profile')}>
+                  <PersonIcon /> Profile <ChevronRightIcon className='rightIcon'/>
+                </StyledMenuItem>
+                <StyledMenuItem onClick={createHandleMenuClick('Payments')}>
+                  <PaymentIcon /> Payments <ChevronRightIcon className='rightIcon'/>
+                </StyledMenuItem>
+                <StyledMenuItem onClick={createHandleMenuClick('Settings')}>
+                  <SettingsIcon /> Settings <ChevronRightIcon className='rightIcon'/>
+                </StyledMenuItem>
+                <StyledMenuItem onClick={handleLogout}>
+                  <LogoutIcon /> Logout <ChevronRightIcon className='rightIcon'/>
+                </StyledMenuItem>
+              </BaseMenu>
+            </>
+          ) : (
+            <>
+              <Link to="/login">
+                <button className='loginButton'>Login</button>
+              </Link>
+              <Link to="/signup">
+                <button className='signupButton'>Sign Up</button>
+              </Link>
+            </>
+          )}
         </Dropdown>
       </div>
     </div>

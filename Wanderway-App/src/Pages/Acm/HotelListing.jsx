@@ -55,6 +55,14 @@ const HotelListing = () => {
   const navigate = useNavigate();
   
   const handleBookNow = (room) => {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      // User is not logged in, redirect to login page
+      alert('Please log in to book a room.');
+      navigate('/login');
+      return;
+    }
+
     if (selectedAccommodation && room) {
       console.log('Selected Accommodation in handleBookNow:', selectedAccommodation);
       console.log('Navigating with accommodationId:', selectedAccommodation.acm_id, 'roomId:', room.id);

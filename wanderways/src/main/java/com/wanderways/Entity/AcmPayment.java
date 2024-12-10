@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class AcmPayment {
 
@@ -16,15 +18,22 @@ public class AcmPayment {
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
+    @JsonIgnoreProperties({"accommodation", "payments"})
     private Rooms roomsSelected;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accommodation_id", nullable = false)
+    @JsonIgnoreProperties({"rooms"})
     private Accommodation accommodation;
 
     private Double totalAmount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    @JsonIgnoreProperties({"payments"})
+    private UserInfo userInfo;
 
     // Getters and Setters
     public Long getPaymentId() {
@@ -89,5 +98,12 @@ public class AcmPayment {
 
     public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 }
