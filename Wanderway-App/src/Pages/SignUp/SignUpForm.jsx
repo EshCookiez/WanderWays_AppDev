@@ -11,6 +11,7 @@ const SignUpForm = () => {
   const [isFormValid, setIsFormValid] = useState(true); // State to track form validity
   const [errorMessage, setErrorMessage] = useState(""); // State to track error message
   const [successMessage, setSuccessMessage] = useState(""); // State for success message
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -34,6 +35,13 @@ const SignUpForm = () => {
     });
   };
 
+
+  // Validate email format
+  const isEmailValid = (email) => {
+    const regex = /\S+@\S+\.\S+/;
+    return regex.test(email);
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,9 +63,16 @@ const SignUpForm = () => {
       setErrorMessage('Passwords do not match');
       return;
     }
+
+    if (!isEmailValid(formData.email)) {
+      setErrorMessage('Please enter a valid email address');
+      return;
+    }
+
+    setIsLoading(true); // Set loading state to true during the request
   
     try {
-      const response = await axios.post('http://localhost:8080/api/customer/signup', {
+      const response = await axios.post('http://localhost:8080/auth/signup', {
         email: formData.email,
         password: formData.password,
         firstName: formData.firstName,

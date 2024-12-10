@@ -16,9 +16,10 @@ import CreateFlight from './Pages/FlightBooking/CreateFlight';
 import CustomerProfile from './Pages/CustomerProfile/CustomerProfile';
 import HotelListing from './Pages/Acm/HotelListing';
 import FlightPayment from './Pages/FlightPayment/FlightPayment.jsx';
-import HomePage from './Pages/NewHome/LandingPage';
 import HotelBooking from './Pages/Acm/HotelBooking';
 import HotelPayment from './Pages/Acm/HotelPayment';
+import User from './Pages/User/User.jsx';
+import PrivateRoute from './PrivateRoute.jsx';
 
 function App() {
     return (
@@ -43,12 +44,16 @@ function App() {
                     <Route path='/hotelPay' element={<HotelPayment/>}/>
                     
                     <Route path="/login" element={<LoginPage />} />
+                    <Route path="/user" element={<PrivateRoute><User/></PrivateRoute>}/>
+                    
                     <Route path="/signup" element={<SignUpForm />} />
                     
                     <Route path="/favorites" element={<Favorites/>}/>
                     <Route path ="/addFav" element={<Addfav/>}/>
                     <Route path="/home" element={<Home />} />
                     <Route path="/customerProfile" element={<CustomerProfile />} />
+
+                    <Route path="/user" element={<User/>}/>
                 </Routes>
             </div>
         </Router>

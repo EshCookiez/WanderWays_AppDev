@@ -41,6 +41,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            //.cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless APIs
             .cors(cors -> cors
                 .configurationSource(corsConfig()) // Apply the CORS configuration directly here
@@ -61,12 +62,11 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/api/bookings/update/**").permitAll()
                 .requestMatchers(HttpMethod.PATCH, "/api/bookings/status/**").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/api/bookings/delete/**").permitAll()
+                .requestMatchers("/api/acc/**").permitAll() 
+                .requestMatchers("/api/rooms/**").permitAll() 
+                .requestMatchers("/api/acmpayment/**").permitAll()
 
-                
-                .requestMatchers("/api/acc/**").permitAll() //wtf double urls
-                .requestMatchers("/api/rooms/**").permitAll() // wtf double ursl bro fix this
-                .requestMatchers("/api/acmpayments/**").permitAll()
-
+                .requestMatchers("/error").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().authenticated() // Protect all other endpoints
             )

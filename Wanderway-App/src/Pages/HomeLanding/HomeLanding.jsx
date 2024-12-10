@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
@@ -17,7 +17,19 @@ function HomeLanding() {
   const [checkOut, setCheckOut] = useState('');
   const [roomsGuests, setRoomsGuests] = useState('');
   const [dateError, setDateError] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken');
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwtToken');
+    setIsLoggedIn(false);
+    navigate('/'); // Redirect to home after logout
+  };
 
   const handleShowFlights = (e) => {
     e.preventDefault();
@@ -85,12 +97,25 @@ function HomeLanding() {
         </div>
         </Link>
         <div className={styles.authButtons}>
-          <Link to="/login">
-          <button className={styles.loginButton}>Login</button>
-          </Link>
-          <Link to="/signup">
-          <button className={styles.signupButton}>Sign up</button>
-          </Link>
+          {!isLoggedIn ? (
+          <>
+            <Link to="/login">
+              <button className={styles.loginButton}>Login</button>
+            </Link>
+            <Link to="/signup">
+              <button className={styles.signupButton}>Sign Up</button>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to="/user">
+              <button className={styles.userButton}>User</button>
+            </Link>
+            <button className={styles.logoutButton} onClick={handleLogout}>
+              Logout
+            </button>
+          </>
+        )}
         </div>
       </header>
       <h1 className={styles.mainTitle}>

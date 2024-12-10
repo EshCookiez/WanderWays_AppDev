@@ -23,7 +23,7 @@ const LoginPage = () => {
     e.preventDefault();
     setErrorMessage('');
   
-    // Check for empty fields
+    // Check if the fields are not empty
     if (!email || !password) {
       setErrorMessage('Please fill in both email and password.');
       return;
@@ -32,24 +32,35 @@ const LoginPage = () => {
     setLoading(true);
   
     try {
-      // Use URLSearchParams to match curl format
-      const params = new URLSearchParams();
-      params.append('email', email);
-      params.append('password', password);
+      // Send login request to the backend
+      const response = await axios.post("http://localhost:8080/auth/login", {
+        email: email,
+        password: password,
+      },
+    {
+      headers: {
+        // Ensure no unnecessary headers are added here unless required
+        'Content-Type': 'application/json',
+      }
+    });
   
-      const response = await axios.post("http://localhost:8080/api/customer/login", params, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      });
+      // Log the response data for debugging purposes
+      console.log("Response from backend:", response);
   
-      console.log("Login Successful:", response.data);
+      // Assuming the response contains the JWT token as a JSON object
+      const token = response.data.token; // Corrected to access the token
   
-      // Store the JWT token in localStorage
-      localStorage.setItem('token', response.data);
+      if (!token) {
+        throw new Error("Token not received");
+      }
   
-      // Redirect after successful login
-      navigate('/customerProfile');
+      // Store the token in localStorage
+      localStorage.setItem('jwtToken', token);
+  
+      console.log("Login Successful, Token saved:", token);
+  
+      // Redirect to the next page after login
+      navigate('/user'); // Update with the correct path
     } catch (error) {
       console.error("Login failed:", error);
       setErrorMessage("Login failed. Please check your credentials and try again.");
@@ -57,6 +68,7 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
+  
   
 
   return (

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
 @RestController
@@ -36,6 +37,19 @@ public class AcmController {
         }
     }
 
+    @GetMapping("/{id}") // **Added Endpoint**
+    public ResponseEntity<Accommodation> getAccommodationById(@PathVariable int id) {
+        try {
+            Accommodation accommodation = acmService.getAccommodationById(id);
+            return ResponseEntity.ok(accommodation); // 200 OK
+        } catch (NoSuchElementException e) {
+            logger.severe("Accommodation not found: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404 Not Found
+        } catch (Exception e) {
+            logger.severe("Error fetching accommodation: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // 500 Internal Server Error
+        }
+    }
     @GetMapping("/all")
     public ResponseEntity<List<Accommodation>> getAllAccommodations() {
         try {

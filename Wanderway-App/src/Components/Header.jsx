@@ -70,22 +70,25 @@ const Header = () => {
         <HorizontalRuleIcon className="line"/>
 
         <Dropdown>
+          
+        <Link to="/user">
           <button className='userButton'>
         <Avatar className='userIcon' alt="Vince K." src={User} /> 
         <span className='userSpan'>User</span>
         </button>
+        
+        </Link>
         
           <BaseMenuButton className='accButton' >
               <KeyboardArrowDownIcon />
           </BaseMenuButton>
 
           <BaseMenu slots={{ listbox: Listbox }}>
-          
             <StyledMenuItem className='userinButton'onClick={createHandleMenuClick('User')}>
+              
               <Avatar  alt="Vince K." src={User} /> 
               <span className='userSpan'>User</span>
             </StyledMenuItem>
-                  
         
             <StyledMenuItem className='styledMenuItem' onClick={createHandleMenuClick('Profile')}>
                   <PersonIcon/>
