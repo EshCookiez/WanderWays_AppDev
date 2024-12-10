@@ -97,43 +97,43 @@ const FlightList = () => {
   return (
   <div className={styles.body}> 
    <Header/>
-  {loading ? (
-    <Loader />
-  ): (
-    <>
+      {loading ? (
+        <Loader />
+      ): (
+        <>
         <div className={styles.mainBox}>
-      <section className={styles.heroSection}>
-            <img src={logo} alt="Travel destination" className={styles.heroImage} />
-            <div className={styles.heroContent}>
-                <h1 className={styles.heroTitle}>Wander the World</h1>
-                <h1 className={styles.heroTitle}>Your way!</h1>
-            </div>
-      </section>
-      <main className={styles.contentBox}>
-        <Box sx={{ borderBottom: 1, borderColor: 'white',overflow: 'hidden',
-        borderTopLeftRadius: '4px', borderTopRightRadius: '4px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}>
-          <StyledTabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
-          <StyledTab label="Available Flights" {...a11yProps(0)} />
-          <StyledTab label="Booked Flights" {...a11yProps(1)} />
-        </StyledTabs>
-        </Box>
-        <CustomTabPanel value={value} index={0}>
-        <AvailableFlights
-            flights={flights}
-            originSearch={originSearch}
-            destinationSearch={destinationSearch}
-            setOriginSearch={setOriginSearch}
-            setDestinationSearch={setDestinationSearch}
-          />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-        <BookedFlights booked={booked} handleDeleteBooking={handleDeleteBooking} />
-        </CustomTabPanel>
-      </main>
-      <Footer/>
-    </div>
-    </>
-  )}
+          <section className={styles.heroSection}>
+                <img src={logo} alt="Travel destination" className={styles.heroImage} />
+                <div className={styles.heroContent}>
+                    <h1 className={styles.heroTitle}>Wander the World</h1>
+                    <h1 className={styles.heroTitle}>Your way!</h1>
+                </div>
+          </section>
+          <main className={styles.contentBox}>
+            <Box sx={{ borderBottom: 1, borderColor: 'white',overflow: 'hidden',
+            borderTopLeftRadius: '4px', borderTopRightRadius: '4px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}>
+              <StyledTabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
+              <StyledTab label="Available Flights" {...a11yProps(0)} />
+              <StyledTab label="Booked Flights" {...a11yProps(1)} />
+            </StyledTabs>
+            </Box>
+            <CustomTabPanel value={value} index={0}>
+            <AvailableFlights
+                flights={flights}
+                originSearch={originSearch}
+                destinationSearch={destinationSearch}
+                setOriginSearch={setOriginSearch}
+                setDestinationSearch={setDestinationSearch}
+              />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+            <BookedFlights booked={booked} handleDeleteBooking={handleDeleteBooking} />
+            </CustomTabPanel>
+          </main>
+          <Footer/>
+        </div>
+        </>
+      )}
    
     </div>
   );
