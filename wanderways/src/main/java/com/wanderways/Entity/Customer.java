@@ -19,8 +19,6 @@ public class Customer {
     private String password;
     private String customerAddress;
     private String birthdate;
-    private String roles;
-
 
     public int getCustomerId() {
         return customerId;
@@ -84,14 +82,6 @@ public class Customer {
     
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
-    }
-
-    public String getRoles() {
-        return roles;
     }
     
 

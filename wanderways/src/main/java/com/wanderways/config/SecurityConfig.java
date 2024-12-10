@@ -47,11 +47,12 @@ public class SecurityConfig {
                 .configurationSource(corsConfig()) // Apply the CORS configuration directly here
             )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/welcome", "/auth/addNewUser", "/auth/generateToken").permitAll()
+                .requestMatchers("/auth/welcome", "/auth/addNewUser", "/auth/generateToken", "/auth/login" , "/auth/signup").permitAll()
                 .requestMatchers("/auth/user/**").hasAuthority("ROLE_USER")
                 .requestMatchers("/auth/admin/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers("/api/acc/*").permitAll()
                 .requestMatchers("/api/rooms/*").permitAll()
+                .requestMatchers(HttpMethod.GET, "/auth/userProfile").permitAll()
                 // Flight and Flight Booking endpoints
                 .requestMatchers("/api/flights/*").permitAll()
                 .requestMatchers("/api/bookings/*").permitAll()
@@ -62,6 +63,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/api/bookings/update/**").permitAll()
                 .requestMatchers(HttpMethod.PATCH, "/api/bookings/status/**").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/api/bookings/delete/**").permitAll()
+
                 .requestMatchers("/api/acc/**").permitAll() 
                 .requestMatchers("/api/rooms/**").permitAll() 
                 .requestMatchers("/api/acmpayment/**").permitAll()
