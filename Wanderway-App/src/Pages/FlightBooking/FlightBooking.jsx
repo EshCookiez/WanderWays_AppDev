@@ -17,7 +17,17 @@ const FlightBooking = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-       
+        const token = localStorage.getItem('jwtToken');
+        if (!token) {
+          // User is not logged in, redirect to login page
+          setMessage('Please log in to book this flight. Redirecting you to Login Page');
+          setTimeout(() => {
+            navigate('/login');
+          }, 4000);
+          
+          return;
+        }
+
         if (!fareclass) {
             setMessage('Please select a seat class.');
             return;
@@ -38,7 +48,7 @@ const FlightBooking = () => {
                 setMessage('Flight booked successfully!');
                 setTimeout(() => {
                     navigate('/list-flight');
-                }, 2000);
+                }, 1500);
             } else {
                 setMessage("Failed to book Flight");
             }

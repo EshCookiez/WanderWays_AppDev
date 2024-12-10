@@ -41,6 +41,10 @@ button a{
     gap: 20px;
 }
 
+.features button:hover{
+    background-color:  #8dd3bb;
+    border-radius: 4px;
+}
 .account-details{
     display: flex;
     flex-direction: row;
@@ -48,6 +52,12 @@ button a{
     justify-content: center;
     margin: 0px 40px 0px 0px;
 }
+
+.account-details button:hover{
+    background-color:  #8dd3bb;
+    border-radius: 4px;
+}
+
 
 .airplane-icon{
     
@@ -120,4 +130,5 @@ button a{
     align-items: center;
     justify-content: space-between; /* Optional: Ensures space between text and icon */
     padding: 10px 20px; /* Adjust padding as needed */
+    z-index: 1000;
   }

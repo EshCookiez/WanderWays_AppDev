@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { IoAirplane } from 'react-icons/io5';
 import sampleimg from './samplelogo.png'
 import './List.css'
@@ -9,7 +10,19 @@ import Typography from '@mui/material/Typography';
 import { MdDeleteForever, MdOutlineUpdate  } from "react-icons/md";
 import Tooltip from '@mui/material/Tooltip';
 
-const BookedFlights = ({ booked, handleDeleteBooking }) => {
+const BookedFlights = ({ booked, handleDeleteBooking}) => {
+  const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      alert('Please log in to access this page.');
+      navigate('/login');
+    } else {
+      setIsAuthenticated(true); // User is authenticated
+    }
+
+  }, [navigate]);
   console.log(booked);
   return (
     <div className="booked-box">

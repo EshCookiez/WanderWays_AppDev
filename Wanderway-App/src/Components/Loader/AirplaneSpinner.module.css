@@ -8,7 +8,7 @@
   .airplane_icon {
     font-size: 80px;
     color: #56b896;
-    animation: airplaneProgress 4s linear infinite; 
+    animation: airplaneProgress 2s linear infinite; 
   }
   
   /* Keyframes for bar like movement*/

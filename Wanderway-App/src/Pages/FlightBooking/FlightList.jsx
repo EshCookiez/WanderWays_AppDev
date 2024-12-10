@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import AvailableFlights from './AvailableFlights.jsx';
 import BookedFlights from './BookedFlights.jsx';
 import { Tab, Tabs } from '@mui/material';
@@ -8,7 +9,7 @@ import Header from '../../Components/Header.jsx';
 import Footer from '../../Components/Footer/Footer.jsx';
 import styles from './flights.module.css';
 import logo from '././Assets/AIRPORT.jpg';
-import Loader from '../../Components/Loader/AirplaneSpinner.jsx'
+//import Loader from '../../Components/Loader/AirplaneSpinner.jsx'
 
 const FlightList = () => {
   const [flights, setFlights] = useState([]);
@@ -17,11 +18,42 @@ const FlightList = () => {
   const [destinationSearch, setDestinationSearch] = useState('');
   const [value, setValue] = useState(0);
 
-  const [loading, setLoading] = useState(true);
+  //const [loading, setLoading] = useState(true);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+
+  useEffect(() => {
+    {/*setTimeout(() => {
+      setLoading(false)  
+    }, 2000);*/}
+
+    fetch('http://localhost:8080/api/flights/all')
+      .then((response) => response.json())
+      .then((data) => setFlights(data))
+      .catch((error) => console.error('Error fetching flights:', error));
+      console.log(flights)
+
+    fetch('http://localhost:8080/api/bookings/all')
+      .then((response) => response.json())
+      .then((data) => setBooked(data))
+      .catch((error) => console.error('Error fetching booked flights:', error));
+  }, []);
+
+
+  const handleDeleteBooking = (fbookId) => {
+    fetch(`http://localhost:8080/api/bookings/delete/${fbookId}`, { method: 'DELETE', credentials: 'include', })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete booking');
+            }
+            // If successful, remove the booking from the state
+            setBooked((prevBooked) => prevBooked.filter((booking) => booking.fbookId !== fbookId));
+        })
+        .catch(error => console.error('Error deleting booking:', error));
+};
 
   const CustomTabPanel = ({ children, value, index, ...other }) => {
     return (
@@ -44,34 +76,6 @@ const FlightList = () => {
     };
   };
   
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false)  
-    }, 2000);
-    fetch('http://localhost:8080/api/flights/all')
-      .then((response) => response.json())
-      .then((data) => setFlights(data))
-      .catch((error) => console.error('Error fetching flights:', error));
-      console.log(flights)
-
-    fetch('http://localhost:8080/api/bookings/all')
-      .then((response) => response.json())
-      .then((data) => setBooked(data))
-      .catch((error) => console.error('Error fetching booked flights:', error));
-  }, []);
-
-  const handleDeleteBooking = (fbookId) => {
-    fetch(`http://localhost:8080/api/bookings/delete/${fbookId}`, { method: 'DELETE', credentials: 'include', })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to delete booking');
-            }
-            // If successful, remove the booking from the state
-            setBooked((prevBooked) => prevBooked.filter((booking) => booking.fbookId !== fbookId));
-        })
-        .catch(error => console.error('Error deleting booking:', error));
-};
-
   const StyledTabs = styled(Tabs)({
     backgroundColor: '#fff', 
     '& .MuiTabs-indicator': {
@@ -97,10 +101,10 @@ const FlightList = () => {
   return (
   <div className={styles.body}> 
    <Header/>
-      {loading ? (
+      {/*{loading ? (
         <Loader />
       ): (
-        <>
+        <>*/}
         <div className={styles.mainBox}>
           <section className={styles.heroSection}>
                 <img src={logo} alt="Travel destination" className={styles.heroImage} />
@@ -111,7 +115,7 @@ const FlightList = () => {
           </section>
           <main className={styles.contentBox}>
             <Box sx={{ borderBottom: 1, borderColor: 'white',overflow: 'hidden',
-            borderTopLeftRadius: '4px', borderTopRightRadius: '4px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}>
+              borderTopLeftRadius: '4px', borderTopRightRadius: '4px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}>
               <StyledTabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
               <StyledTab label="Available Flights" {...a11yProps(0)} />
               <StyledTab label="Booked Flights" {...a11yProps(1)} />
@@ -127,13 +131,16 @@ const FlightList = () => {
               />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-            <BookedFlights booked={booked} handleDeleteBooking={handleDeleteBooking} />
+            <BookedFlights 
+            booked={booked} 
+            handleDeleteBooking={handleDeleteBooking} 
+            />
             </CustomTabPanel>
           </main>
           <Footer/>
         </div>
-        </>
-      )}
+        {/*</>
+      )}*/}
    
     </div>
   );
