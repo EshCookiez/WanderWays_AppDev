@@ -4,12 +4,33 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import styles from './HomeLanding.module.css';
 import logo from '../../assets/wander-nobg.png';
+import Modal from '@mui/material/Modal';
 import pic from '../../assets/Picture.png';
 import './HomeLanding.css';
 import Footer from './Footer/Footer';
 import HomePage from './HomePage';
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 import KingBedIcon from '@mui/icons-material/KingBed';
+
+
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #4c987e',
+  boxShadow: 24,
+  p: 4,
+  borderRadius: '8px',
+};
+
+
+
+
+
 function HomeLanding() {
   const [selectedTab, setSelectedTab] = useState("Flights");
   const [destination, setDestination] = useState('');
