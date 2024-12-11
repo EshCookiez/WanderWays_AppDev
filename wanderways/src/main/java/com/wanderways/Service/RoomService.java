@@ -43,4 +43,8 @@ public class RoomService {
         roomRepo.deleteById(id);
         return "Room deleted with id: " + id;
     }
+    public Rooms getRoomById(Integer roomId) {
+        return roomRepo.findById(roomId)
+            .orElseThrow(() -> new NoSuchElementException("Room not found with ID: " + roomId));
+    }
 }

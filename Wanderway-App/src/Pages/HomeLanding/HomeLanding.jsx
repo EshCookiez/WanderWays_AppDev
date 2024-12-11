@@ -109,7 +109,7 @@ function HomeLanding() {
         ) : (
           <>
             <Link to="/user">
-              <button className={styles.userButton}>User</button>
+              <button className={styles.loginButton}>User</button>
             </Link>
             <button className={styles.logoutButton} onClick={handleLogout}>
               Logout

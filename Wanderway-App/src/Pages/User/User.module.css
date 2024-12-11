@@ -11,9 +11,12 @@
   aspect-ratio: 3.52;
   object-fit: cover;
   object-position: center;
-  width: 100%;
+  /* width: 100%; */
   border-radius: 12px;
-  height: 300px;
+  height: 200px;
+  width: 1000px;
+  border-color: rgba(0, 0, 0, 0);
+  z-index: -2000;
 }
 
 .profileContent {
@@ -62,7 +65,18 @@
   cursor: pointer;
   font-size: 14px;
 }
-
+.heroBackground {
+  position: fixed;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  background-image: url('path_to_your_image.jpg'); 
+  background-repeat: repeat; 
+  z-index: -1;
+  
+}
 .uploadButton {
   background-color: #4caf50;
   color: white;
@@ -382,8 +396,12 @@
   align-items: flex-start;
   gap: 16px;
 }
-
-.downloadButton {
+.buttonsForEdit{
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+.downloadButton, .saveButton {
   border-radius: 4px;
   background: var(--Mint-Green, #8dd3bb);
   padding: 16px;
@@ -395,7 +413,21 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-
+.deleteButton,.cancelEditButton {
+  border-radius: 4px;
+  background: #ee4545;
+  padding: 16px;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: Montserrat, sans-serif;
+  color: var(--Blackish-Green, #121212);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.deleteButton:hover ,.cancelEditButton:hover{
+  background-color: #e01a1a;
+}
 .downloadButton:hover {
   background-color: #7ac3ab;
 }

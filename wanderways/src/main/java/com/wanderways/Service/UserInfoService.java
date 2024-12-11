@@ -14,6 +14,7 @@ import com.wanderways.Entity.UserInfo;
 import com.wanderways.Repository.UserInfoRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -83,5 +84,9 @@ public class UserInfoService implements UserDetailsService {
         }
 
         return repository.save(user);
+    }
+    public UserInfo getUserById(Integer customerId) {
+        return repository.findById(customerId)
+            .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + customerId));
     }
 }

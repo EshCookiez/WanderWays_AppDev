@@ -20,6 +20,7 @@ import StarIcon from '@mui/icons-material/Star';
 import EmojiFoodBeverageIcon from '@mui/icons-material/EmojiFoodBeverage';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import Slider from '@mui/material/Slider';
+import Alert from '@mui/material/Alert';
 
 import Header from '../../Components/Header';
 import AcmService from '../../services/AcmService';
@@ -52,13 +53,79 @@ const HotelListing = () => {
   const [checkOutState, setCheckOutState] = useState(checkOut || '');
   const [roomsGuestsState, setRoomsGuestsState] = useState(roomsGuests || '');
   const [searchError, setSearchError] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertSeverity, setAlertSeverity] = useState('success');
+  const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
   
-  const handleBookNow = (room) => {
+  useEffect(() => {
+    fetchFavorites();
+  }, []);
+  
+  const fetchFavorites = async () => {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) return;
+  
+    try {
+      const response = await fetch('http://localhost:8080/api/favorites/list', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        setFavorites(data.map(fav => fav.accommodation.acm_id));
+      } else {
+        console.error('Failed to fetch favorites');
+      }
+    } catch (error) {
+      console.error('Error fetching favorites:', error);
+    }
+  };
+  const handleAddFavorite = async (accommodationId) => {
     const token = localStorage.getItem('jwtToken');
     if (!token) {
+      setAlertMessage('Please log in to add favorites.');
+      setAlertSeverity('error');
+      setShowAlert(true);
+      navigate('/login');
+      return;
+    }
+  
+    try {
+      const response = await fetch(`http://localhost:8080/api/favorites/add?accommodationId=${accommodationId}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        setAlertMessage('Accommodation added to favorites!');
+        setAlertSeverity('success');
+        setShowAlert(true);
+        setFavorites([...favorites, accommodationId]);
+      } else {
+        const errorData = await response.json();
+        setAlertMessage(`Failed to add favorite: ${errorData.message}`);
+        setAlertSeverity('error');
+        setShowAlert(true);
+      }
+    } catch (error) {
+      console.error('Error adding favorite:', error);
+      setAlertMessage('An error occurred while adding to favorites.');
+      setAlertSeverity('error');
+      setShowAlert(true);
+    }
+  };
+
+  const handleBookNow = (room) => {
+    const token = localStorage.getItem('jwtToken');
+      if (!token) {
       // User is not logged in, redirect to login page
-      alert('Please log in to book a room.');
+    setShowAlert(true);
       navigate('/login');
       return;
     }
@@ -100,6 +167,14 @@ const HotelListing = () => {
 
   const [open, setOpen] = useState(false);
   const [selectedAccommodation, setSelectedAccommodation] = useState(null);
+  useEffect(() => {
+    if (showAlert) {
+      const timer = setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showAlert]);
 
   useEffect(() => {
     fetchAccommodations();
@@ -153,6 +228,7 @@ const HotelListing = () => {
             (accommodation) => accommodation.acm_type === selectedType
           )
         );
+        fetchFavorites();
       } else {
         // Handle unexpected response structure
         console.error('Unexpected response format:', response.data);
@@ -253,6 +329,22 @@ const HotelListing = () => {
 
   return (
     <div className={styles.hotelListing}>
+      {showAlert && (
+      <Alert
+        variant="filled"
+        severity={alertSeverity}
+        onClose={() => setShowAlert(false)}
+        sx={{
+          position: 'fixed',
+          top: '10%',
+          width: '80%',
+          left: '10%',
+          zIndex: 1000,
+        }}
+      >
+        {alertMessage}
+      </Alert>
+    )}
       <h1 className={styles.mainTitle}>
         <span className={styles.mainTitleHighlight}>Make Your Travel Now</span>
         <span className={styles.mainTitlePrefix}>Special offers to suit your plan</span>
@@ -455,6 +547,8 @@ const HotelListing = () => {
                         backgroundColor: '#4c987e',
                       },
                     }}
+                    onClick={() => handleAddFavorite(accommodation.acm_id)} 
+                    disabled={favorites.includes(accommodation.acm_id)}
                   >
                     <BookmarkBorderIcon />
                   </Button>
@@ -649,7 +743,7 @@ const HotelListing = () => {
                               '& button': { m: 1, opacity: 0.75 },
                             }}
                           >
-                            <Button
+                            {/* <Button
                               variant="contained"
                               size="medium"
                               sx={{
@@ -664,7 +758,7 @@ const HotelListing = () => {
                               }}
                             >
                               <BookmarkBorderIcon />
-                            </Button>
+                            </Button> */}
                             <Button
                               variant="contained"
                               size="medium"

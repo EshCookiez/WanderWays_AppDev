@@ -12,6 +12,15 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import AccessibleIcon from '@mui/icons-material/Accessible';
 import { formatTime,formatDate } from '../../Components/utils';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import Alert from '@mui/material/Alert';
+
 const TABS = [
   { id: 'account', label: 'Account' },
   // { id: 'history', label: 'Booked Flights' },
@@ -31,6 +40,54 @@ export function User() {
   const [accommodationLogo, setAccommodationLogo] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [openDialog, setOpenDialog] = useState(false);
+  const [paymentToDelete, setPaymentToDelete] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertSeverity, setAlertSeverity] = useState('success');
+
+  
+  useEffect(() => {
+    if (showAlert) {
+      const timer = setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showAlert]);
+
+  const handleDelete = async (paymentId) => {
+    setPaymentToDelete(paymentId);
+    setOpenDialog(true);
+  };
+
+  const confirmDelete = async () => {
+  try {
+    const token = localStorage.getItem('jwtToken');
+    await axios.delete(`http://localhost:8080/api/acmpayment/delete/${paymentToDelete}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    setPayments(payments.filter(payment => payment.paymentId !== paymentToDelete));
+    setOpenDialog(false);
+    setPaymentToDelete(null);
+    
+    // Add success alert
+    setAlertMessage('Payment deleted successfully.');
+    setAlertSeverity('success');
+    setShowAlert(true);
+  } catch (err) {
+    console.error('Error deleting payment:', err);
+    // Add error alert
+    setAlertMessage('Failed to delete payment. Please try again.');
+    setAlertSeverity('error');
+    setShowAlert(true);
+  }
+};
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setPaymentToDelete(null);
+  };
   
   const handleShare = (paymentId) => {
     navigate(`/hotelPay/${paymentId}`);
@@ -211,38 +268,44 @@ export function User() {
   };
 
   const handleSaveField = async (fieldId) => {
-    const token = localStorage.getItem('jwtToken');
-    if (!token) {
-      setError('No token found. Please log in.');
-      return;
-    }
+  const token = localStorage.getItem('jwtToken');
+  if (!token) {
+    setAlertMessage('No token found. Please log in.');
+    setAlertSeverity('error');
+    setShowAlert(true);
+    return;
+  }
 
-    let updateData = {};
-    if (fieldId === 'name') {
-      const [firstName, ...lastNameArr] = fieldValues.name.split(' ');
-      updateData = { firstName, lastName: lastNameArr.join(' ') };
-    } else {
-      updateData[fieldId] = fieldValues[fieldId];
-    }
+  let updateData = {};
+  if (fieldId === 'name') {
+    const [firstName, ...lastNameArr] = fieldValues.name.split(' ');
+    updateData = { firstName, lastName: lastNameArr.join(' ') };
+  } else {
+    updateData[fieldId] = fieldValues[fieldId];
+  }
 
-    try {
-      const response = await axios.put('http://localhost:8080/auth/updateUserProfile', updateData, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      setUserData(response.data);
-      setEditingField(null);
-      alert('Profile updated successfully.');
-    } catch (err) {
-      if (err.response) {
-        alert(`Error: ${err.response.data.message || 'Failed to update profile.'}`);
-      } else {
-        alert('Error: Unable to update profile.');
+  try {
+    const response = await axios.put('http://localhost:8080/auth/updateUserProfile', updateData, {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
-      console.error(err);
+    });
+    setUserData(response.data);
+    setEditingField(null);
+    setAlertMessage('Profile updated successfully.');
+    setAlertSeverity('success');
+    setShowAlert(true);
+  } catch (err) {
+    if (err.response) {
+      setAlertMessage(`Error: ${err.response.data.message || 'Failed to update profile.'}`);
+    } else {
+      setAlertMessage('Error: Unable to update profile.');
     }
-  };
+    setAlertSeverity('error');
+    setShowAlert(true);
+    console.error(err);
+  }
+};
 
   const handleCancelEdit = () => {
     setEditingField(null);
@@ -313,18 +376,20 @@ export function User() {
               onChange={handleInputChange}
               className={styles.fieldInput}
             />
-            <button
-              className={styles.saveButton}
-              onClick={() => handleSaveField(id)}
-            >
-              Save
-            </button>
-            <button
-              className={styles.cancelEditButton}
-              onClick={handleCancelEdit}
-            >
-              Cancel
-            </button>
+            <div className={styles.buttonsForEdit}>
+              <button
+                className={styles.saveButton}
+                onClick={() => handleSaveField(id)}
+              >
+                Save
+              </button>
+              <button
+                className={styles.cancelEditButton}
+                onClick={handleCancelEdit}
+              >
+                Cancel
+              </button>
+            </div>
           </>
         ) : (
           <>
@@ -346,8 +411,26 @@ export function User() {
   return (
     <main className={styles.profileContainer}>
       <Header />
+      
+    {showAlert && (
+      <Alert
+        variant="filled"
+        severity={alertSeverity}
+        onClose={() => setShowAlert(false)}
+        sx={{
+          position: 'fixed',
+          top: '10%',
+          width: '80%',
+          left: '10%',
+          zIndex: 1000,
+        }}
+      >
+        {alertMessage}
+      </Alert>
+    )}
+      <img src={sample} alt="background" className={styles.heroBackground} />
       <img
-        src={userData.backgroundImage || sample}
+        src={userData.backgroundImage}
         className={styles.headerImage}
         alt=""
         role="presentation"
@@ -497,12 +580,12 @@ export function User() {
                                 
                               <div className={styles.detailsContainer}>
                                 <div role="group" aria-label="Primary flight details" className={styles.calendarDetails}>
-                                  <CalendarMonthIcon sx={{alignContent: 'center', justifyContent: 'space-around'}}/> 
+                                  <AccessTimeIcon sx={{alignContent: 'center', justifyContent: 'space-around'}}/> 
                                   <div className={styles.calendar}>
                                     <span>Check-in Time </span>
                                     <span>{formatTime(payment.checkInTime)}</span>
                                   </div>
-                                  <CalendarMonthIcon/>
+                                  <AccessTimeIcon/>
                                   <div className={styles.calendar}>
                                     <span>Check-out Time </span>
                                     <span>{formatTime(payment.checkOutTime)}</span>
@@ -516,6 +599,13 @@ export function User() {
 
                             {/* Action Buttons */}
                             <div className={styles.actionButtons}>
+                              <button 
+                                className={styles.deleteButton}
+                                onClick={() => handleDelete(payment.paymentId)}
+                                aria-label="Delete payment"
+                              >
+                                Delete
+                              </button>
                               <button 
                                 className={styles.downloadButton}
                                 // onClick={handleDownload}
@@ -548,6 +638,40 @@ export function User() {
           ))}
         </section>
       </div>
+                                  <Dialog
+                              open={openDialog}
+                              onClose={handleCloseDialog}
+                              aria-labelledby="alert-dialog-title"
+                              aria-describedby="alert-dialog-description"
+                            >
+                              <DialogTitle id="alert-dialog-title">
+                                {"Confirm Delete"}
+                              </DialogTitle>
+                              <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                  Are you sure you want to delete this payment? This action cannot be undone.
+                                </DialogContentText>
+                              </DialogContent>
+                              <DialogActions>
+                                <Button onClick={handleCloseDialog}>Cancel</Button>
+                                <Button 
+                                  onClick={confirmDelete} 
+                                  autoFocus
+                                  color="error"
+                                  sx={{
+                                    border: '2px solid #e01a1a',backgroundColor: '#ee4545', color: '#000000',
+                                    
+                                      '&:hover': {
+                                        backgroundColor: '#e01a1a',
+                                        color: '#000000'
+                                      },
+                                   }}
+
+                                >
+                                  Delete
+                                </Button>
+                              </DialogActions>
+                            </Dialog>
     </main>
   );
 }
