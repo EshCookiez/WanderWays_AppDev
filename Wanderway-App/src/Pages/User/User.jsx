@@ -1,5 +1,5 @@
-// User.jsx
 import React, { useState, useEffect } from 'react';
+import {useNavigate} from 'react-router-dom';
 import styles from './User.module.css';
 import Avatar from '@mui/material/Avatar';
 import CreateIcon from '@mui/icons-material/Create';
@@ -7,10 +7,23 @@ import Header from '../../Components/Header';
 import { FlightTicket } from './Flights/FlightTicket';
 import axios from 'axios';
 import sample from './userAssets/sample.png';
+import PaymentService from '../../services/PaymentService';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import AccessibleIcon from '@mui/icons-material/Accessible';
+import { formatTime,formatDate } from '../../Components/utils';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import Alert from '@mui/material/Alert';
 
 const TABS = [
   { id: 'account', label: 'Account' },
-  { id: 'history', label: 'Booked Flights' },
+  // { id: 'history', label: 'Booked Flights' },
   { id: 'stays', label: 'Booked Stays' }
 ];
 
@@ -23,6 +36,80 @@ export function User() {
   const [previewUrl, setPreviewUrl] = useState('');
   const [editingField, setEditingField] = useState(null);
   const [fieldValues, setFieldValues] = useState({});
+  const [payments, setPayments] = useState([]);
+  const [accommodationLogo, setAccommodationLogo] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const [openDialog, setOpenDialog] = useState(false);
+  const [paymentToDelete, setPaymentToDelete] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertSeverity, setAlertSeverity] = useState('success');
+
+  
+  useEffect(() => {
+    if (showAlert) {
+      const timer = setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showAlert]);
+
+  const handleDelete = async (paymentId) => {
+    setPaymentToDelete(paymentId);
+    setOpenDialog(true);
+  };
+
+  const confirmDelete = async () => {
+  try {
+    const token = localStorage.getItem('jwtToken');
+    await axios.delete(`http://localhost:8080/api/acmpayment/delete/${paymentToDelete}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    setPayments(payments.filter(payment => payment.paymentId !== paymentToDelete));
+    setOpenDialog(false);
+    setPaymentToDelete(null);
+    
+    // Add success alert
+    setAlertMessage('Payment deleted successfully.');
+    setAlertSeverity('success');
+    setShowAlert(true);
+  } catch (err) {
+    console.error('Error deleting payment:', err);
+    // Add error alert
+    setAlertMessage('Failed to delete payment. Please try again.');
+    setAlertSeverity('error');
+    setShowAlert(true);
+  }
+};
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setPaymentToDelete(null);
+  };
+  
+  const handleShare = (paymentId) => {
+    navigate(`/hotelPay/${paymentId}`);
+  };
+  useEffect(() => {
+    const fetchPayments = async () => {
+      try {
+        const token = localStorage.getItem('jwtToken');
+        const paymentData = await PaymentService.getPaymentsByUser(userData.customerId, token);
+        setPayments(paymentData);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching payments:', err);
+        setError('Failed to load payments.');
+        setLoading(false);
+      }
+    };
+
+    if (userData) {
+      fetchPayments();
+    }
+  }, [userData]);
 
   const handleChangePicture = () => {
     document.getElementById('userIconInput').click();
@@ -57,35 +144,35 @@ export function User() {
   };
 
   const fetchUserData = async () => {
-  const token = localStorage.getItem('jwtToken');
-  if (!token) {
-    setError('No token found. Please log in.');
-    return;
-  }
-
-  try {
-    const response = await axios.get('http://localhost:8080/auth/userProfile', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    setUserData(response.data);
-    fetchUserIcon(token);
-  } catch (err) {
-    if (err.response) {
-      // Server responded with a status other than 2xx
-      setError(`Error: ${err.response.data.message || 'Failed to fetch user data.'}`);
-    } else if (err.request) {
-      // Request was made but no response received
-      setError('Error: No response from server.');
-    } else {
-      // Something else caused the error
-      setError(`Error: ${err.message}`);
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      setError('No token found. Please log in.');
+      return;
     }
-    console.error(err);
-  }
-};
-  
+
+    try {
+      const response = await axios.get('http://localhost:8080/auth/userProfile', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setUserData(response.data);
+      fetchUserIcon(token);
+    } catch (err) {
+      if (err.response) {
+        // Server responded with a status other than 2xx
+        setError(`Error: ${err.response.data.message || 'Failed to fetch user data.'}`);
+      } else if (err.request) {
+        // Request was made but no response received
+        setError('Error: No response from server.');
+      } else {
+        // Something else caused the error
+        setError(`Error: ${err.message}`);
+      }
+      console.error(err);
+    }
+  };
+
   const handleUpload = async () => {
     if (!selectedFile) {
       alert('No file selected.');
@@ -119,10 +206,12 @@ export function User() {
       alert('Failed to upload user icon.');
     }
   };
+
   const handleCancel = () => {
     setSelectedFile(null);
     setPreviewUrl('');
   };
+
   const handleTabChange = (tabId) => {
     setActiveTab(tabId);
     setEditingField(null); 
@@ -154,7 +243,7 @@ export function User() {
         return '';
     }
   };
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFieldValues({
@@ -179,44 +268,50 @@ export function User() {
   };
 
   const handleSaveField = async (fieldId) => {
-    const token = localStorage.getItem('jwtToken');
-    if (!token) {
-      setError('No token found. Please log in.');
-      return;
-    }
+  const token = localStorage.getItem('jwtToken');
+  if (!token) {
+    setAlertMessage('No token found. Please log in.');
+    setAlertSeverity('error');
+    setShowAlert(true);
+    return;
+  }
 
-    let updateData = {};
-    if (fieldId === 'name') {
-      const [firstName, ...lastNameArr] = fieldValues.name.split(' ');
-      updateData = { firstName, lastName: lastNameArr.join(' ') };
-    } else {
-      updateData[fieldId] = fieldValues[fieldId];
-    }
+  let updateData = {};
+  if (fieldId === 'name') {
+    const [firstName, ...lastNameArr] = fieldValues.name.split(' ');
+    updateData = { firstName, lastName: lastNameArr.join(' ') };
+  } else {
+    updateData[fieldId] = fieldValues[fieldId];
+  }
 
-    try {
-      const response = await axios.put('http://localhost:8080/auth/updateUserProfile', updateData, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      setUserData(response.data);
-      setEditingField(null);
-      alert('Profile updated successfully.');
-    } catch (err) {
-      if (err.response) {
-        alert(`Error: ${err.response.data.message || 'Failed to update profile.'}`);
-      } else {
-        alert('Error: Unable to update profile.');
+  try {
+    const response = await axios.put('http://localhost:8080/auth/updateUserProfile', updateData, {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
-      console.error(err);
+    });
+    setUserData(response.data);
+    setEditingField(null);
+    setAlertMessage('Profile updated successfully.');
+    setAlertSeverity('success');
+    setShowAlert(true);
+  } catch (err) {
+    if (err.response) {
+      setAlertMessage(`Error: ${err.response.data.message || 'Failed to update profile.'}`);
+    } else {
+      setAlertMessage('Error: Unable to update profile.');
     }
-  };
+    setAlertSeverity('error');
+    setShowAlert(true);
+    console.error(err);
+  }
+};
 
   const handleCancelEdit = () => {
     setEditingField(null);
     setFieldValues({});
   };
-  
+
   useEffect(() => {
     fetchUserData();
   }, []);
@@ -268,7 +363,6 @@ export function User() {
     }
   ];
 
-
   const renderField = ({ id, label, value, icon }) => (
     <div key={id} className={styles.fieldContainer} role="group" aria-labelledby={`${id}-label`}>
       <span id={`${id}-label`} className={styles.fieldLabel}>{label}</span>
@@ -282,18 +376,20 @@ export function User() {
               onChange={handleInputChange}
               className={styles.fieldInput}
             />
-            <button
-              className={styles.saveButton}
-              onClick={() => handleSaveField(id)}
-            >
-              Save
-            </button>
-            <button
-              className={styles.cancelEditButton}
-              onClick={handleCancelEdit}
-            >
-              Cancel
-            </button>
+            <div className={styles.buttonsForEdit}>
+              <button
+                className={styles.saveButton}
+                onClick={() => handleSaveField(id)}
+              >
+                Save
+              </button>
+              <button
+                className={styles.cancelEditButton}
+                onClick={handleCancelEdit}
+              >
+                Cancel
+              </button>
+            </div>
           </>
         ) : (
           <>
@@ -315,8 +411,26 @@ export function User() {
   return (
     <main className={styles.profileContainer}>
       <Header />
+      
+    {showAlert && (
+      <Alert
+        variant="filled"
+        severity={alertSeverity}
+        onClose={() => setShowAlert(false)}
+        sx={{
+          position: 'fixed',
+          top: '10%',
+          width: '80%',
+          left: '10%',
+          zIndex: 1000,
+        }}
+      >
+        {alertMessage}
+      </Alert>
+    )}
+      <img src={sample} alt="background" className={styles.heroBackground} />
       <img
-        src={userData.backgroundImage || sample}
+        src={userData.backgroundImage}
         className={styles.headerImage}
         alt=""
         role="presentation"
@@ -326,15 +440,15 @@ export function User() {
         <section className={styles.userInfoSection}>
           <div className={styles.userHeader}>
             <div className={styles.profileImageWrapper}>
-            <Avatar
-              alt={`${userData.firstName}`}
-              src={previewUrl || userIcon || '/path/to/sampleUser.png'}
-              sx={{
-                width: '154px',
-                height: '154px',
-                borderRadius: '50%'
-              }}
-            />
+              <Avatar
+                alt={`${userData.firstName}`}
+                src={previewUrl || userIcon || '/path/to/sampleUser.png'}
+                sx={{
+                  width: '154px',
+                  height: '154px',
+                  borderRadius: '50%'
+                }}
+              />
               <div
                 className={styles.overlay}
                 onClick={handleChangePicture}
@@ -360,21 +474,21 @@ export function User() {
               <p className={styles.userEmail}>{userData.email}</p>
             </div>
           </div>
-            {/* File Upload Preview and Upload Button */}
-            {selectedFile && (
-                        <div className={styles.uploadSection}>
-                          <h3>Preview:</h3>
-                          <img src={previewUrl} alt="Preview" className={styles.previewImage} />
-                          <div className={styles.buttonGroup}>
-                            <button className={styles.uploadButton} onClick={handleUpload}>
-                              Upload
-                            </button>
-                            <button className={styles.cancelButton} onClick={handleCancel}>
-                              Cancel
-                            </button>
-                          </div>
-                        </div>
-                      )}
+          {/* File Upload Preview and Upload Button */}
+          {selectedFile && (
+            <div className={styles.uploadSection}>
+              <h3>Preview:</h3>
+              <img src={previewUrl} alt="Preview" className={styles.previewImage} />
+              <div className={styles.buttonGroup}>
+                <button className={styles.uploadButton} onClick={handleUpload}>
+                  Upload
+                </button>
+                <button className={styles.cancelButton} onClick={handleCancel}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
           <nav className={styles.navigationTabs} role="tablist" aria-label="Profile sections">
             {TABS.map((tab) => (
               <button
@@ -410,23 +524,154 @@ export function User() {
                 </section>
               )}
 
-              {tab.id === 'history' && (
+              {/* {tab.id === 'history' && (
                 <section className={styles.flightHistorySection}>
                   <h2 className={styles.sectionTitle}>Booked Flights</h2>
                   <FlightTicket />
                 </section>
-              )}
+              )} */}
 
               {tab.id === 'stays' && (
                 <section className={styles.staysSection}>
                   <h2 className={styles.sectionTitle}>Booked Stays</h2>
-                  <p>No booked stays available.</p>
+                  {loading ? (
+                    <p>Loading payments...</p>
+                  ) : error ? (
+                    <p>{error}</p>
+                  ) : payments.length === 0 ? (
+                    <p>No stays found.</p>
+                  ) : (
+                    <ul>
+                      {payments.map(payment => (
+                        <div>
+
+                        <div className={styles.ticketContainer}>
+                            {/* Airline Logo */}
+                            <div className={styles.airlineLogoWrapper} role="img" aria-label="Airline logo">
+                              <img
+                                src={payment.accommodationLogo ? `data:image/jpeg;base64,${payment.accommodationLogo}` : 'https://via.placeholder.com/150'} 
+                                alt=""
+                                className={styles.airlineLogo}
+                                loading="lazy"
+                              />
+                            </div>
+                            
+                            {/* Flight Information */}
+                            <div className={styles.flightInfoContainer}>
+                              <div className={styles.routeInfo} role="text">
+                                <span>{payment.accommodationName}</span>
+                              </div>
+                              
+                              <div className={styles.divider} role="presentation" />
+                              
+                              <div className={styles.detailsContainer}>
+                                <div role="group" aria-label="Primary flight details" className={styles.calendarDetails}>
+                                  <CalendarMonthIcon sx={{alignContent: 'center', justifyContent: 'space-around'}}/> 
+                                  <div className={styles.calendar}>
+                                    <span>Start Date </span>
+                                    <span>{formatDate(payment.checkInDate)}</span>
+                                  </div>
+                                  <CalendarMonthIcon/>
+                                  <div className={styles.calendar}>
+                                    <span>End Date </span>
+                                    <span>{formatDate(payment.checkOutDate)}</span>
+                                  </div>
+                                </div>
+                                
+                              <div className={styles.detailsContainer}>
+                                <div role="group" aria-label="Primary flight details" className={styles.calendarDetails}>
+                                  <AccessTimeIcon sx={{alignContent: 'center', justifyContent: 'space-around'}}/> 
+                                  <div className={styles.calendar}>
+                                    <span>Check-in Time </span>
+                                    <span>{formatTime(payment.checkInTime)}</span>
+                                  </div>
+                                  <AccessTimeIcon/>
+                                  <div className={styles.calendar}>
+                                    <span>Check-out Time </span>
+                                    <span>{formatTime(payment.checkOutTime)}</span>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              <div className={styles.divider} role="presentation" />
+
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className={styles.actionButtons}>
+                              <button 
+                                className={styles.deleteButton}
+                                onClick={() => handleDelete(payment.paymentId)}
+                                aria-label="Delete payment"
+                              >
+                                Delete
+                              </button>
+                              <button 
+                                className={styles.downloadButton}
+                                // onClick={handleDownload}
+                                aria-label="Download ticket"
+                              >
+                                Download Ticket
+                              </button>
+                              <button 
+                                className={styles.shareButton}
+                                onClick={() => handleShare(payment.paymentId)}
+                                aria-label="Share ticket"
+                              >
+                                <img
+                                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/f4a5befd5dc2e4173499b8fe0bfb167dcc3d48069c784c7b55207010208b8554?placeholderIfAbsent=true&apiKey=a15e519098c240a2b028acfbd9132f63"
+                                  alt=""
+                                  className={styles.shareIcon}
+                                  loading="lazy"
+                                  role="presentation"
+                                />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </ul>
+                  )}
                 </section>
               )}
             </div>
           ))}
         </section>
       </div>
+                                  <Dialog
+                              open={openDialog}
+                              onClose={handleCloseDialog}
+                              aria-labelledby="alert-dialog-title"
+                              aria-describedby="alert-dialog-description"
+                            >
+                              <DialogTitle id="alert-dialog-title">
+                                {"Confirm Delete"}
+                              </DialogTitle>
+                              <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                  Are you sure you want to delete this payment? This action cannot be undone.
+                                </DialogContentText>
+                              </DialogContent>
+                              <DialogActions>
+                                <Button onClick={handleCloseDialog}>Cancel</Button>
+                                <Button 
+                                  onClick={confirmDelete} 
+                                  autoFocus
+                                  color="error"
+                                  sx={{
+                                    border: '2px solid #e01a1a',backgroundColor: '#ee4545', color: '#000000',
+                                    
+                                      '&:hover': {
+                                        backgroundColor: '#e01a1a',
+                                        color: '#000000'
+                                      },
+                                   }}
+
+                                >
+                                  Delete
+                                </Button>
+                              </DialogActions>
+                            </Dialog>
     </main>
   );
 }

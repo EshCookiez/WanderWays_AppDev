@@ -42,7 +42,7 @@
     color: #fff;
     padding: 8px 174px 200px 116px;
     width: 100%;
-    z-index: 1;
+    z-index: -1;
   }
   
   .heroImage {
@@ -51,6 +51,7 @@
     width: 100%;
     height: 50.3vh;
     object-fit: cover;
+    z-index: -1;
 
   }
   

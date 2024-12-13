@@ -74,4 +74,7 @@ public class AcmPaymentService {
     public AcmPayment savePayment(AcmPayment payment) {
         return acmPaymentRepo.save(payment);
     }
+    public List<AcmPayment> getPaymentsByUser(Long customerId) {
+        return acmPaymentRepo.findByUserInfoCustomerId(customerId);
+    }
 }

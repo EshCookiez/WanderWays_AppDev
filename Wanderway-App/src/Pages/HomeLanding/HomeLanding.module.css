@@ -95,6 +95,10 @@
   transform: rotate(90deg);
   
 }
+.logoutButton:hover{
+  color: #000000; 
+
+}
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -159,6 +163,17 @@ a{
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
   
 }
+.logoutButton{
+  margin-left: 10px;
+  margin-right: 50px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  z-index: 2; /* Ensure the buttons are in front of the background image */
+  border-radius: 10px;    
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+
+}
 .loginButton:hover,.signupButton:hover{
   background-color: #8dd3bb;
   color: #000000;
@@ -174,7 +189,9 @@ a{
   background-color: white;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
+.logoutButton:hover{
+  background-color: #ee4545;
+}
 .mainContent {
   width: 100%;
   max-width: 1380px;

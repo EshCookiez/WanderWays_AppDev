@@ -1,4 +1,5 @@
 import React, { useState, useEffect  } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlineUser } from 'react-icons/ai';
@@ -25,12 +26,14 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import './css/header.css';
+import zIndex from '@mui/material/styles/zIndex';
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userIcon, setUserIcon] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [userName, setUserName] = useState('');
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
 
   useEffect(() => {
@@ -83,7 +86,9 @@ const Header = () => {
       handleClose();
     };
   };
-
+  const handleFavorite = () =>{
+    navigate('/Favorites');
+  };
   return (
     <div className="header-box">
       <div className="features">
@@ -92,6 +97,7 @@ const Header = () => {
             <AirplanemodeActiveIcon className="airplane-icon" />Find Flight
             </button>
         </Link>
+        <HorizontalRuleIcon className="line"/>
         <Link to="/hotel">
           <button className='findButton'>
             <KingBedIcon className="bed-icon" /> Find Stays
@@ -103,35 +109,35 @@ const Header = () => {
       <div className="account-details">
 
 
-        <Dropdown>
+        <Dropdown sx={{zIndex: 1212}}>
           {isLoggedIn ? (
             <>
-            <Link to="/Favorites">
+            {/* <Link to="/Favorites">
             <button className='findButton'>
                 <FavoriteIcon className="favorites-icon" />Favorites 
               </button>
-            </Link>
-            <HorizontalRuleIcon className="line"/>
+            </Link> */}
               <Link to="/user">
                 <button className='userButton'>
                 <Avatar className='userIcon' alt="User" src={userIcon || '/path/to/default.png'} />
                   <span className='userSpan'>{userName}</span>
                 </button>
               </Link>
-              <BaseMenuButton className='accButton'>
+              <HorizontalRuleIcon className="line"/>
+              <BaseMenuButton className='accButton'  sx={{zIndex: 1111 }}>
                 <KeyboardArrowDownIcon />
               </BaseMenuButton>
-              <BaseMenu slots={{ listbox: Listbox }}>
-                <StyledMenuItem onClick={createHandleMenuClick('Profile')}>
-                  <PersonIcon /> Profile <ChevronRightIcon className='rightIcon'/>
+              <BaseMenu slots={{ listbox: Listbox }} sx={{ zIndex: 9999, position: 'absolute' }}>
+                <StyledMenuItem onClick={handleFavorite} sx={{zIndex: 1111 }}>
+                  <FavoriteIcon /> Favorite <ChevronRightIcon className='rightIcon'/>
                 </StyledMenuItem>
-                <StyledMenuItem onClick={createHandleMenuClick('Payments')}>
+                {/* <StyledMenuItem onClick={createHandleMenuClick('Payments')}>
                   <PaymentIcon /> Payments <ChevronRightIcon className='rightIcon'/>
                 </StyledMenuItem>
                 <StyledMenuItem onClick={createHandleMenuClick('Settings')}>
                   <SettingsIcon /> Settings <ChevronRightIcon className='rightIcon'/>
-                </StyledMenuItem>
-                <StyledMenuItem onClick={handleLogout}>
+                </StyledMenuItem> */}
+                <StyledMenuItem onClick={handleLogout} sx={{zIndex: 1111 }}>
                   <LogoutIcon /> Logout <ChevronRightIcon className='rightIcon'/>
                 </StyledMenuItem>
               </BaseMenu>
@@ -182,6 +188,8 @@ const Listbox = styled('ul')(
   ({ theme }) => `
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 0.875rem;
+  z-index: 9999;
+  position: relative;
   box-sizing: border-box;
   padding: 6px;
   margin: 12px 0;
@@ -195,7 +203,6 @@ const Listbox = styled('ul')(
   box-shadow: 0 4px 6px ${
     theme.palette.mode === 'dark' ? 'rgba(0,0,0, 0.50)' : 'rgba(0,0,0, 0.05)'
   };
-  z-index: 1;
   `,
 );
 
@@ -206,7 +213,7 @@ const StyledMenuItem = styled(BaseMenuItem)(
   border-radius: 8px;
   cursor: default;
   user-select: none;
-
+  z-index: 1221;
   &:last-of-type {
     border-bottom: none;
   }
@@ -215,6 +222,7 @@ const StyledMenuItem = styled(BaseMenuItem)(
     outline: 3px solid ${theme.palette.mode === 'dark' ? blue[600] : blue[200]};
     background-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[100]};
     color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+    z-index: 9999;
   }
 
   &.${menuItemClasses.disabled} {
@@ -237,7 +245,7 @@ const MenuButton = styled(BaseMenuButton)(
   border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
   color: ${theme.palette.mode === 'dark' ? grey[200] : grey[900]};
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-
+  z-index: 9999;
   &:hover {
     background: ${theme.palette.mode === 'dark' ? grey[800] : grey[50]};
     border-color: ${theme.palette.mode === 'dark' ? grey[600] : grey[300]};
@@ -245,6 +253,7 @@ const MenuButton = styled(BaseMenuButton)(
 
   &:active {
     background: ${theme.palette.mode === 'dark' ? grey[700] : grey[100]};
+    z-index: 9999;
   }
 
   &:focus-visible {
