@@ -87,7 +87,6 @@ function FlightPayment(){
           
 
         if (!bookingDetailsRef.current) {
-          alert('No booking details available to download.');
           return;
         }
 
@@ -99,7 +98,6 @@ function FlightPayment(){
           link.click();
         }).catch((err) => {
           console.error('Error generating image:', err);
-          alert('Failed to generate image.');
         });
 
         if (response.ok) {

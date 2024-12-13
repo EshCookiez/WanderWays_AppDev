@@ -16,7 +16,6 @@ const BookedFlights = ({ booked, handleDeleteBooking}) => {
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
     if (!token) {
-      alert('Please log in to access this page.');
       navigate('/login');
     } else {
       setIsAuthenticated(true); // User is authenticated
