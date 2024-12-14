@@ -20,6 +20,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import Alert from '@mui/material/Alert';
+import ReceiptIcon from '@mui/icons-material/Receipt';
 
 const TABS = [
   { id: 'account', label: 'Account' },
@@ -196,7 +197,9 @@ export function User() {
         }
       });
 
-      alert(response.data); // "User icon uploaded successfully."
+      setAlertMessage('Profile Icon updated successfully.');
+      setAlertSeverity('success');
+      setShowAlert(true);; // "User icon uploaded successfully."
       setSelectedFile(null);
       setPreviewUrl('');
       // Refresh user data to display the new picture
@@ -606,25 +609,27 @@ export function User() {
                               >
                                 Delete
                               </button>
-                              <button 
+                              {/* <button 
                                 className={styles.downloadButton}
                                 // onClick={handleDownload}
                                 aria-label="Download ticket"
                               >
                                 Download Ticket
-                              </button>
+                              </button> */}
                               <button 
                                 className={styles.shareButton}
                                 onClick={() => handleShare(payment.paymentId)}
                                 aria-label="Share ticket"
+                                sx={{
+                                  border: '2px solid #7ac3ab',backgroundColor: '#ee4545', color: '#000000',
+                                  
+                                    '&:hover': {
+                                      backgroundColor: '#7ac3ab',
+                                      color: '#000000'
+                                    },
+                                 }}
                               >
-                                <img
-                                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/f4a5befd5dc2e4173499b8fe0bfb167dcc3d48069c784c7b55207010208b8554?placeholderIfAbsent=true&apiKey=a15e519098c240a2b028acfbd9132f63"
-                                  alt=""
-                                  className={styles.shareIcon}
-                                  loading="lazy"
-                                  role="presentation"
-                                />
+                                <ReceiptIcon/>
                               </button>
                             </div>
                           </div>

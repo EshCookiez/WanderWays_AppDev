@@ -119,7 +119,7 @@ const Header = () => {
             </Link> */}
               <Link to="/user">
                 <button className='userButton'>
-                <Avatar className='userIcon' alt="User" src={userIcon || '/path/to/default.png'} />
+                <Avatar className='userIcon' alt={userName} src={userIcon || '/path/to/default.png'} />
                   <span className='userSpan'>{userName}</span>
                 </button>
               </Link>

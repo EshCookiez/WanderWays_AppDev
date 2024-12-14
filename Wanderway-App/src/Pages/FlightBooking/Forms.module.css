@@ -2,7 +2,7 @@
     position: relative;
     display: flex;
     background-color: #fff;
-    height: 130vh;
+    height: 190vh;
     width: 100%;
     padding: 0vh;
   }
@@ -12,8 +12,8 @@
     top: 0;
     right: 0;
     width: 50vw;
-    height: 130vh;  
-    padding: 70px 30px 100px 70px;
+    height: 150vh;  
+    padding: 30px 30px 20px 70px;
     display: flex;
     flex-direction: column;
     justify-content: center; 

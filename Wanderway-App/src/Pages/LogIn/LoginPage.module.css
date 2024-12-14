@@ -24,6 +24,10 @@
     flex-direction: column;
     gap: 24px;
   }
+  .formLogin{
+    display: flex;
+    flex-direction: column;
+  }
   
   .title {
     font: 700 40px 'TradeGothic LT Extended', -apple-system, Roboto, Helvetica, sans-serif;

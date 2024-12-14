@@ -4,7 +4,7 @@ import TextField from './TextField';
 import Button from './Button';
 import SocialSignUp from './SocialSignUp';
 import styles from './SignUpForm.module.css';
-import { useNavigate } from 'react-router-dom'; // Add this for navigation
+import { useNavigate, Link } from 'react-router-dom'; // Add this for navigation
 
 const SignUpForm = () => {
   const [isAgreed, setIsAgreed] = useState(false); // State to track checkbox value
@@ -109,18 +109,22 @@ const SignUpForm = () => {
       console.error('Error creating account:', error);
   
       // Handle different errors here
-      if (error.response && error.response.data) {
-        if (error.response.data.message === 'Email already in use') {
-          setErrorMessage('The email address is already in use. Please use a different email.');
-        } else {
-          setErrorMessage('Error creating account. Please try again later.');
-        }
+      if (error.response?.status === 409) {
+        setErrorMessage('This email is already registered. Please use a different email.');
       } else {
-        setErrorMessage('The email address is already in use. Please use a different email.');
+        setErrorMessage('Error creating account. Email is already in use.');
       }
     }
   };
-  
+  const checkEmailAvailability = async (email) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/auth/check-email/${email}`);
+      return response.data.isAvailable;
+    } catch (error) {
+      console.error('Error checking email:', error);
+      throw error;
+    }
+  };
 
   const fields = [
     { label: 'First Name', name: 'firstName', value: formData.firstName },
@@ -138,11 +142,13 @@ const SignUpForm = () => {
     <section className={styles.signUp}>
       <div className={styles.container}>
         <div className={styles.formWrapper}>
+          <Link to="/">
           <img
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/633aaaa339ee7af67a22595035717caa8c4a23d51c73dfdc999464c1de6a97bb?placeholderIfAbsent=true&apiKey=918132c67bed4c9f95d44f9d99b73e78"
             alt="Logo"
             className={styles.logo}
           />
+          </Link>
           <div className={styles.formContent}>
             <h1 className={styles.title}>Sign up</h1>
             <p className={styles.description}>
@@ -156,6 +162,7 @@ const SignUpForm = () => {
                     {...field}
                     onChange={handleChange}
                     required
+                    sx={{width: '1000px'}}
                   />
                 ))}
               </div>

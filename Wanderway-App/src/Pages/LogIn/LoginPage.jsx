@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import styles from './LoginPage.module.css';
 import TextField from './TextField';
 import Button from './Button';
@@ -75,12 +75,14 @@ const LoginPage = () => {
     <main className={styles.loginPage}>
       <div className={styles.contentWrapper}>
         <section className={styles.loginSection}>
+          <Link to='/'>
           <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/633aaaa339ee7af67a22595035717caa8c4a23d51c73dfdc999464c1de6a97bb?placeholderIfAbsent=true&apiKey=918132c67bed4c9f95d44f9d99b73e78" alt="WanderWays logo" className={styles.logo} />
+          </Link>
           <div className={styles.loginForm}>
             <h1 className={styles.title}>Login</h1>
             <p className={styles.subtitle}>Login to access your WanderWays account</p>
-            <form onSubmit={handleLogin}>
-              <TextField label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <form onSubmit={handleLogin} className={styles.formLogin}>
+              <TextField label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} sx={{display: 'flex'}} />
               <TextField label="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} showPasswordToggle />
               {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
               <div className={styles.formOptions}>
@@ -89,8 +91,10 @@ const LoginPage = () => {
                   Remember me
                 </label>
                 <a href="" className={styles.forgotPassword}>Forgot Password</a>
+                
               </div>
-              <Button type="submit" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</Button>
+              
+              <Button sx={{width: '100%'}}type="submit" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</Button>
             </form>
             <p className={styles.signUpPrompt}>
               Don't have an account? <a href="/signup" className={styles.signUpLink}>Sign up</a>

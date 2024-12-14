@@ -67,6 +67,7 @@ public class UserController {
     } else {
         throw new UsernameNotFoundException("Invalid email or password!");
     }
+    
 }
 
 
@@ -131,6 +132,22 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+    @GetMapping("/check-email/{email}")
+public ResponseEntity<?> checkEmailAvailability(@PathVariable String email) {
+    try {
+        boolean isAvailable = !service.findByEmail(email).isPresent();
+        Map<String, Object> response = new HashMap<>();
+        response.put("isAvailable", isAvailable);
+        response.put("message", isAvailable ? 
+            "Email is available" : "Email is already in use");
+            
+        return ResponseEntity.ok(response);
+    } catch (Exception e) {
+        return ResponseEntity
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body("Error checking email availability");
+    }
+}
 
     @PutMapping("/updateUserProfile")
     public ResponseEntity<?> updateUserProfile(

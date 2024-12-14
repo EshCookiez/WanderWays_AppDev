@@ -220,10 +220,13 @@
     align-items: center;
     justify-content: center;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #8dd3bb;
     color: white;
     border: none;
     cursor: pointer;
+  }
+  .searchButton:hover{
+    background-color: #30c996;
   }
   
   .searchIcon {

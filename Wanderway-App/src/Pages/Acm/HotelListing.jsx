@@ -21,6 +21,7 @@ import EmojiFoodBeverageIcon from '@mui/icons-material/EmojiFoodBeverage';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import Slider from '@mui/material/Slider';
 import Alert from '@mui/material/Alert';
+import SearchIcon from '@mui/icons-material/Search';
 
 import Header from '../../Components/Header';
 import AcmService from '../../services/AcmService';
@@ -51,6 +52,9 @@ const HotelListing = () => {
   const [destinationState, setDestinationState] = useState(destination || '');
   const [checkInState, setCheckInState] = useState(checkIn || '');
   const [checkOutState, setCheckOutState] = useState(checkOut || '');
+  
+  const [checkInStateFrom, setCheckInStateFrom] = useState(checkIn || '');
+  const [checkOutStateFrom, setCheckOutStateFrom] = useState(checkOut || '');
   const [roomsGuestsState, setRoomsGuestsState] = useState(roomsGuests || '');
   const [searchError, setSearchError] = useState('');
   const [showAlert, setShowAlert] = useState(false);
@@ -136,7 +140,9 @@ const HotelListing = () => {
       navigate('/hotelBook', { 
         state: { 
           accommodationId: selectedAccommodation.acm_id, // Pass specific ID
-          roomId: room.id // Pass specific ID
+          roomId: room.id, // Pass specific ID
+          checkInStateFrom: checkInState,
+          checkOutStateFrom: checkOutState
         } 
       });
     } else if (selectedAccommodation) {
@@ -329,6 +335,12 @@ const HotelListing = () => {
 
   return (
     <div className={styles.hotelListing}>
+      <h1 className={styles.mainTitle}>
+        <span className={styles.mainTitleHighlight}>Make Your Travel Now</span>
+        <span className={styles.mainTitlePrefix}>Special offers to suit your plan</span>
+      </h1>
+      <Header />
+      
       {showAlert && (
       <Alert
         variant="filled"
@@ -345,11 +357,6 @@ const HotelListing = () => {
         {alertMessage}
       </Alert>
     )}
-      <h1 className={styles.mainTitle}>
-        <span className={styles.mainTitleHighlight}>Make Your Travel Now</span>
-        <span className={styles.mainTitlePrefix}>Special offers to suit your plan</span>
-      </h1>
-      <Header />
       <img src={logo} alt="background" className={styles.heroBackground} />
       <div className={styles.searchMain}>
         <h1 className={styles.mainTitle}>
@@ -426,11 +433,7 @@ const HotelListing = () => {
             </div>
             
             <button type="submit" className={styles.searchButton}>
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/39e7d1fb343ed6c3f97bbaa288ebef6317c359d89415ed0d9cfa599f2a10f75b?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7"
-                alt="Search"
-                className={styles.searchIcon}
-              />
+              <SearchIcon/>
             </button>
           </form>
         </section>

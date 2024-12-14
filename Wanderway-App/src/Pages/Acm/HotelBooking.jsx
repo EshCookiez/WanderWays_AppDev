@@ -16,13 +16,13 @@ import AcmService from '../../services/AcmService'; // Ensure this import exists
 const HotelBooking = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { accommodationId, roomId } = location.state || {};
+  const { accommodationId, roomId ,checkInStateFrom,checkOutStateFrom} = location.state || {};
 
   const [accommodation, setAccommodation] = useState(null);
   const [selectedRoom, setSelectedRoom] = useState(null);
-  const [checkInState, setCheckInState] = useState('');
+  const [checkInState, setCheckInState] = useState(checkInStateFrom || '');
   const [checkInTime, setCheckInTime] = useState('');
-  const [checkOutState, setCheckOutState] = useState('');
+  const [checkOutState, setCheckOutState] = useState(checkOutStateFrom || '');
   const [checkOutTime, setCheckOutTime] = useState(''); 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');

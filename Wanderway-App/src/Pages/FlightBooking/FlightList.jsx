@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import AvailableFlights from './AvailableFlights.jsx';
 import BookedFlights from './BookedFlights.jsx';
 import { Tab, Tabs } from '@mui/material';
-import { styled } from '@mui/system';
+import { display, styled } from '@mui/system';
 import Header from '../../Components/Header.jsx';
 import Footer from '../../Components/Footer/Footer.jsx';
 import styles from './flights.module.css';
@@ -121,7 +121,7 @@ const FlightList = () => {
               <StyledTab label="Booked Flights" {...a11yProps(1)} />
             </StyledTabs>
             </Box>
-            <CustomTabPanel value={value} index={0}>
+            <CustomTabPanel value={value} index={0} sx={{display: 'flex',justifyContent: 'center'}}>
             <AvailableFlights
                 flights={flights}
                 originSearch={originSearch}

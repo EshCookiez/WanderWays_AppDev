@@ -130,7 +130,7 @@ function HomeLanding() {
         ) : (
           <>
             <Link to="/user">
-              <button className={styles.loginButton}>User</button>
+              <button className={styles.loginButton}>Profile</button>
             </Link>
             <button className={styles.logoutButton} onClick={handleLogout}>
               Logout
@@ -320,7 +320,9 @@ function HomeLanding() {
         <section className={styles.destinationSection}>
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>Plan your perfect trip</h2>
+            <Link to="/hotel" >
             <button className={styles.seeMoreButton}>See more places</button>
+            </Link>
           </div>
           <div className="section-Description">
           <p className={styles.sectionDescription}>
@@ -365,7 +367,7 @@ function HomeLanding() {
               <p className={styles.optionDescription}>
                 Search Flights & Places Hire to our most popular destinations
               </p>
-              <Link to="/flight-search">
+              <Link to="/list-flight">
                 <button className={styles.optionButton}>
                   <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/1621daca02bcb5aacc082af98626b872482611b9ffab1cee341ef40025380ef1?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.buttonIcon} />
                   Show Flights
@@ -381,7 +383,7 @@ function HomeLanding() {
               <p className={styles.optionDescription}>
                 Search hotels & Places Hire to our most popular destinations
               </p>
-              <Link to="/list-accommodation">
+              <Link to="/hotel">
                 <button className={styles.optionButton}>
                   <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/936a6564ba922fa9343b13081aaf959dd62af07cc90b98dd33e6d6167c5234ca?placeholderIfAbsent=true&apiKey=7e996fec0e7d44d186be219bc6f7eea7" alt="" className={styles.buttonIcon} />
                   Show Hotels
